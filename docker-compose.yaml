@@ -1,0 +1,35 @@
+version: '3'
+services:
+  mongodb:
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - /etc/docker/db
+    networks:
+      - app-network
+
+  nodejs-app:
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mongodb
+    environment:
+      PORT: 8080
+      MONGO_URL: mongodb://mongodb:27017/async
+    networks:
+      - app-network
+
+  frontend:
+    build: ./web_areasync
+    ports:
+      - "8081:8081"
+    depends_on:
+      - nodejs-app
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
