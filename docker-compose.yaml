@@ -1,37 +1,41 @@
 version: '3'
 services:
-  mongodb:
-    image: mongo
+  nodejs-app:
+    build: .
     ports:
-      - "27017:27017"
+      - "8080:8080"
+    depends_on:
+      - mongodb
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=yannick
-      - MONGO_INITDB_ROOT_PASSWORD=async
-    volumes:
-      - /etc/docker/db
+      - CONN_STR=mongodb://yannick:async@mongodb
+      - PORT=8080
+    command: '/bin/bash -c "sleep 5; node server.js"'
     networks:
       - app-network
 
-  # nodejs-app:
-  #   build: .
-  #   ports:
-  #     - "8080:8080"
-  #   depends_on:
-  #     - mongodb
-  #   environment:
-  #     PORT: 8080
-  #     MONGO_URL: mongodb://mongodb:27017/async
-  #   networks:
-  #     - app-network
+  mongodb:
+    image: mongodb/mongodb-community-server:6.0-ubi8
+    environment:
+      - MONGODB_INITDB_ROOT_USERNAME=yannick
+      - MONGODB_INITDB_ROOT_PASSWORD=async
+    volumes:
+      - type: volume
+        source: mongodb-data
+        target: /data/db
+    networks:
+      - app-network
 
   frontend:
     build: ./web_areasync
     ports:
       - "8081:8081"
-    # depends_on:
-    #   - nodejs-app
+    depends_on:
+      - nodejs-app
     networks:
       - app-network
+
+volumes:
+  mongodb-data:
 
 networks:
   app-network:

@@ -1,2 +1,7 @@
+# compilation app folders
+
 .expo/
 .Doc*
+
+# docker compose up target
+data/
