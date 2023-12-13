@@ -4,29 +4,32 @@ services:
     image: mongo
     ports:
       - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=yannick
+      - MONGO_INITDB_ROOT_PASSWORD=async
     volumes:
       - /etc/docker/db
     networks:
       - app-network
 
-  nodejs-app:
-    build: .
-    ports:
-      - "8080:8080"
-    depends_on:
-      - mongodb
-    environment:
-      PORT: 8080
-      MONGO_URL: mongodb://mongodb:27017/async
-    networks:
-      - app-network
+  # nodejs-app:
+  #   build: .
+  #   ports:
+  #     - "8080:8080"
+  #   depends_on:
+  #     - mongodb
+  #   environment:
+  #     PORT: 8080
+  #     MONGO_URL: mongodb://mongodb:27017/async
+  #   networks:
+  #     - app-network
 
   frontend:
     build: ./web_areasync
     ports:
       - "8081:8081"
-    depends_on:
-      - nodejs-app
+    # depends_on:
+    #   - nodejs-app
     networks:
       - app-network
 
