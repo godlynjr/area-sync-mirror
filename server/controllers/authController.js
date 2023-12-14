@@ -5,6 +5,12 @@ const User = require('../models/userModel');
 
 const register = async (req, res) => {
     try {
+        // Vérifier si le nom d'utilisateur existe déjà
+        const existingUser = await User.findOne({ username: req.body.username });
+
+        if (existingUser) {
+            return res.status(400).json({ message: 'Username already exists' });
+        }
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(req.body.password, salt);
 
