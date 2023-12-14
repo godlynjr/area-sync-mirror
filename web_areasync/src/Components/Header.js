@@ -1,6 +1,6 @@
 import React from 'react';
 import logo from '../Assets/logo.svg';
-import LoginForm from '../RegisterForm';
+import LoginForm from '../Authentification/RegisterForm';
 
 function Header() {
   return (

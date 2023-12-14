@@ -21,9 +21,9 @@ const CustomButton = ({ color, logo, description, onClick }) => {
   return (
     <button style={{ maxWidth: '400px' }}
       onClick={onClick}
-      className={`flex mx-auto sm:w-full py-3 my-3 items-center justify-center rounded-2xl  focus:outline-none text-white ${getBackgroundColor()}`}
+      className={`flex mx-auto sm:w-full py-3 my-3 items-center justify-center rounded-3xl  focus:outline-none text-white ${getBackgroundColor()}`}
     >
-      {logo && <img src={logo} alt="Logo" className="mr-2 h-6 w-6" />}
+      {/* {logo && <img src={logo} alt="Logo" className="mr-2 h-6 w-6" />} */}
       <span>{description}</span>
     </button>
   );
