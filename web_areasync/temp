@@ -1,0 +1,14 @@
+<header className="bg-red-500 flex flex-col justify-center items-center md:bg-black lg:bg-yellow-500">
+        <img src={logo} className="App-logo" alt="logo" />
+        <p className='text-yellow-400 '>
+          Edit <code>src/App.js</code> and save to reload.
+        </p>
+        <a
+          className="App-link"
+          href="https://reactjs.org"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Learn React
+        </a>
+      </header>
