@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, Text, StyleSheet, Picker} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-// import Icon from 'react-native-vector-icons/FontAwesome';
+import Services from './Services';
+import Profil from './Profil';
 
 const OtherPage = () => {
   const [activeTab, setActiveTab] = useState('Home');
+  const [selectedValue, setSelectedValue] = useState('');
 
   const handleTabPress = (tabName) => {
     setActiveTab(tabName);
@@ -15,10 +17,10 @@ const OtherPage = () => {
       <View style={styles.content}>
         {/* Contenu de chaque onglet */}
         {activeTab === 'Home' && <Text>Contenu de l'onglet Home</Text>}
-        {activeTab === 'Search' && <Text>Contenu de l'onglet Search</Text>}
+        {activeTab === 'Search' && <Services/>}
         {activeTab === 'Add' && <Text>Contenu de l'onglet Add</Text>}
-        {activeTab === 'Services' && <Text>Contenu de l'onglet Services</Text>}
-        {activeTab === 'Services' && <Text>Contenu de l'onglet Services</Text>}
+        {activeTab === 'Layers' && <Text>Contenu de l'onglet Recent services</Text>}
+        {activeTab === 'Account' && <Text><Profil></Profil></Text>}
       </View>
 
       <View style={styles.navBar}>
@@ -26,35 +28,35 @@ const OtherPage = () => {
           style={[styles.tabButton, activeTab === 'Home' && styles.activeTab]}
           onPress={() => handleTabPress('Home')}
         >
-          <Icon name="home-outline" size={24} color={activeTab === 'Home' ? 'blue' : 'black'} />
+          <Icon name="home-outline" size={24} color={activeTab === 'Home' ? '#E0C0FC' : 'black'} />
         </TouchableOpacity>
 
         <TouchableOpacity
           style={[styles.tabButton, activeTab === 'Search' && styles.activeTab]}
           onPress={() => handleTabPress('Search')}
         >
-          <Icon name="search" size={24} color={activeTab === 'Search' ? 'blue' : 'black'} />
+          <Icon name="search" size={24} color={activeTab === 'Search' ? '#E0C0FC' : 'black'} />
         </TouchableOpacity>
           
         <TouchableOpacity
           style={[styles.tabButton, activeTab === 'Add' && styles.activeTab]}
           onPress={() => handleTabPress('Add')}
         >
-          <Icon name="add" size={24} color={activeTab === 'Add' ? 'blue' : 'black'} />
+          <Icon name="add" size={24} color={activeTab === 'Add' ? '#E0C0FC' : 'black'} />
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={[styles.tabButton, activeTab === 'Services' && styles.activeTab]}
-          onPress={() => handleTabPress('Services')}
+          style={[styles.tabButton, activeTab === 'Layers' && styles.activeTab]}
+          onPress={() => handleTabPress('Layers')}
         >
-          <Icon name="business-outline" size={24} color={activeTab === 'Services' ? 'blue' : 'black'} />
+          <Icon name="layers" size={24} color={activeTab === 'Layers' ? '#E0C0FC' : 'black'} />
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={[styles.tabButton, activeTab === 'Services' && styles.activeTab]}
-          onPress={() => handleTabPress('Services')}
+          style={[styles.tabButton, activeTab === 'Account' && styles.activeTab]}
+          onPress={() => handleTabPress('Account')}
         >
-          <Icon name="mdi-account" size={24} color={activeTab === 'Services' ? 'blue' : 'black'} />
+          <Icon name="person" size={24} color={activeTab === 'Account' ? '#E0C0FC' : 'black'} />
         </TouchableOpacity>
       </View>
     </View>
@@ -71,7 +73,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center',
     height: 50,
-    backgroundColor: '#f2f2f2',
+    backgroundColor: 'white',
   },
   tabButton: {
     flex: 1,
@@ -80,7 +82,7 @@ const styles = StyleSheet.create({
   },
   activeTab: {
     // borderBottomWidth: 2, // Commenter ou supprimer cette ligne
-    // borderBottomColor: 'blue', // Commenter ou supprimer cette ligne
+    // borderBottomColor: '#E0C0FC', // Commenter ou supprimer cette ligne
   },
   tabText: {
     fontSize: 12,

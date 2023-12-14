@@ -13,6 +13,8 @@ const AppWithNavigation = () => {
       <Stack.Navigator>
         <Stack.Screen name="App" component={App} />
         <Stack.Screen name="LoginScreen" component={LoginScreen} />
+        <Stack.Screen name="LoginScreen" component={LoginScreen} />
+        <Stack.Screen name="LoginScreen" component={LoginScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
