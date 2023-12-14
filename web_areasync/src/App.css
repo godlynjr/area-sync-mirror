@@ -1,5 +1,14 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+/* .App * {
+  margin-left: 10%;
+  margin-right: 10%;
+} */
+
 .App {
-  text-align: center;
+  background-color: #EDEDE5;
 }
 
 .App-logo {
