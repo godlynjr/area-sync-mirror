@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import CustomButton from "../Components/AuthButton";
+import { signInWithGoogle } from "./Firebase";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
@@ -18,11 +19,29 @@ const LoginForm = () => {
     e.preventDefault();
     // Add your login logic here
     console.log("Logging in with:", { email, password });
-  };
+    fetch('http://localhost:8181/auth/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        username: email,
+        password: password,
+      }),
+    })
+    .then(response => response.json())
+      .then(data => {
+        // // Stockage du token (à faire en fonction de votre mécanisme choisi)
+        // // Par exemple, en utilisant localStorage
+        // localStorage.setItem('authToken', data.token);
 
-  const handleGoogleLogin = () => {
-    // Add your Google login logic here
-    console.log("Logging in with Google");
+        // // Redirection vers la page d'accueil ou une autre page sécurisée
+        // window.location.href = '/accueil';
+        console.log(data)
+      })
+      .catch(error => {
+        console.error('Erreur de connexion :', error);
+      });
   };
 
   return (
@@ -52,6 +71,7 @@ const LoginForm = () => {
                 color="blue"
                 logo="path/to/blue-logo.png"
                 description="Sign in with Google"
+                onClick={signInWithGoogle}
               />
               <div className="relative">
                 <div className="relative flex justify-center text-xs py-3">
@@ -61,41 +81,78 @@ const LoginForm = () => {
                 </div>
               </div>
             </div>
-            <div className="grid gap-2">
-              <label htmlFor="email">Email</label>
-              <input id="email" type="email" placeholder="m@example.com" />
-            </div>
-            <div className="grid gap-2">
-              <lqbel htmlFor="password">Password</lqbel>
-              <lqbel id="password" type="password" />
-            </div>
-            <button className="w-full">Sign in</button>
-            {/* <p className="px-8 text-center text-sm text-muted-foreground">
-              By creating your account, you agree to our{" "}
-              <Link
-                href="/terms"
-                className="underline underline-offset-4 hover:text-primary"
-              >
-                Terms of Service
-              </Link>{" "}
-              and{" "}
-              <Link
-                href="/privacy"
-                className="underline underline-offset-4 hover:text-primary"
-              >
-                Privacy Policy
-              </Link>
-              .
-            </p> */}
+            <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+              <form className="space-y-6" action="#" method="POST">
+                <div>
+                  <label
+                    htmlFor="email"
+                    className="block text-sm font-medium leading-6 text-gray-900"
+                  >
+                    Email address
+                  </label>
+                  <div className="mt-2">
+                    <input
+                      id="email"
+                      name="email"
+                      type="email"
+                      autoComplete="email"
+                      onChange={handleEmailChange}
+                      required
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    />
+                  </div>
+                </div>
 
+                <div>
+                  <div className="flex items-center justify-between">
+                    <label
+                      htmlFor="password"
+                      className="block text-sm font-medium leading-6 text-gray-900"
+                    >
+                      Password
+                    </label>
+                    <div className="text-sm">
+                      <a
+                        href="#"
+                        className="font-semibold text-black hover:text-gray-800"
+                      >
+                        Forgot?
+                      </a>
+                    </div>
+                  </div>
+                  <div className="mt-2">
+                    <input
+                      id="password"
+                      name="password"
+                      type="password"
+                      autoComplete="current-password"
+                      onChange={handlePasswordChange}
+                      required
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <a href="/login">
+                    <button
+                      type="submit"
+                      onClick={handleSubmit}
+                      className="flex w-full justify-center rounded-3xl bg-black px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-gray-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                    >
+                      Sign In
+                    </button>
+                  </a>
+                </div>
+              </form>
+            </div>
             <p className="px-8 text-center text-sm text-muted-foreground">
               Don't have an account ?{" "}
-              <Link
+              <a
                 href="/register"
                 className="underline underline-offset-4 hover:text-primary"
               >
                 Sign up
-              </Link>
+              </a>
             </p>
           </div>
         </div>
