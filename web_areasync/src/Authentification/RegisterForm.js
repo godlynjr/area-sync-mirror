@@ -22,34 +22,29 @@ const RegisterForm = () => {
     // Add your login logic here
     console.log("Registring with:", { email, password });
 
-    // fetch('http://localhost:8181/auth/register', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify({
-    //     username: email,
-    //     password: password,
-    //   }),
-    // })
-    // .then(response => response.json())
-    //   .then(data => {
-    //     // // Stockage du token (à faire en fonction de votre mécanisme choisi)
-    //     // // Par exemple, en utilisant localStorage
-    //     // localStorage.setItem('authToken', data.token);
+    fetch('http://localhost:8181/auth/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        username: email,
+        password: password,
+      }),
+    })
+    .then(response => response.json())
+      .then(data => {
+        // // Stockage du token (à faire en fonction de votre mécanisme choisi)
+        // // Par exemple, en utilisant localStorage
+        // localStorage.setItem('authToken', data.token);
 
-    //     // // Redirection vers la page d'accueil ou une autre page sécurisée
-    //     // window.location.href = '/accueil';
-    //     console.log(data)
-    //   })
-    //   .catch(error => {
-    //     console.error('Erreur de connexion :', error);
-    //   });
-  };
-
-  const handleGoogleLogin = () => {
-    // Add your Google login logic here
-    console.log("Logging in with Google");
+        // // Redirection vers la page d'accueil ou une autre page sécurisée
+        // window.location.href = '/accueil';
+        console.log(data)
+      })
+      .catch(error => {
+        console.error('Erreur de connexion :', error);
+      });
   };
 
   const handleContinueWithEmail = () => {
