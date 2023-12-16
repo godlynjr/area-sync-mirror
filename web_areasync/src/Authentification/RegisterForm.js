@@ -64,7 +64,7 @@ const RegisterForm = () => {
 
   return (
     <>
-      <div className=" relative min-h-screen flex w-full lg:px-0 bg-figma-green">
+      <div className="relative min-h-screen flex w-full lg:px-0 bg-figma-green">
         <div className="relative max-md:hidden bg-muted p-10 text-white dark:border-r w-1/3 min-h-screen">
           <div className="absolute inset-0 bg-zinc-900" />
         </div>
