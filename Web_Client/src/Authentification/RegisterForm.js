@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import CustomButton from "../Components/AuthButton";
 import { ArrowLeftIcon } from '@heroicons/react/solid';
 import { signInWithGoogle } from "./Firebase";
+import User from "../User";
 
 const RegisterForm = () => {
   const [isRegistering, setIsRegistering] = useState(false);
@@ -19,32 +20,9 @@ const RegisterForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Add your login logic here
+    // login logic here
     console.log("Registring with:", { email, password });
-
-    fetch('http://localhost:8181/auth/register', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        username: email,
-        password: password,
-      }),
-    })
-    .then(response => response.json())
-      .then(data => {
-        // // Stockage du token (à faire en fonction de votre mécanisme choisi)
-        // // Par exemple, en utilisant localStorage
-        // localStorage.setItem('authToken', data.token);
-
-        // // Redirection vers la page d'accueil ou une autre page sécurisée
-        // window.location.href = '/accueil';
-        console.log(data)
-      })
-      .catch(error => {
-        console.error('Erreur de connexion :', error);
-      });
+    User.register(email, password);
   };
 
   const handleContinueWithEmail = () => {
@@ -115,14 +93,7 @@ const RegisterForm = () => {
                       >
                         Password
                       </label>
-                      <div className="text-sm">
-                        <a
-                          href="#"
-                          className="font-semibold text-black hover:text-gray-800"
-                        >
-                          Forgot password?
-                        </a>
-                      </div>
+                      
                     </div>
                     <div className="mt-2">
                       <input

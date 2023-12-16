@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import CustomButton from "../Components/AuthButton";
 import { signInWithGoogle } from "./Firebase";
+import User from "../User";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
@@ -19,39 +19,17 @@ const LoginForm = () => {
     e.preventDefault();
     // Add your login logic here
     console.log("Logging in with:", { email, password });
-    fetch('http://localhost:8181/auth/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        username: email,
-        password: password,
-      }),
-    })
-    .then(response => response.json())
-      .then(data => {
-        // // Stockage du token (à faire en fonction de votre mécanisme choisi)
-        // // Par exemple, en utilisant localStorage
-        // localStorage.setItem('authToken', data.token);
-
-        // // Redirection vers la page d'accueil ou une autre page sécurisée
-        // window.location.href = '/accueil';
-        console.log(data)
-      })
-      .catch(error => {
-        console.error('Erreur de connexion :', error);
-      });
+    User.login(email, password);
   };
 
   return (
     <>
-      <div className="container relative hidden min-h-screen flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-3 lg:px-0">
+      <div className="container relative hidden min-h-screen flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-3 lg:px-0 bg-figma-green">
         <div className="relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex lg:col-span-1">
           <div className="absolute inset-0 bg-zinc-900" />
         </div>
 
-        <div className="lg:p-8 lg:col-span-2">
+        <div className="lg:p-8 lg:col-span-2 ">
           <div className="mx-auto flex w-full flex-col justify-center space-y-6 ">
             <h1 className="text-center font-bold text-2xl">
               Sign In to AREASYNC
