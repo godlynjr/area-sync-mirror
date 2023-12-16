@@ -1,0 +1,25 @@
+name: Web Test
+
+on:
+  push:
+    branches:
+        - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      
+      - name: Setup Node
+        uses: actions/setup-node@v1
+
+      - name: Install dependencies
+        run: cd Web_Client && npm install
+      
+      - name: Run tests
+        run: cd Web_Client && npm start
+        env:
+          CI: true
