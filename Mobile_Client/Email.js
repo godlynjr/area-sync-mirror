@@ -1,35 +1,23 @@
 import React, { useState } from 'react';
 import { View, TextInput, TouchableOpacity, Text, StyleSheet, Alert, Image } from 'react-native';
-import axios from 'axios';
 
-const Ema = ({ navigation }) => {
+const Email = ({ navigation }) => {
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-
   const handleLogin = () => {
-    // Vérifier l'e-mail et le mot de passe
     if (email === 'C') {
-      // Connexion réussie, rediriger vers la page précédente (OtherPage)
       navigation.navigate('Password');
-      // Réinitialiser les valeurs des champs e-mail et mot de passe
       setEmail('');
       setErrorMessage('');
     } else {
-      Alert.alert('Erreur de connexion', 'L\'e-mail est incorrect', [{ text: 'OK' }]);
+      Alert.alert('Erreur de connexion', "L'e-mail est incorrect", [{ text: 'OK' }]);
     }
-    axios.post('https://example.com/api/login', data, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((response) => {
-        // Traitement de la réponse du serveur
-        console.log(response.data);
-      })
-      .catch((error) => {
-        // Gestion des erreurs
-        console.error(error);
-      });
+    
+    const data = {
+      email: email,
+      password: password
+    };
   };
 
   return (
@@ -154,4 +142,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Ema;
+export default Email;

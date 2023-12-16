@@ -69,6 +69,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
         textAlign: 'center',
+        marginLeft: -240,
     },
     pickerStyle: {
         marginTop: -(windowHeight * 0.01),

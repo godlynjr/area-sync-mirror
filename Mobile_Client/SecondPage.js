@@ -1,7 +1,6 @@
 import React from 'react';
-import { View, Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import Email from './Email'
 
 const SecondPage = ({ navigation }) => {
     const PressMail = (provider) => {
