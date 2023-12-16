@@ -1,6 +1,12 @@
-<header className="bg-red-500 flex flex-col justify-center items-center md:bg-black lg:bg-yellow-500">
+import logo from './logo.svg';
+import './App.css';
+
+function App() {
+  return (
+    <div className="App">
+      <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <p className='text-yellow-400 '>
+        <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
         <a
@@ -12,3 +18,8 @@
           Learn React
         </a>
       </header>
+    </div>
+  );
+}
+
+export default App;
