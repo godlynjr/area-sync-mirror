@@ -1,6 +1,6 @@
-# Project Name
+# AREA
 
-# Overview
+## Overview
 
 The project aims to develop a comprehensive application for interconnecting various digital services such as Outlook 365, Yammer, OneDrive, Twitter, etc., enabling users to create and manage customized workflows. The application will be primarily accessed through web and mobile clients, both exposing their functionalities through a REST API provided by the central application server.
 
