@@ -4,6 +4,8 @@ WORKDIR /usr/src/app
 
 COPY package*.json ./
 
+RUN npm install --force
+
 COPY . .
 
 ENV PORT 8081
