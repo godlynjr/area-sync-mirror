@@ -1,14 +1,14 @@
 version: '3'
 services:
   nodejs-app:
-    build: ./server
+    build: ./Server
     ports:
       - "8080:8080"
     networks:
       - app-network
 
   frontend:
-    build: ./web_areasync
+    build: ./Web_Client
     ports:
       - "8081:8081"
     depends_on:
