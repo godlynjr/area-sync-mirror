@@ -1,0 +1,64 @@
+{
+    "client": {
+        "host": "IP_DU_CLIENT"
+    },
+    "server": {
+        "current_time": "TEMPS_DU_SERVEUR",
+        "services": [
+            {
+                "name": "Discord",
+                "actions": [
+                    {
+                        "name": "Gmail",
+                        "description": "Chaque fois qu’un nouveau membre rejoint un serveur Discord spécifique, un e-mail est envoyé via Gmail pour vous informer du nouveau membre."
+                    },
+                    {
+                        "name": "Spotify",
+                        "description": "Lorsque vous commencez à écouter une playlist spécifique sur Spotify, un message est posté dans un canal Discord pour partager la playlist avec les autres."
+                    },
+                    {
+                        "name": "Notion",
+                        "description": "Lorsqu’une nouvelle tâche est ajoutée à une liste de tâches dans Notion, un message est posté dans un canal Discord pour informer les autres de la nouvelle tâche."
+                    }
+                ],
+                "reactions": []
+            },
+            {
+                "name": "Gmail",
+                "actions": [
+                    {
+                        "name": "Google Calendar",
+                        "description": "Lorsqu’un nouvel e-mail est reçu dans Gmail avec une date spécifique, un nouvel événement est ajouté à votre Google Calendar pour cette date."
+                    },
+                    {
+                        "name": "Tally",
+                        "description": "Lorsqu’un nouvel e-mail est envoyé depuis Gmail, une nouvelle entrée est créée dans Tally pour suivre le nombre d’e-mails que vous avez envoyés."
+                    },
+                    {
+                        "name": "Github",
+                        "description": "Lorsqu’un nouvel e-mail est reçu dans Gmail avec un lien vers une issue Github, la issue est automatiquement fermée sur Github."
+                    }
+                ],
+                "reactions": []
+            },
+            {
+                "name": "Spotify",
+                "actions": [
+                    {
+                        "name": "Notion",
+                        "description": "Lorsque vous supprimez une chanson de votre playlist Spotify, une note est créée dans Notion pour suivre les chansons que vous avez supprimées."
+                    },
+                    {
+                        "name": "Google Calendar",
+                        "description": "Lorsqu’un nouvel événement est ajouté à votre Google Calendar avec un thème musical spécifique, une nouvelle playlist est créée dans Spotify avec des chansons correspondant à ce thème."
+                    },
+                    {
+                        "name": "Tally",
+                        "description": "Lorsqu’une chanson est jouée plus de 10 fois sur Spotify, une nouvelle entrée est créée dans Tally pour suivre les chansons les plus écoutées."
+                    }
+                ],
+                "reactions": []
+            }
+        ]
+    }
+}
