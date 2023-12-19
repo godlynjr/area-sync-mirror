@@ -1,10 +1,10 @@
 import React from 'react';
 
-const Dashboard = () => {
+const UserList = () => {
     return (
         <>
         </>
     );
 };
 
-export default Dashboard;
+export default UserList;

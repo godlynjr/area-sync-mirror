@@ -1,10 +1,10 @@
 import React from 'react';
 
-const Dashboard = () => {
+const Sidebar = () => {
     return (
         <>
         </>
     );
 };
 
-export default Dashboard;
+export default Sidebar;

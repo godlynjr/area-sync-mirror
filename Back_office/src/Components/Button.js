@@ -1,10 +1,10 @@
 import React from 'react';
 
-const Dashboard = () => {
+const Button = () => {
     return (
         <>
         </>
     );
-};
+}
 
-export default Dashboard;
+export default Button;
