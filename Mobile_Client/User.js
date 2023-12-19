@@ -61,11 +61,9 @@ class Client {
                 headers: this.fillRequestHeaders(),
                 body: JSON.stringify({ email: mail }),
             });
-
             const statusCode = response.status;
             const data = await response.json();
             console.log(statusCode);
-
             if (statusCode === 200) {
                 console.log("Is goodcheckmail");
                 return 200;
@@ -79,49 +77,24 @@ class Client {
         }
     }
 
-    // async checkMail(mail) {
-    //     try {
-    //         const response = await fetch(api + "/auth/check_mail", {
-    //             method: "POST",
-    //             headers: this.fillRequestHeaders(),
-    //             body: JSON.stringify({ email: mail }),
-    //         });
-
-    //         const statusCode = response.status;
-    //         const data = await response.json();
-    //         console.log(statusCode);
-
-    //         if (statusCode === 200) {
-    //             console.log("Is goodcheckmail");
-    //             // window.location.href = '/check_mail';
-    //         } else if (statusCode === 400) {
-    //             console.log("Is badcheckmail");
-    //         }
-    //     } catch (error) {
-    //         console.error('Erreur de connexion :', error);
-    //     }
-    // }
-
     async register(mail, password) {
         try {
             const response = await fetch(api + "/auth/register", {
                 method: "POST",
                 headers: this.fillRequestHeaders(),
                 body: JSON.stringify({ email: mail, password: password }),
-            })
-                .then(response => response.json())
-                .then(data => {
-                    // localStorage.setItem('authToken', data.token);
-
-                    // // Redirection
-                    console.log(data)
-                    window.location.href = '/login';
-                })
-                .catch(error => {
-                    console.error('Erreur de connexion :', error);
-                });
+            });
+            if (response.ok) {
+                const data = await response.json();
+                console.log(data);
+                window.location.href = '/login';
+                return 200;
+            } else {
+                throw new Error('Failed to register');
+                return 400;
+            }
         } catch (error) {
-            console.log(error);
+            console.error('Erreur de connexion :', error);
         }
     }
 }
