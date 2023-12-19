@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/userModel');
 
 const check_mail = async (req, res) => {
+    // Routes to check if the user exists
     try {
         const user = await User.findOne({ email: req.body.email });
         if (user) {
@@ -28,6 +29,7 @@ const check_mail = async (req, res) => {
 };
 
 const login = async (req, res) => {
+    // Routes to login the user
     try {
         const user = await User.findOne({ email: req.body.email });
         if (user) {
@@ -38,13 +40,13 @@ const login = async (req, res) => {
                 user.password = hashedPassword;
                 await user.save();
                 
-                const token = jwt.sign({ _id: user._id }, 'SECRET_KEY');
+                const token = jwt.sign({ _id: user._id }, process.env.SECRET_KEY, {expiresIn: '3h'});
                 res.header('auth-token', token).send({ token });
             } else {
                 // User exists and password is set, so just check the password
                 const validPassword = await bcrypt.compare(req.body.password, user.password);
                 if (validPassword) {
-                    const token = jwt.sign({ _id: user._id }, 'SECRET_KEY');
+                    const token = jwt.sign({ _id: user._id }, process.env.SECRET_KEY, {expiresIn: '3h'});
                     res.header('auth-token', token).send({ token });
                 } else {
                     res.status(400).json({ message: 'Invalid password' });
