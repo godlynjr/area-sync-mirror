@@ -1,9 +1,9 @@
 import React, { useState, } from 'react';
 import { View, Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
 
-const FirstPage = ({ navigation }) => {
+const OnboardingPage = ({ navigation }) => {
   const handlePress = () => {
-    navigation.navigate('SecondPage');
+    navigation.navigate('ConnexionPage');
   };
   return (
       <View style={styles.container}>
@@ -55,4 +55,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default FirstPage;
+export default OnboardingPage;
