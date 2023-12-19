@@ -1,0 +1,132 @@
+{
+    "client": {
+        "host": "IP_DU_CLIENT"
+    },
+    "server": {
+        "current_time": "TEMPS_DU_SERVEUR",
+        "services": [
+            {
+                "name": "Discord",
+                "actions": [
+                    {
+                        "name": "Gmail",
+                        "description": "Chaque fois qu’un nouveau membre rejoint un serveur Discord spécifique, un e-mail est envoyé via Gmail pour vous informer du nouveau membre."
+                    },
+                    {
+                        "name": "Spotify",
+                        "description": "Lorsque vous commencez à écouter une playlist spécifique sur Spotify, un message est posté dans un canal Discord pour partager la playlist avec les autres."
+                    },
+                    {
+                        "name": "Notion",
+                        "description": "Lorsqu’une nouvelle tâche est ajoutée à une liste de tâches dans Notion, un message est posté dans un canal Discord pour informer les autres de la nouvelle tâche."
+                    }
+                ],
+                "reactions": []
+            },
+            {
+                "name": "Gmail",
+                "actions": [
+                    {
+                        "name": "Google Calendar",
+                        "description": "Lorsqu’un nouvel e-mail est reçu dans Gmail avec une date spécifique, un nouvel événement est ajouté à votre Google Calendar pour cette date."
+                    },
+                    {
+                        "name": "Tally",
+                        "description": "Lorsqu’un nouvel e-mail est envoyé depuis Gmail, une nouvelle entrée est créée dans Tally pour suivre le nombre d’e-mails que vous avez envoyés."
+                    },
+                    {
+                        "name": "Github",
+                        "description": "Lorsqu’un nouvel e-mail est reçu dans Gmail avec un lien vers une issue Github, la issue est automatiquement fermée sur Github."
+                    }
+                ],
+                "reactions": []
+            },
+            {
+                "name": "Spotify",
+                "actions": [
+                    {
+                        "name": "Notion",
+                        "description": "Lorsque vous supprimez une chanson de votre playlist Spotify, une note est créée dans Notion pour suivre les chansons que vous avez supprimées."
+                    },
+                    {
+                        "name": "Google Calendar",
+                        "description": "Lorsqu’un nouvel événement est ajouté à votre Google Calendar avec un thème musical spécifique, une nouvelle playlist est créée dans Spotify avec des chansons correspondant à ce thème."
+                    },
+                    {
+                        "name": "Tally",
+                        "description": "Lorsqu’une chanson est jouée plus de 10 fois sur Spotify, une nouvelle entrée est créée dans Tally pour suivre les chansons les plus écoutées."
+                    }
+                ],
+                "reactions": []
+            },
+            {
+                "name": "Github",
+                "actions": [
+                  {
+                    "name": "Nouvelle issue créée",
+                    "description": "Créer une nouvelle page dans Notion avec les détails de l’issue lorsqu’une nouvelle issue est créée"
+                  },
+                  {
+                    "name": "Issue fermée",
+                    "description": "Supprimer un événement correspondant dans Google Calendar lorsqu’une issue est fermée Réaction"
+                  },
+                  {
+                    "name": "Pull request fusionnée",
+                    "description": "Ajouter un événement à Google Calendar pour célébrer cette fusion lorsqu’une pull request est fusionnée"
+                  }
+                ]
+            },
+            {
+                "name": "Google Calendar",
+                "actions": [
+                  {
+                    "name": "Nouvel événement ajouté",
+                    "description": "Créer une nouvelle page dans Notion avec les détails de l’événement lorsqu’un nouvel événement est ajouté à votre calendrier"
+                  },
+                  {
+                    "name": "Événement supprimé",
+                    "description": "Envoyer une notification sur Tally lorsqu’un événement est supprimé de votre calendrier"
+                  },
+                  {
+                    "name": "Événement mis à jour",
+                    "description": "Mettre à jour une issue correspondante sur Github lorsqu’un événement est mis à jour"
+                  }
+                ]
+            },
+            {
+                "name": "Notion",
+                "actions": [
+                  {
+                    "name": "Nouvelle page créée dans base de données spécifique",
+                    "description": "Créer un événement dans Google Calendar pour cette nouvelle page lorsqu’une nouvelle page est créée dans une base de données spécifique"
+                  },
+                  {
+                    "name": "Tâche marquée comme terminée",
+                    "description": "Envoyer une notification sur Tally lorsqu’une tâche est marquée comme terminée"
+                  },
+                  {
+                    "name": "Commentaire ajouté à une page",
+                    "description": "Créer une issue sur Github avec les détails du commentaire lorsqu’un commentaire est ajouté à une page"
+                  }
+                ]
+            },
+            {
+                "name": "Tally",
+                "actions": [
+                  {
+                    "name": "Nouveau score ajouté",
+                    "description": "Ajouter une nouvelle entrée dans une base de données Notion lorsqu’un nouveau score est ajouté"
+                  },
+                  {
+                    "name": "Score supprimé",
+                    "description": "Supprimer un événement correspondant dans Google Calendar lorsqu’un score est supprimé"
+                  },
+                  {
+                    "name": "Score mis à jour",
+                    "description": "Mettre à jour une issue correspondante sur Github lorsqu’un score est mis à jour"
+                  }
+                ]
+            }
+        ]
+    }
+}
