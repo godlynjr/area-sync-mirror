@@ -75,8 +75,8 @@
                     "description": "Ajouter un événement à Google Calendar pour célébrer cette fusion lorsqu’une pull request est fusionnée"
                   }
                 ]
-              },
-              {
+            },
+            {
                 "name": "Google Calendar",
                 "actions": [
                   {
@@ -92,8 +92,8 @@
                     "description": "Mettre à jour une issue correspondante sur Github lorsqu’un événement est mis à jour"
                   }
                 ]
-              },
-              {
+            },
+            {
                 "name": "Notion",
                 "actions": [
                   {
@@ -109,8 +109,8 @@
                     "description": "Créer une issue sur Github avec les détails du commentaire lorsqu’un commentaire est ajouté à une page"
                   }
                 ]
-              },
-              {
+            },
+            {
                 "name": "Tally",
                 "actions": [
                   {
@@ -126,7 +126,7 @@
                     "description": "Mettre à jour une issue correspondante sur Github lorsqu’un score est mis à jour"
                   }
                 ]
-              }
+            }
         ]
     }
 }

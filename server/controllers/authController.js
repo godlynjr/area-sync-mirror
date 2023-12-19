@@ -107,4 +107,4 @@ const web = async (req, res) => {
     }
 };
 
-module.exports = { check_mail, login };
+module.exports = { check_mail, login, web };
