@@ -7,11 +7,8 @@ const LoginScreen = ({ navigation }) => {
   const [errorMessage, setErrorMessage] = useState('');
 
   const handleLogin = () => {
-    // Vérifier l'e-mail et le mot de passe
     if (email === 'C' && password === 'P') {
-      // Connexion réussie, rediriger vers la page précédente (OtherPage)
       navigation.navigate('OtherPage');
-      // Réinitialiser les valeurs des champs e-mail et mot de passe
       setEmail('');
       setPassword('');
       setErrorMessage('');
