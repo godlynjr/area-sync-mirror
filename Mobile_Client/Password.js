@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import axios from 'axios';
 
 const Password = ({ navigation }) => {
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -19,19 +20,24 @@ const Password = ({ navigation }) => {
     } else {
       Alert.alert('Erreur de connexion', 'Le mot de passe est incorrect', [{ text: 'OK' }]);
     }
-    axios.post('https://example.com/api/login', data, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((response) => {
-        // Traitement de la réponse du serveur
-        console.log(response.data);
-      })
-      .catch((error) => {
-        // Gestion des erreurs
-        console.error(error);
-      });
+    const data = {
+      email: email,
+      password: password
+    };
+  
+    // axios.post('https://example.com/api/login', data, {
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    // })
+    //   .then((response) => {
+    //     // Traitement de la réponse du serveur
+    //     console.log(response.data);
+    //   })
+    //   .catch((error) => {
+    //     // Gestion des erreurs
+    //     console.error(error);
+    //   });
   };
 
   const togglePasswordVisibility = () => {

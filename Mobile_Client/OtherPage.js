@@ -20,7 +20,7 @@ const OtherPage = () => {
         {activeTab === 'Search' && <Services/>}
         {activeTab === 'Add' && <Text>Contenu de l'onglet Add</Text>}
         {activeTab === 'Layers' && <Text>Contenu de l'onglet Recent services</Text>}
-        {activeTab === 'Account' && <Text><Profil></Profil></Text>}
+        {activeTab === 'Account' && <Text> <Profil/> </Text>}
       </View>
 
       <View style={styles.navBar}>
