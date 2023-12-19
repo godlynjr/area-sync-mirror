@@ -1,35 +1,23 @@
 import React, { useState } from 'react';
 import { View, TextInput, TouchableOpacity, Text, StyleSheet, Alert, Image } from 'react-native';
-import axios from 'axios';
 
-const Ema = ({ navigation }) => {
+const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
   const handleLogin = () => {
     // Vérifier l'e-mail et le mot de passe
-    if (email === 'C') {
+    if (email === 'C' && password === 'P') {
       // Connexion réussie, rediriger vers la page précédente (OtherPage)
-      navigation.navigate('Password');
+      navigation.navigate('OtherPage');
       // Réinitialiser les valeurs des champs e-mail et mot de passe
       setEmail('');
+      setPassword('');
       setErrorMessage('');
     } else {
-      Alert.alert('Erreur de connexion', 'L\'e-mail est incorrect', [{ text: 'OK' }]);
+      Alert.alert('Erreur de connexion', 'L\'e-mail ou le mot de passe est incorrect', [{ text: 'OK' }]);
     }
-    axios.post('https://example.com/api/login', data, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((response) => {
-        // Traitement de la réponse du serveur
-        console.log(response.data);
-      })
-      .catch((error) => {
-        // Gestion des erreurs
-        console.error(error);
-      });
   };
 
   return (
@@ -39,7 +27,10 @@ const Ema = ({ navigation }) => {
         style={styles.image}
       />
       <Text style={styles.Text}>
-        What's your email?
+        Ready to Dive Back In?
+      </Text>
+      <Text style={styles.Text1}>
+        Log in to get all features
       </Text>
       <Text style={styles.mail}>
         Email      </Text>
@@ -49,9 +40,26 @@ const Ema = ({ navigation }) => {
         value={email}
         onChangeText={setEmail}
       />
+      <Text style={styles.password}>
+        Password
+      </Text>
+      <TextInput
+        style={styles.input2}
+        placeholder="Enter Password"
+        secureTextEntry={true}
+        value={password}
+        onChangeText={setPassword}
+      />
+      <Text style={styles.forgot}>
+        Forgot password ?
+      </Text>
       <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
-        <Text style={styles.loginButtonText}>Continue</Text>
+        <Text style={styles.loginButtonText}>Log In</Text>
       </TouchableOpacity>
+      <View style={styles.container1}>
+        <Text style={styles.lastext}>Don't have an account?</Text>
+        <Text style={styles.last}>Sign Up</Text>
+      </View>
       {errorMessage ? <Text style={styles.errorMessage}>{errorMessage}</Text> : null}
     </View>
   );
@@ -69,7 +77,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   image: {
-    marginTop: -200,
+    marginTop: -100,
     width: 350, // Spécifiez la largeur souhaitée
     height: 350, // Spécifiez la hauteur souhaitée
   },
@@ -154,4 +162,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Ema;
+export default LoginScreen;
