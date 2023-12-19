@@ -1,4 +1,3 @@
-const axios = require('axios');
 const { verify } = require('jsonwebtoken');
 
 const about_json = async (req, res) => {
