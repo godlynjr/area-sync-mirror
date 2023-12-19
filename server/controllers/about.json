@@ -64,15 +64,15 @@
                 "actions": [
                   {
                     "name": "Nouvelle issue créée",
-                    "reaction": "Créer une nouvelle page dans Notion avec les détails de l’issue"
+                    "description": "Créer une nouvelle page dans Notion avec les détails de l’issue lorsqu’une nouvelle issue est créée"
                   },
                   {
                     "name": "Issue fermée",
-                    "reaction": "Supprimer un événement correspondant dans Google Calendar"
+                    "description": "Supprimer un événement correspondant dans Google Calendar lorsqu’une issue est fermée Réaction"
                   },
                   {
                     "name": "Pull request fusionnée",
-                    "reaction": "Ajouter un événement à Google Calendar pour célébrer cette fusion"
+                    "description": "Ajouter un événement à Google Calendar pour célébrer cette fusion lorsqu’une pull request est fusionnée"
                   }
                 ]
               },
@@ -81,15 +81,15 @@
                 "actions": [
                   {
                     "name": "Nouvel événement ajouté",
-                    "reaction": "Créer une nouvelle page dans Notion avec les détails de l’événement"
+                    "description": "Créer une nouvelle page dans Notion avec les détails de l’événement lorsqu’un nouvel événement est ajouté à votre calendrier"
                   },
                   {
                     "name": "Événement supprimé",
-                    "reaction": "Envoyer une notification sur Tally"
+                    "description": "Envoyer une notification sur Tally lorsqu’un événement est supprimé de votre calendrier"
                   },
                   {
                     "name": "Événement mis à jour",
-                    "reaction": "Mettre à jour une issue correspondante sur Github"
+                    "description": "Mettre à jour une issue correspondante sur Github lorsqu’un événement est mis à jour"
                   }
                 ]
               },
@@ -98,15 +98,15 @@
                 "actions": [
                   {
                     "name": "Nouvelle page créée dans base de données spécifique",
-                    "reaction": "Créer un événement dans Google Calendar pour cette nouvelle page"
+                    "description": "Créer un événement dans Google Calendar pour cette nouvelle page lorsqu’une nouvelle page est créée dans une base de données spécifique"
                   },
                   {
                     "name": "Tâche marquée comme terminée",
-                    "reaction": "Envoyer une notification sur Tally"
+                    "description": "Envoyer une notification sur Tally lorsqu’une tâche est marquée comme terminée"
                   },
                   {
                     "name": "Commentaire ajouté à une page",
-                    "reaction": "Créer une issue sur Github avec les détails du commentaire"
+                    "description": "Créer une issue sur Github avec les détails du commentaire lorsqu’un commentaire est ajouté à une page"
                   }
                 ]
               },
@@ -115,15 +115,15 @@
                 "actions": [
                   {
                     "name": "Nouveau score ajouté",
-                    "reaction": "Ajouter une nouvelle entrée dans une base de données Notion"
+                    "description": "Ajouter une nouvelle entrée dans une base de données Notion lorsqu’un nouveau score est ajouté"
                   },
                   {
                     "name": "Score supprimé",
-                    "reaction": "Supprimer un événement correspondant dans Google Calendar"
+                    "description": "Supprimer un événement correspondant dans Google Calendar lorsqu’un score est supprimé"
                   },
                   {
                     "name": "Score mis à jour",
-                    "reaction": "Mettre à jour une issue correspondante sur Github"
+                    "description": "Mettre à jour une issue correspondante sur Github lorsqu’un score est mis à jour"
                   }
                 ]
               }
