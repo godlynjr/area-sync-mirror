@@ -58,7 +58,75 @@
                     }
                 ],
                 "reactions": []
-            }
+            },
+            {
+                "name": "Github",
+                "actions": [
+                  {
+                    "name": "Nouvelle issue créée",
+                    "reaction": "Créer une nouvelle page dans Notion avec les détails de l’issue"
+                  },
+                  {
+                    "name": "Issue fermée",
+                    "reaction": "Supprimer un événement correspondant dans Google Calendar"
+                  },
+                  {
+                    "name": "Pull request fusionnée",
+                    "reaction": "Ajouter un événement à Google Calendar pour célébrer cette fusion"
+                  }
+                ]
+              },
+              {
+                "name": "Google Calendar",
+                "actions": [
+                  {
+                    "name": "Nouvel événement ajouté",
+                    "reaction": "Créer une nouvelle page dans Notion avec les détails de l’événement"
+                  },
+                  {
+                    "name": "Événement supprimé",
+                    "reaction": "Envoyer une notification sur Tally"
+                  },
+                  {
+                    "name": "Événement mis à jour",
+                    "reaction": "Mettre à jour une issue correspondante sur Github"
+                  }
+                ]
+              },
+              {
+                "name": "Notion",
+                "actions": [
+                  {
+                    "name": "Nouvelle page créée dans base de données spécifique",
+                    "reaction": "Créer un événement dans Google Calendar pour cette nouvelle page"
+                  },
+                  {
+                    "name": "Tâche marquée comme terminée",
+                    "reaction": "Envoyer une notification sur Tally"
+                  },
+                  {
+                    "name": "Commentaire ajouté à une page",
+                    "reaction": "Créer une issue sur Github avec les détails du commentaire"
+                  }
+                ]
+              },
+              {
+                "name": "Tally",
+                "actions": [
+                  {
+                    "name": "Nouveau score ajouté",
+                    "reaction": "Ajouter une nouvelle entrée dans une base de données Notion"
+                  },
+                  {
+                    "name": "Score supprimé",
+                    "reaction": "Supprimer un événement correspondant dans Google Calendar"
+                  },
+                  {
+                    "name": "Score mis à jour",
+                    "reaction": "Mettre à jour une issue correspondante sur Github"
+                  }
+                ]
+              }
         ]
     }
 }
