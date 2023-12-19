@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, TextInput, TouchableOpacity, Text, Alert, StyleSheet, Image } from 'react-native';
 import User from "./User"
 import Icon from 'react-native-vector-icons/Ionicons';
+import { enableLegacyWebImplementation } from 'react-native-gesture-handler';
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -9,20 +10,37 @@ const LoginScreen = ({ navigation }) => {
   const [isEnteringEmail, setIsEnteringEmail] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [isEmailNotFound, setIsEmailNotFound] = useState(false);
 
-  const handleContinue = () => {
-
+  const handleContinue = async () => {
     if (isEnteringEmail) {
-      setIsEnteringEmail(false);
-      User.checkMail(email);
-    } else if (!isEnteringEmail) {
-      console.log('Email:', email);
-      console.log('Password:', password);
-      User.login(email, password)
-      navigation.navigate('OtherPage');
-      setErrorMessage('')
-    }  else {
-      Alert.alert('Erreur de connexion', 'L\'e-mail ou le mot de passe est incorrect', [{ text: 'OK' }]);
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (emailRegex.test(email)) {
+        setIsEnteringEmail(false);
+      } else {
+        Alert.alert('Invalid email format');
+      }
+    } else if (password.trim() === '') {
+      Alert.alert('Empty Password', 'Please enter your password.');
+    } else {
+      const isValidEmail = await User.checkMail(email);
+      try {
+        console.log('isvalidemail', isValidEmail)
+        if (isValidEmail === 200) {
+          console.log(password)
+          const loginResponse = await User.login(email, password);
+          console.log('loginresponse', loginResponse)
+          if (loginResponse === 200) {
+            navigation.navigate('OtherPage');
+          } else if (loginResponse === 400) {
+            Alert.alert('Invalid Password', 'The password is incorrect.');
+          }
+        } else if (isValidEmail === 400) {
+          Alert.alert('Invalid email', 'The email is incorrect.');
+        }
+      } catch (error) {
+        console.error('Erreur de connexionoooooooooooooooo :', error);
+      }
     }
 
   };
