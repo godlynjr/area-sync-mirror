@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 const SecondPage = ({ navigation }) => {
     const PressMail = (provider) => {
         navigation.goBack(); // Close the modal
-        navigation.navigate('Email', { provider }); // Redirect to the desired page
+        navigation.navigate('LoginScreen', { provider }); // Redirect to the desired page
     };
 
     return (

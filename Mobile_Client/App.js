@@ -4,8 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import OtherPage from './OtherPage';
 import FirstPage from './FirstPage'
 import SecondPage from './SecondPage'
-import Email from './Email'
-import Password from './Password'
+import LoginScreen from './LoginScreen'
 import Profil from './Profil'
 import Edit_profil from './Edit_profil'
 
@@ -19,8 +18,7 @@ const App = () => {
         <Stack.Group screenOptions={{ presentation: 'modal' }}>
           <Stack.Screen name="SecondPage" component={SecondPage} />
         </Stack.Group>
-        <Stack.Screen name="Email" component={Email} />
-        <Stack.Screen name="Password" component={Password} />
+        <Stack.Screen name="LoginScreen" component={LoginScreen} />
         <Stack.Screen name="OtherPage" component={OtherPage} />
         <Stack.Screen name="Profil" component={Profil} />
         <Stack.Screen name="Edit_profil" component={Edit_profil} />
