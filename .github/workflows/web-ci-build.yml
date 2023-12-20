@@ -1,0 +1,41 @@
+name: Web Test
+
+on:
+  push:
+    branches:
+        - main
+
+jobs:
+  Web:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: cd Web_Client && npm install
+      
+      - name: Run tests
+        run: cd Web_Client && npm start
+        env:
+          CI: true
+  
+  js-formatters:
+    needs: Web
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      - name: Install dependencies
+        run: npm install
+      - name: Lint JavaScript files
+        run: npx prettier --write 'Web_Client/**/*.js'

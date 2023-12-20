@@ -1,0 +1,42 @@
+name: Server Test
+
+on:
+    push:
+      branches:
+          - main
+
+jobs:
+  Server:
+    runs-on: ubuntu-latest
+    container:
+      image: epitechcontent/epitest-docker
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: cd Server && npm install
+      
+      - name: Run tests
+        run: cd Server && node app.js
+  
+  js-formatters:
+    needs: Server
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      - name: Install dependencies
+        run: npm install
+      - name: Lint JavaScript files
+        run: npx prettier --write 'Server/**/*.js'
+      
