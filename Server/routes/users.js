@@ -1,9 +1,8 @@
-var express = require("express")
-var router = express.Router()
+const express = require("express")
+const router = express.Router()
+const {  login, callback } = require('../Services/Discord/index');
 
-/* GET users listing. */
-router.get("/ui", function (req, res, next) {
-  res.send("Users!")
-})
+router.get('/discord/login', login);
+router.get('/discord/callback', callback);
 
 module.exports = router
