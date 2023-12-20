@@ -3,40 +3,24 @@ import { View, TextInput, TouchableOpacity, Text, Alert, StyleSheet, Image } fro
 import User from "./User"
 import Icon from 'react-native-vector-icons/Ionicons';
 
-const LoginScreen = ({ navigation }) => {
+const RegisterScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isEnteringEmail, setIsEnteringEmail] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
-  const handleContinue = async () => {
-    if (isEnteringEmail) {
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (emailRegex.test(email)) {
-        setIsEnteringEmail(false);
-      } else {
-        Alert.alert('Invalid email format');
+  const handleRegister = async () => {
+    const register = await User.register(email, password);
+    try {
+      console.log('registerrr', register)
+      if (register === 200) {
+        console.log('user register')
+        navigation.navigate('AppContentScreen');
+      } else if (register === 400) {
+        Alert.alert('ERROR');
       }
-    } else if (password.trim() === '') {
-      Alert.alert('Empty Password', 'Please enter your password.');
-    } else {
-      const isValidEmail = await User.checkMail(email);
-      try {
-        console.log('isvalidemail', isValidEmail)
-        if (isValidEmail === 200) {
-          const loginResponse = await User.login(email, password);
-          console.log('loginresponse', loginResponse)
-          if (loginResponse === 200) {
-            navigation.navigate('AppContentScreen');
-          }
-        } else if (isValidEmail === 400) {
-          navigation.navigate('RegisterScreen')
-          // Alert.alert('Invalid email', 'The email is incorrect.');
-        }
-      } catch (error) {
-        console.error('Erreur de connexionoooooooooooooooo :', error);
-      }
+    } catch (error) {
+      console.error('Erreur de connexionregister :', error);
     }
   };
 
@@ -51,7 +35,7 @@ const LoginScreen = ({ navigation }) => {
         style={styles.image}
       />
       <Text style={styles.text}>
-        {isEnteringEmail ? "What's your email?" : "Enter your password"}
+        {isEnteringEmail ? "What's your email?" : "Create your password"}
       </Text>
       {isEnteringEmail ? (
         <View>
@@ -78,7 +62,7 @@ const LoginScreen = ({ navigation }) => {
           </TouchableOpacity>
         </View>
       )}
-      <TouchableOpacity style={styles.button} onPress={handleContinue}>
+      <TouchableOpacity style={styles.button} onPress={handleRegister}>
         <Text style={styles.buttonText}>
           {isEnteringEmail ? 'Continue' : 'Sign In'}
         </Text>
@@ -142,4 +126,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoginScreen;
+export default RegisterScreen;
