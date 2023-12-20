@@ -1,4 +1,5 @@
 const { verify } = require('jsonwebtoken');
+const path = require('path');
 
 const about_json = async (req, res) => {
     // Routes to get the about.json file
@@ -8,10 +9,10 @@ const about_json = async (req, res) => {
         if (!isValid) {
             return res.status(401).json({ message: 'Unauthorized' });
         }
-        res.sendFile('about.json', { root: "/server/controllers/about.json" });
+        res.sendFile(path.join(__dirname, 'about.json'));
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: 'Server error', error: error.toString() });
+        res.status(500).json({ message: 'Servers error', error: error.toString() });
     }
 };
 
