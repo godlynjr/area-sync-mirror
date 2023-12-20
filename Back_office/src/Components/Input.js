@@ -1,12 +1,13 @@
 import React from 'react';
 
-const Input = ({ text, style, onSearch }) => {
+const Input = ({ text, style, handleSearchChange }) => {
     return (
         <input
             type="text"
             value={text}
-            style={style}
-            onChange={(event) => onSearch(event.target.value)}
+            className={style}
+            onChange={handleSearchChange}
+            placeholder='Search for...'
         />
     );
 };
