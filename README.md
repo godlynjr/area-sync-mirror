@@ -154,9 +154,9 @@ The primary goal is to develop a modular, scalable, and well-documented system t
   - Document the API endpoints and usage
   - Include design schemes (class diagram, sequence diagram)
 
-[](Assets/architecture.png)
+![](Assets/architecture.png)
 
-[](Assets/diagram.jpeg)
+![](Assets/diagram.jpeg)
 ## Getting Started
 
 ### Prerequisites
