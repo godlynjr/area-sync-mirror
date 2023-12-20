@@ -1,23 +1,35 @@
 version: '3'
 services:
-  nodejs-app:
+  server:
     build: ./Server
     ports:
       - "8080:8080"
     networks:
       - app-network
+    volumes:
+      - shared-volume:/app
 
-  frontend:
+  client_mobile:
+    build: ./Mobile_Client
+    volumes:
+      - shared-volume:/app
+    networks:
+      - app-network
+
+  client_web:
     build: ./Web_Client
     ports:
       - "8081:8081"
     depends_on:
-      - nodejs-app
+      - server
+      - client_mobile
     networks:
       - app-network
+    volumes:
+      - shared-volume:/app/build/outputs/
 
 volumes:
-  mongodb-data:
+  shared-volume:
 
 networks:
   app-network:
