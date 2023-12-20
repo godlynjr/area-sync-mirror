@@ -9,7 +9,7 @@ const about_json = async (req, res) => {
         if (!isValid) {
             return res.status(401).json({ message: 'Unauthorized' });
         }
-        res.sendFile(path.join(__dirname, 'about.json'));
+        res.sendFile('about.json', { root: "/Server/controllers/about.json" });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Servers error', error: error.toString() });
