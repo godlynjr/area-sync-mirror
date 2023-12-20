@@ -21,13 +21,13 @@ const LoginForm = () => {
     e.preventDefault();
     // Add your login logic here
     console.log("Logging in with:", { email, password });
-    User.login(email, password);
+    User.log(email, password);
   };
 
   const signWithGoogle = useGoogleLogin({
     onSuccess: (codeResponse) => {
       setUser(codeResponse);
-  
+      // console.log(codeResponse)
       axios
         .get(`https://www.googleapis.com/oauth2/v1/userinfo`, {
           headers: {
@@ -36,8 +36,7 @@ const LoginForm = () => {
           },
         })
         .then((res) => {
-          console.log(res.data);
-          User.login(res.data.email, res.data.id);
+          User.log(res.data.email, res.data.id);
         })
         .catch((err) => console.log(err));
     },

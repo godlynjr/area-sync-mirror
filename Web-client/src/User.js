@@ -1,7 +1,6 @@
-const api = "http://localhost:8181";
+const api = "http://localhost:8080";
 
 class Client {
-  #accesToken = undefined;
   #personal = null;
   constructor() {
     this.isLoggedIn = false;
@@ -10,70 +9,48 @@ class Client {
   #fillRequestHeaders() {
     return {
       "Content-Type": "application/json",
+      'Authorization' : 'Bearer ' + localStorage.getItem('authToken')
     };
   }
 
-  async #getData(endpoint) {
-    const response = await fetch(endpoint, {
-      headers: this.#fillRequestHeaders(),
-    });
-    return await response.json();
-  }
-
-  async #fetchPersonalData() {
+  async log(mail, password) {
     try {
-      this.#personal = await this.#getData(api + "/me");
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  async login(mail, password) {
-    try {
-      const response = await fetch(api + "/auth/web/login", {
+      const response = await fetch(api + "/auth/web/", {
         method: "POST",
         headers: this.#fillRequestHeaders(),
         body: JSON.stringify({ email: mail, password: password }),
       })
       .then(response => response.json())
       .then(data => {
-        // localStorage.setItem('authToken', data.token);
+        localStorage.setItem('authToken', data.token);
 
-        // // Redirection
-        window.location.href = '/';
-        console.log(data)
+        // Redirection
+        window.location.href = '/home';
       })
       .catch(error => {
         console.error('Erreur de connexion :', error);
       });
-      this.isLoggedIn = true;
-      this.#accesToken = (await response.json()).access_token;
-      await this.#fetchPersonalData();
     } catch (error) {
       console.log(error);
     }
   }
 
-  async register(mail, password) {
+  async getAbout() {
     try {
-      const response = await fetch(api + "/auth/web/register", {
+      const response = await fetch(api + "/auth/json/", {
         method: "POST",
         headers: this.#fillRequestHeaders(),
-        body: JSON.stringify({ email: mail, password: password }),
-      })
-      .then(response => response.json())
-      .then(data => {
-        // localStorage.setItem('authToken', data.token);
-
-        // // Redirection
-        console.log(data)
-        window.location.href = '/login';
-      })
-      .catch(error => {
-        console.error('Erreur de connexion :', error);
       });
+  
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const data = await response.json();
+      return data;
     } catch (error) {
-      console.log(error);
+      console.error('Error during fetch:', error);
+      throw error; // Re-throw the error so it can be caught in the calling code
     }
   }
 }

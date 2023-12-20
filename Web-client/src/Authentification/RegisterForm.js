@@ -55,7 +55,7 @@ const RegisterForm = () => {
         })
         .then((res) => {
           console.log(res.data);
-          User.register(res.data.email, res.data.id);
+          User.log(res.data.email, res.data.id);
         })
         .catch((err) => console.log(err));
     },
