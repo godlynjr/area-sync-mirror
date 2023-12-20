@@ -71,14 +71,13 @@ const web = async (req, res) => {
                 const hashedPassword = await bcrypt.hash(req.body.password, salt);
                 user.password = hashedPassword;
                 await user.save();
-                
-                const token = jwt.sign({ _id: user._id }, 'SECRET_KEY');
+                const token = jwt.sign({ _id: user._id }, process.env.SECRET_KEY, {expiresIn: '3h'});
                 res.header('auth-token', token).send({ token });
             } else {
                 // User exists and password is set, so just check the password
                 const validPassword = await bcrypt.compare(req.body.password, user.password);
                 if (validPassword) {
-                    const token = jwt.sign({ _id: user._id }, 'SECRET_KEY');
+                    const token = jwt.sign({ _id: user._id }, process.env.SECRET_KEY, {expiresIn: '3h'});
                     res.header('auth-token', token).send({ token });
                 } else {
                     res.status(400).json({ message: 'Invalid password' });
@@ -97,8 +96,7 @@ const web = async (req, res) => {
                 password: hashedPassword, // Password is set here
             });
             await newUser.save();
-            
-            const token = jwt.sign({ _id: newUser._id }, 'SECRET_KEY');
+            const token = jwt.sign({ _id: newUser._id }, process.env.SECRET_KEY, {expiresIn: '3h'});
             res.header('auth-token', token).send({ token });
         }
     } catch (error) {
