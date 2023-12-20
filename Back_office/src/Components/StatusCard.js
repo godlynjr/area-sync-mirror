@@ -2,7 +2,7 @@ import React from "react";
 
 const StatusCard = ({ color, text, Icon, Numbers }) => {
     return (
-        <div className="h-24 bg-white border border-gray-300 rounded-lg p-4 flex items-center justify-between hover:shadow-lg transform hover:scale-[103%] transition duration-300 ease-out">
+        <div className="h-24 bg-white border border-gray-400 rounded-lg p-4 flex items-center justify-between hover:shadow-lg transform hover:scale-[103%] transition duration-300 ease-out">
           <div>
             <h2 className={color}>
               {text}
