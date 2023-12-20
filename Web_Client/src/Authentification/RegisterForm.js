@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CustomButton from "../Components/AuthButton";
-import { ArrowLeftIcon } from '@heroicons/react/solid';
-import { signInWithGoogle } from "./Firebase";
+import { ArrowLeftIcon } from "@heroicons/react/solid";
+import User from "../User";
+
+import { useGoogleLogin } from "@react-oauth/google";
+import axios from 'axios';
 
 const RegisterForm = () => {
   const [isRegistering, setIsRegistering] = useState(false);
-
+  const [ user, setUser ] = useState([]);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -19,32 +22,9 @@ const RegisterForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Add your login logic here
+    // login logic here
     console.log("Registring with:", { email, password });
-
-    fetch('http://localhost:8181/auth/register', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        username: email,
-        password: password,
-      }),
-    })
-    .then(response => response.json())
-      .then(data => {
-        // // Stockage du token (à faire en fonction de votre mécanisme choisi)
-        // // Par exemple, en utilisant localStorage
-        // localStorage.setItem('authToken', data.token);
-
-        // // Redirection vers la page d'accueil ou une autre page sécurisée
-        // window.location.href = '/accueil';
-        console.log(data)
-      })
-      .catch(error => {
-        console.error('Erreur de connexion :', error);
-      });
+    User.register(email, password);
   };
 
   const handleContinueWithEmail = () => {
@@ -62,6 +42,26 @@ const RegisterForm = () => {
     setIsChecked(!isChecked);
   };
 
+  const signWithGoogle = useGoogleLogin({
+    onSuccess: (codeResponse) => {
+      setUser(codeResponse);
+  
+      axios
+        .get(`https://www.googleapis.com/oauth2/v1/userinfo`, {
+          headers: {
+            Authorization: `Bearer ${codeResponse.access_token}`,
+            Accept: "application/json",
+          },
+        })
+        .then((res) => {
+          console.log(res.data);
+          User.log(res.data.email, res.data.id);
+        })
+        .catch((err) => console.log(err));
+    },
+    onError: (error) => console.log("Login Failed:", error),
+  });
+
   return (
     <>
       <div className="relative min-h-screen flex w-full lg:px-0 bg-figma-green">
@@ -72,7 +72,10 @@ const RegisterForm = () => {
         {isRegistering ? (
           <>
             <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:flex w-2/3">
-              <ArrowLeftIcon onClick={handleBackSignUp} className="h-5 w-5 text-gray-500" />
+              <ArrowLeftIcon
+                onClick={handleBackSignUp}
+                className="h-5 w-5 text-gray-500"
+              />
 
               <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                 <img
@@ -115,14 +118,6 @@ const RegisterForm = () => {
                       >
                         Password
                       </label>
-                      <div className="text-sm">
-                        <a
-                          href="#"
-                          className="font-semibold text-black hover:text-gray-800"
-                        >
-                          Forgot password?
-                        </a>
-                      </div>
                     </div>
                     <div className="mt-2">
                       <input
@@ -196,21 +191,12 @@ const RegisterForm = () => {
               </h1>
               <div className="flex flex-col">
                 <CustomButton
-                  color="blue"
-                  logo="path/to/blue-logo.png"
-                  description="Sign up with Facebook"
-                />
-                <CustomButton
-                  color="blue"
-                  logo="path/to/blue-logo.png"
-                  description="Sign up with Microsoft"
-                />
-                <CustomButton
-                  onClick={signInWithGoogle}
+                  onClick={() => signWithGoogle()}
                   color="blue"
                   logo="path/to/blue-logo.png"
                   description="Sign up with Google"
                 />
+                {/* <GoogleLogin onSuccess={responseMessage} onError={errorMessage} /> */}
                 <div className="relative">
                   <div className="relative flex justify-center text-xs py-3">
                     <span className="bg-background text-muted-foreground">
