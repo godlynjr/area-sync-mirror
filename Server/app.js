@@ -12,7 +12,9 @@ var indexRouter = require("./routes/index")
 var usersRouter = require("./routes/users")
 var authRouter = require("./routes/auth")
 
+// Swagger utils
 var swaggerDocs = require("./swagger")
+const swaggerUi = require("swagger-ui-express")
 
 var app = express()
 
