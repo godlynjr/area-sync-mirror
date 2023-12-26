@@ -23,7 +23,7 @@ class Client {
       .then(response => response.json())
       .then(data => {
         localStorage.setItem('authToken', data.token);
-
+        this.isLoggedIn = true;
         // Redirection
         window.location.href = '/home';
       })
