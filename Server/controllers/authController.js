@@ -136,6 +136,6 @@ const authenticateGoogleCallback = async (req, res) => {
   // Utiliser l'état pour rediriger vers la page d'origine
   const state = jwt.verify(req.query.state, process.env.SECRET_KEY);
   res.redirect(state.redirectURL || '/dashboard');
-};
+};2
 
 module.exports = { check_mail, login, web, authenticateGoogle, authenticateGoogleCallback };
