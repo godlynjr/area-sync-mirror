@@ -3,16 +3,35 @@ import { View, ScrollView, StyleSheet, Text, Dimensions, Image, TouchableOpacity
 import SearchBar from './SearchBar';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { widthPercentageToDP, heightPercentageToDP, listenOrientationChange, moderateScale } from 'react-native-responsive-screen';
+import { useNavigation } from '@react-navigation/native';
 
 const { width, height } = Dimensions.get('window');
 const guidelineWidth = 375; // Width of the device on which the design is based
-
 const scale = size => (width / guidelineWidth) * size;
 
-const Services = ({ navigation }) => {
+const Services = ({}) => {
+    const navigation = useNavigation();
     const [selectedValue, setSelectedValue] = useState('');
-    const handlePress = async () => {
-        navigation.navigate('github');
+    const handleGithub = async () => {
+        navigation.navigate('Service/Github');
+    };
+    const handleGoogle = async () => {
+        navigation.navigate('Service/Google');
+    };
+    const handleNotion = async () => {
+        navigation.navigate('Service/Notion');
+    };
+    const handleCalendar = async () => {
+        navigation.navigate('Service/Calendar');
+    };
+    const handleTally = async () => {
+        navigation.navigate('Service/Tally');
+    };
+    const handleSpotify = async () => {
+        navigation.navigate('Service/Spotify');
+    };
+    const handleDiscord = async () => {
+        navigation.navigate('Service/Discord');
     };
     return (
         <View style={styles.container}>
@@ -32,38 +51,50 @@ const Services = ({ navigation }) => {
             />
             <View style={styles.container1}>
                 <ScrollView style={styles.box}>
-                    <TouchableOpacity onPress={handlePress}>
+                    <TouchableOpacity onPress={handleGithub}>
                         <Image
                             source={require('./Assets/github.png')}
                             style={styles.image}
                         />
                     </TouchableOpacity>
-                    <Image
-                        source={require('./Assets/google.png')}
-                        style={styles.image1}
-                    />
-                    <Image
-                        source={require('./Assets/notion.png')}
-                        style={styles.image1}
-                    />
-                    <Image
-                        source={require('./Assets/calendar.png')}
-                        style={styles.image4}
-                    />
+                    <TouchableOpacity onPress={handleGoogle}>
+                        <Image
+                            source={require('./Assets/google.png')}
+                            style={styles.image1}
+                        />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={handleNotion}>
+                        <Image
+                            source={require('./Assets/notion.png')}
+                            style={styles.image1}
+                        />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={handleCalendar}>
+                        <Image
+                            source={require('./Assets/calendar.png')}
+                            style={styles.image4}
+                        />
+                    </TouchableOpacity>
                 </ScrollView>
                 <ScrollView style={styles.box1}>
-                    <Image
-                        source={require('./Assets/spotify1.jpeg')}
-                        style={styles.image2}
-                    />
-                    <Image
-                        source={require('./Assets/tally.png')}
-                        style={styles.image3}
-                    />
-                    <Image
-                        source={require('./Assets/discord.png')}
-                        style={styles.image1}
-                    />
+                    <TouchableOpacity onPress={handleSpotify}>
+                        <Image
+                            source={require('./Assets/spotify1.jpeg')}
+                            style={styles.image2}
+                        />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={handleTally}>
+                        <Image
+                            source={require('./Assets/tally.png')}
+                            style={styles.image3}
+                        />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={handleDiscord}>
+                        <Image
+                            source={require('./Assets/discord.png')}
+                            style={styles.image1}
+                        />
+                    </TouchableOpacity>
                 </ScrollView>
             </View>
         </View>

@@ -1,8 +1,8 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-const discord = ({ navigation }) =>  {
+const Google = ({ navigation }) =>  {
   const iconSize = 30; // Taille de l'icône en pixels
   return (
     <View>
@@ -11,4 +11,4 @@ const discord = ({ navigation }) =>  {
   );
 };
 
-export default discord;
+export default Google;

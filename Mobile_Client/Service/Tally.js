@@ -1,7 +1,8 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View , Text} from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 
-const spotify = ({ navigation }) =>  {
+const Tally = ({ navigation }) =>  {
   const iconSize = 30; // Taille de l'icône en pixels
   return (
     <View>
@@ -10,4 +11,4 @@ const spotify = ({ navigation }) =>  {
   );
 };
 
-export default spotify;
+export default Tally;

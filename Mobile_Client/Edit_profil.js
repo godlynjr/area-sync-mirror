@@ -1,16 +1,14 @@
-
-import React, { useState, } from 'react';
+import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
-import { FontAwesome } from '@expo/vector-icons';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import { Ionicons } from '@expo/vector-icons';
 
-const Edit_profil = () => {
+const Edit_profil = ({ navigation }) => { // Ajout de la prop "navigation"
     const user = {
         name: 'Maman Jacqueline',
         age: 25,
         email: 'johndoe@example.com',
-        gender: 'female'? 'female' : 'male',
+        gender: 'female' ? 'female' : 'male',
         password: 'password' // 'female' pour le genre féminin
     };
     const [name, setName] = useState(user.name);
@@ -18,7 +16,6 @@ const Edit_profil = () => {
     const [displayName, setDisplayName] = useState(user.name);
     const handleSave = () => {
         const updatedUser = { ...user, name, email };
-        // Effectuez ici la logique pour mettre à jour les informations de l'utilisateur
         setDisplayName(name); // Met à jour le nom affiché avec la nouvelle valeur
         console.log(updatedUser);
     };
@@ -28,6 +25,9 @@ const Edit_profil = () => {
             <View style={styles.content}>
                 <View style={styles.profileInfo}>
                     <View style={styles.avatarContainer}>
+                        <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+                            <Ionicons name="arrow-back" size={30} color="black" />
+                        </TouchableOpacity>
                         <FontAwesome5
                             name={user.gender === 'female' ? 'female' : 'male'}
                             size={80}
@@ -64,6 +64,11 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
+    },
+    backButton: {
+        position: 'absolute',
+        top: -10,
+        left: -100,
     },
     rowContainer: {
         flexDirection: 'row',

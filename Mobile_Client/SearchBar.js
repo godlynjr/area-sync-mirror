@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, TextInput, Dimensions} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import { Ionicons } from '@expo/vector-icons';
 import { widthPercentageToDP, heightPercentageToDP, listenOrientationChange, removeOrientationListener } from 'react-native-responsive-screen';
 
 const MySearch = () => {
@@ -13,7 +13,7 @@ const MySearch = () => {
   return (
     <View style={styles.container}>
       <View style={styles.searchContainer}>
-        <Icon name="search" size={24} color="black" style={styles.icon} />
+        <Ionicons name="search" size={24} color="black" style={styles.icon} />
         <TextInput
           style={styles.input}
           placeholder="Search..."
