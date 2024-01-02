@@ -123,19 +123,19 @@ const authenticateGoogle = (req, res) => {
 };
 
 const authenticateGoogleCallback = async (req, res) => {
-  const { code } = req.query;
-  const { tokens } = await OAuth2Client.getToken(code);
-  OAuth2Client.setCredentials(tokens);
+//   const { code } = req.query;
+//   const { tokens } = await OAuth2Client.getToken(code);
+//   OAuth2Client.setCredentials(tokens);
 
-  // Enregistrer le jeton d'accès dans la base de données pour cet utilisateur
-  const user = await User.findById(req.user._id);
-  user.googleCalendarAccessToken = tokens.access_token;
-  user.googleCalendarRefreshToken = tokens.refresh_token;
-  await user.save();
+//   // Enregistrer le jeton d'accès dans la base de données pour cet utilisateur
+//   const user = await User.findById(req.user._id);
+//   user.googleCalendarAccessToken = tokens.access_token;
+//   user.googleCalendarRefreshToken = tokens.refresh_token;
+//   await user.save();
 
-  // Utiliser l'état pour rediriger vers la page d'origine
-  const state = jwt.verify(req.query.state, process.env.SECRET_KEY);
-  res.redirect(state.redirectURL || '/dashboard');
-};2
+//   // Utiliser l'état pour rediriger vers la page d'origine
+//   const state = jwt.verify(req.query.state, process.env.SECRET_KEY);
+//   res.redirect(state.redirectURL || '/dashboard');
+};
 
 module.exports = { check_mail, login, web, authenticateGoogle, authenticateGoogleCallback };
