@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { View, TouchableOpacity, Text, StyleSheet, Picker} from 'react-native';
+import { View, TouchableOpacity, Text, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Services from './Services';
 import Profil from './Profil';
 
 const OtherPage = () => {
   const [activeTab, setActiveTab] = useState('Home');
-  const [selectedValue, setSelectedValue] = useState('');
+  // const [selectedValue, setSelectedValue] = useState('');
 
   const handleTabPress = (tabName) => {
     setActiveTab(tabName);

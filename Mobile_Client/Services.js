@@ -1,11 +1,19 @@
 import React, { useState } from 'react';
-import { View, ScrollView, StyleSheet, Text, Dimensions, Image } from 'react-native';
+import { View, ScrollView, StyleSheet, Text, Dimensions, Image, TouchableOpacity } from 'react-native';
 import SearchBar from './SearchBar';
 import DropDownPicker from 'react-native-dropdown-picker';
+import { widthPercentageToDP, heightPercentageToDP, listenOrientationChange, moderateScale } from 'react-native-responsive-screen';
+
+const { width, height } = Dimensions.get('window');
+const guidelineWidth = 375; // Width of the device on which the design is based
+
+const scale = size => (width / guidelineWidth) * size;
 
 const Services = ({ navigation }) => {
     const [selectedValue, setSelectedValue] = useState('');
-
+    const handlePress = async () => {
+        navigation.navigate('github');
+    };
     return (
         <View style={styles.container}>
             <Text style={styles.Services}>Services</Text>
@@ -24,32 +32,43 @@ const Services = ({ navigation }) => {
             />
             <View style={styles.container1}>
                 <ScrollView style={styles.box}>
-                    <Image
-                        source={require('./Assets/github.png')}
-                        style={styles.image}
-                    />
+                    <TouchableOpacity onPress={handlePress}>
+                        <Image
+                            source={require('./Assets/github.png')}
+                            style={styles.image}
+                        />
+                    </TouchableOpacity>
                     <Image
                         source={require('./Assets/google.png')}
-                        style={styles.image}
+                        style={styles.image1}
+                    />
+                    <Image
+                        source={require('./Assets/notion.png')}
+                        style={styles.image1}
+                    />
+                    <Image
+                        source={require('./Assets/calendar.png')}
+                        style={styles.image4}
                     />
                 </ScrollView>
                 <ScrollView style={styles.box1}>
                     <Image
                         source={require('./Assets/spotify1.jpeg')}
-                        style={styles.image}
+                        style={styles.image2}
                     />
                     <Image
                         source={require('./Assets/tally.png')}
-                        style={styles.image}
+                        style={styles.image3}
+                    />
+                    <Image
+                        source={require('./Assets/discord.png')}
+                        style={styles.image1}
                     />
                 </ScrollView>
             </View>
         </View>
     );
 };
-
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
     container: {
@@ -58,52 +77,88 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     image: {
-        marginTop: 2,
+        marginTop: scale(10),
+        marginLeft: scale(10),
         width: 150,
         height: 150,
         borderRadius: 20,
     },
+    image1: {
+        marginTop: scale(10),
+        marginLeft: scale(10),
+        width: 150,
+        height: 150,
+        borderRadius: 20,
+    },
+    image2: {
+        marginTop: scale(10),
+        marginLeft: scale(10),
+        width: 150,
+        height: 150,
+        borderRadius: 20,
+    },
+    image3: {
+        marginTop: scale(10),
+        marginLeft: scale(10),
+        width: 150,
+        height: 150,
+        borderRadius: 20,
+    },
+    image4: {
+        marginTop: scale(10),
+        marginLeft: scale(10),
+        width: 150,
+        height: 150,
+        borderRadius: 25,
+    },
     container1: {
+        marginTop: scale(0),
         flexDirection: 'row',
+        width: scale(350),
+        height: scale(360),
+        borderRadius: 20,
         justifyContent: 'center',
         alignItems: 'center',
-        marginHorizontal: windowWidth * 0.05,
-        marginTop: windowHeight * 0.05,
     },
     box: {
         flex: 1,
-        height: windowHeight * 0.6,
-        backgroundColor: '#DFE1E7',
+        marginLeft: scale(1),
+        height: heightPercentageToDP('60'),
+        width: widthPercentageToDP('30'),
+        backgroundColor: 'green',
         borderRadius: 20,
-        marginHorizontal: windowWidth * 0.02,
+        backgroundColor: '#DFE1E7',
     },
     box1: {
         flex: 1,
-        height: windowHeight * 0.6,
+        marginLeft: scale(8),
+        height: heightPercentageToDP('60'),
+        width: widthPercentageToDP('30'),
         backgroundColor: '#DFE1E7',
         borderRadius: 20,
-        marginHorizontal: windowWidth * 0.02,
     },
+
     pickerContainer: {
-        height: windowHeight * 0.04,
-        width: windowWidth * 0.8,
+        height: heightPercentageToDP('30'),
+        width: widthPercentageToDP('30'),
     },
     Services: {
-        marginTop: windowHeight * 0.05,
+        marginTop: scale(30),
+        padding: scale(40),
         fontSize: 20,
         fontWeight: 'bold',
         textAlign: 'center',
-        marginLeft: -240,
+        marginLeft: widthPercentageToDP('-68'),
     },
     pickerStyle: {
-        marginTop: -(windowHeight * 0.01),
+        marginTop: scale(60),
         backgroundColor: '#DFE1E7',
         borderWidth: 1,
-        width: windowWidth * 0.88,
-        height: windowHeight * 0.04,
+        width: widthPercentageToDP('88'),
+        height: 50,
         borderColor: '#DFE1E7',
-        marginLeft: -15,
-        borderRadius: 10,
+        marginLeft: scale(-110),
+        borderRadius: 20,
     },
     dropDownStyle: {
         backgroundColor: '#fafafa',

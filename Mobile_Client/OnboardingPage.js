@@ -1,25 +1,29 @@
 import React, { useState, } from 'react';
 import { View, Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { widthPercentageToDP, heightPercentageToDP, listenOrientationChange, removeOrientationListener } from 'react-native-responsive-screen';
 
 const OnboardingPage = ({ navigation }) => {
   const handlePress = () => {
     navigation.navigate('ConnexionPage');
   };
   return (
-      <View style={styles.container}>
-        <Image
-          source={require('./Assets/area_logo.jpeg')}
-          style={styles.image}
-        />
-        <Text style={styles.texts}>
-          The NAS that does it all. Connect, automate, and sync your apps and data with ease.
-        </Text>
-        <TouchableOpacity style={styles.button} onPress={handlePress}>
-          <Text style={styles.buttonText}>Get Started</Text>
-        </TouchableOpacity>
-      </View>
+    <View style={styles.container}>
+      <Image
+        source={require('./Assets/area_logo.jpeg')}
+        style={styles.image}
+      />
+      <Text style={styles.texts}>
+        The NAS that does it all. Connect, automate, and sync your apps and data with ease.
+      </Text>
+      <TouchableOpacity style={styles.button} onPress={handlePress}>
+        <Text style={styles.buttonText}>Get Started</Text>
+      </TouchableOpacity>
+    </View>
   );
 };
+
+const responsiveWidth = widthPercentageToDP('50%'); // Get responsive width
+const responsiveHeight = heightPercentageToDP('30%'); // Get responsive height
 
 const styles = StyleSheet.create({
   container: {
@@ -28,28 +32,29 @@ const styles = StyleSheet.create({
     marginTop: 130,
   },
   image: {
-    marginTop: 10,
-    width: 350,
-    height: 350,
+    top: widthPercentageToDP('-20'),
+    width: widthPercentageToDP('80%'),
+    height: heightPercentageToDP('50%'),
   },
   texts: {
-    marginTop: -90,
+    top: widthPercentageToDP('-40'),
+    marginBottom: heightPercentageToDP('3'),
     fontSize: 15,
     textAlign: 'center',
   },
   button: {
-    marginTop: 60,
+    top: widthPercentageToDP('-20'),
     backgroundColor: 'black',
     borderRadius: 20,
-    padding: 10,
-    width: 300,
-    height: 50,
+    padding: widthPercentageToDP('1'),
+    width: widthPercentageToDP('80'),
+    height: heightPercentageToDP('5'),
   },
   buttonText: {
-    marginTop: 5,
+    top: widthPercentageToDP('2'),
     justifyContent: 'center',
     alignItems: 'center',
-    marginLeft: 90,
+    textAlign: 'center',    
     color: 'white',
     fontWeight: 'bold',
   },

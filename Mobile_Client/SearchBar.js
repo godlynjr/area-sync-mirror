@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, TextInput, Dimensions} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { widthPercentageToDP, heightPercentageToDP, listenOrientationChange, removeOrientationListener } from 'react-native-responsive-screen';
 
 const MySearch = () => {
   const [searchText, setSearchText] = useState('');
@@ -25,8 +26,8 @@ const MySearch = () => {
   );
 };
 
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
+const responsiveWidth = widthPercentageToDP('50%'); // Get responsive width
+const responsiveHeight = heightPercentageToDP('30%'); // Get responsive height
 
 const styles = StyleSheet.create({
   container: {
@@ -35,17 +36,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   searchContainer: {
-    marginTop: 0,
+    // marginTop: heightPercentageToDP('0'),
     marginLeft: -1,
     position: 'relative',
     flexDirection: 'row',
     borderWidth: 1,
     borderColor: "#DFE1E7",
-    // width: 350,
-    width: windowWidth * 0.88,
-        // height: windowHeight * 0.04,
+    width: widthPercentageToDP('90'),
     height: 50,
-    borderRadius: 50,
+    borderRadius: 20,
     color: '#DFE1E7',
     paddingHorizontal: 10,
     backgroundColor: '#DFE1E7'

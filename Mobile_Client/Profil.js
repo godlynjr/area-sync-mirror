@@ -3,9 +3,12 @@ import React, { useState, } from 'react';
 import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import Icon from 'react-native-vector-icons/Ionicons';
-import edit from './Edit_profil'
 import { useNavigation } from '@react-navigation/native'; // Importer useNavigation
-import Edit from './Edit_profil'
+import { widthPercentageToDP, heightPercentageToDP, listenOrientationChange, removeOrientationListener } from 'react-native-responsive-screen';
+
+const { width, height } = Dimensions.get('window');
+const guidelineWidth = 375; // Width of the device on which the design is based
+const scale = size => (width / guidelineWidth) * size;
 
 const Profil = () => {
   const navigation = useNavigation(); // Obtenir l'objet navigation
@@ -16,6 +19,7 @@ const Profil = () => {
     email: 'johndoe@example.com',
     gender: 'female',
   };
+  const iconSize = 30;
 
   const PressEdit = () => {
     navigation.navigate('Edit_profil');
@@ -38,7 +42,7 @@ const Profil = () => {
             <TouchableOpacity onPress={PressEdit}>
               <View style={styles.rowContainer}>
                 <Text style={styles.menuText1}>Edit profile</Text>
-                <Icon name="right-outline" size={24} color='white' marginLeft={150} />
+                <Icon name="pencil" size={20} color='white' marginLeft={150}/>
               </View>
             </TouchableOpacity>
 
@@ -47,7 +51,7 @@ const Profil = () => {
             <TouchableOpacity>
               <View style={styles.rowContainer}>
                 <Text style={styles.menuText2}> Change Password</Text>
-                <Icon name="navigate-next" size={24} color='white' marginLeft={85} />
+                <Icon name="key" size={20} color='white' marginLeft={85} />
               </View>
             </TouchableOpacity>
 
@@ -56,9 +60,8 @@ const Profil = () => {
             <TouchableOpacity>
               <View style={styles.rowContainer}>
                 <Text style={styles.menuText3}> Informations</Text>
-                <Icon name="navigate-next" size={24} color='white' marginLeft={130} />
+                <Icon name="information-circle" size={20} color='white' marginLeft={129}/>
               </View>
-
             </TouchableOpacity>
           </View>
 
@@ -67,7 +70,7 @@ const Profil = () => {
             <TouchableOpacity>
               <View style={styles.rowContainer}>
                 <Text style={styles.menuText11}> Notifications</Text>
-                <Icon name="navigate-next" size={24} color='white' marginLeft={129} />
+                <Icon name="notifications" size={20} color='white' marginLeft={135} marginTop={20} />
               </View>
             </TouchableOpacity>
 
@@ -76,7 +79,7 @@ const Profil = () => {
             <TouchableOpacity>
               <View style={styles.rowContainer}>
                 <Text style={styles.menuText2}> Log out</Text>
-                <Icon name="navigate-next" size={24} color='white' marginLeft={172} />
+                <Icon name="log-out" size={20} color='white' marginLeft={172} marginTop={10}/>
               </View>
             </TouchableOpacity>
 
@@ -85,7 +88,7 @@ const Profil = () => {
             <TouchableOpacity>
               <View style={styles.rowContainer}>
                 <Text style={styles.menuText3}> Delete Account</Text>
-                <Icon name="arrowdown" size={24} color='white' marginLeft={108} />
+                <Icon name="trash" size={20} color='white' marginLeft={108} marginTop={10} />
               </View>
             </TouchableOpacity>
 
@@ -94,7 +97,7 @@ const Profil = () => {
             <TouchableOpacity>
               <View style={styles.rowContainer}>
                 <Text style={styles.menuText3}> Help center</Text>
-                <Icon name="navigate-next" size={24} color='white' marginLeft={138} />
+                <Icon name="help-circle" size={20} color='white' marginLeft={138} marginTop={10}/>
               </View>
             </TouchableOpacity>
           </View>
@@ -103,6 +106,9 @@ const Profil = () => {
     </View>
   );
 };
+
+const responsiveWidth = widthPercentageToDP('50%'); // Get responsive width
+const responsiveHeight = heightPercentageToDP('30%'); // Get responsive height
 
 const styles = StyleSheet.create({
   container: {
@@ -123,7 +129,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 20,
     backgroundColor: '#DFE1E7',
-    width: 380,
+    width: 5000,
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: -40,
@@ -166,8 +172,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     backgroundColor: '#2D2D2D',
     borderRadius: 25,
-    width: 300,
-    height: 220,
+    width: widthPercentageToDP('80%'),
+    height: widthPercentageToDP('55%'),
   },
   line: {
     marginTop: 15,
