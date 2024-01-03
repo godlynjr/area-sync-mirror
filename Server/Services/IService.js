@@ -15,40 +15,40 @@ class IService
       throw new Error('Method not implemented');
     }
   
-    // Optional methods
+    // Optional M*ethods
 
     async createNotification(message)
     {
-        // Default implementation
+        // nothing
     }
     async createEventInCalendar(eventDetails)
     {
-      // Default implementation
+      // nothing
     }
   
     async createEntryInTally(entryDetails)
     {
-      // Default implementation
+      // nothing
     }
   
     async closeGithubIssue(issueDetails)
     {
-      // Default implementation
+      // nothing
     }
   
     async createPageInNotion(pageDetails)
     {
-      // Default implementation
+      // nothing
     }
   
     async addEventToGoogleCalendar(calendarEvent)
     {
-      // Default implementation
+      // nothing
     }
   
     async updateGithubIssue(issueDetails)
     {
-      // Default implementation
+      // nothing
     }
 }
 
