@@ -1,6 +1,7 @@
 const { Client, GatewayIntentBits } = require('discord.js');
 const config = require("./config.json");
 const fetch = require('node-fetch');
+const DiscordUser = require('../../models/DiscordUser');
 
 const client = new Client({
     intents: [
@@ -26,7 +27,7 @@ const callback = async (req, res) => {
         client_id: process.env.DISCORD_CLIENT_ID,
         client_secret: process.env.DISCORD_CLIENT_SECRET,
         grant_type: 'authorization_code',
-        redirect_uri: 'http://localhost:8080/users/discord/callback',
+        redirect_uri: process.env.DISCORD_REDIRECT_URI,
         code: code,
         scope: 'identify guilds',
     };
@@ -49,6 +50,21 @@ const callback = async (req, res) => {
     });
     let userJson = await userResponse.json();
     console.log(userJson); // Affiche les informations de l'utilisateur dans la console
+
+    const user = await DiscordUser.findOne({ discordId: userJson.id });
+    if (user) {
+        user.accessToken = json.access_token;
+        user.refreshToken = json.refresh_token;
+        await user.save();
+    } else {
+        const newUser = new DiscordUser({
+            discordId: userJson.id,
+            username: userJson.username,
+            accessToken: json.access_token,
+            refreshToken: json.refresh_token,
+        });
+        await newUser.save();
+    }
 
     // Renvoie les informations en réponse à la requête de rappel
     res.json({

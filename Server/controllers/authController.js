@@ -9,7 +9,6 @@ const OAuth2Client = new google.auth.OAuth2(
   process.env.REDIRECT_URI
 );
 
-
 const check_mail = async (req, res) => {
     // Routes to check if the user exists
     try {
