@@ -10,6 +10,7 @@ const logger = require("morgan");
 const mongoose = require("mongoose");
 const port = process.env.PORT || 8080;
 const cors = require("cors");
+const {  about_json } = require('./controllers/dataInfo');
 
 // Importez votre modèle User
 const User = require("./models/userModel");
@@ -121,6 +122,7 @@ app.use(passport.session());
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/auth", authRouter);
+app.get('/about.json', about_json);
 
 // Catch 404 and forward to error handler
 app.use(function (req, res, next) {
