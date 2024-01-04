@@ -9,7 +9,6 @@ const OAuth2Client = new google.auth.OAuth2(
   process.env.REDIRECT_URI
 );
 
-
 const check_mail = async (req, res) => {
     // Routes to check if the user exists
     try {
@@ -46,7 +45,6 @@ const login = async (req, res) => {
                 const hashedPassword = await bcrypt.hash(req.body.password, salt);
                 user.password = hashedPassword;
                 await user.save();
-                
                 const token = jwt.sign({ _id: user._id }, process.env.SECRET_KEY, {expiresIn: '3h'});
                 res.header('auth-token', token).send({ token });
             } else {
@@ -136,6 +134,6 @@ const authenticateGoogleCallback = async (req, res) => {
   // Utiliser l'état pour rediriger vers la page d'origine
   const state = jwt.verify(req.query.state, process.env.SECRET_KEY);
   res.redirect(state.redirectURL || '/dashboard');
-};
+};2
 
 module.exports = { check_mail, login, web, authenticateGoogle, authenticateGoogleCallback };

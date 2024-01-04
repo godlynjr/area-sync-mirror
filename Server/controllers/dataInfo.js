@@ -1,4 +1,4 @@
-const { verify } = require('jsonwebtoken');
+const fs = require('fs');
 const path = require('path');
 
 const about_json = async (req, res) => {
@@ -9,7 +9,21 @@ const about_json = async (req, res) => {
         if (!isValid) {
             return res.status(401).json({ message: 'Unauthorized' });
         }
-        res.sendFile('about.json', { root: "/Server/controllers/about.json" });
+        // Lire les informations sur les services à partir du fichier
+        const servicesData = JSON.parse(fs.readFileSync(path.join(__dirname, 'services.json'), 'utf8'));
+
+        // Générer les données dynamiquement
+        let aboutData = {
+            "client": {
+                "host": req.ip
+            },
+            "server": {
+                "current_time": Date.now(),
+                "services": servicesData.services
+            }
+        };
+
+        res.json(aboutData);
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Servers error', error: error.toString() });

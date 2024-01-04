@@ -3,8 +3,8 @@ const api = "http://localhost:8080";
 class Data {
     #accesToken = undefined;
 
-    constructor() {
-    }
+    // constructor() {
+    // }
 
     #fillRequestHeaders(Format)
     {
@@ -17,15 +17,14 @@ class Data {
 
     async login(mail, password) {
         try {
-          const response = await fetch(api + "/loginn", {
+          const response = await fetch(api + "/login", {
             method: "POST",
-            headers: this.#fillRequestHeaders(),
+            headers: this.#fillRequestHeaders("application/json"),
             body: JSON.stringify({ email: mail, password: password }),
           })
           .then(response => response.json())
           .then(data => {
             localStorage.setItem('authToken', data.token);
-    
             // Redirection
             window.location.href = '/Dashboard';
           })
@@ -49,5 +48,5 @@ class Data {
     // Ajoutez d'autres méthodes pour gérer d'autres actions ici
 }
 
-const Infos = new Data;
+const Infos = new Data();
 export default Infos;

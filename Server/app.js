@@ -1,78 +1,3 @@
-// require("dotenv").config()
-// var createError = require("http-errors")
-// var express = require("express")
-// var path = require("path")
-// const passport = require('passport');
-// var cookieParser = require("cookie-parser")
-// const session = require('express-session');
-// const bodyParser = require('body-parser');
-// var logger = require("morgan")
-// const mongoose = require("mongoose")
-// const port = process.env.PORT || 8080
-// const cors = require("cors")
-
-// var indexRouter = require("./routes/index")
-// var usersRouter = require("./routes/users")
-// var authRouter = require("./routes/auth")
-
-// Swagger utils
-var swaggerDocs = require("./swagger")
-const swaggerUi = require("swagger-ui-express")
-
-var app = express()
-// Require the router modules for each endpoint
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
-const authRouter = require('./routes/auth');
-
-// var app = express()
-
-// app.use(cors())
-// app.use(express.json());
-
-
-// // view engine setup
-// app.set("views", path.join(__dirname, "views"))
-// app.set("view engine", "jade")
-
-// app.use(logger("dev"))
-// app.use(express.json())
-// app.use(express.urlencoded({ extended: false }))
-// app.use(cookieParser())
-// app.use(express.static(path.join(__dirname, "public")))
-
-// mongoose.connect(process.env.MONGO_URL, {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true,
-// })
-
-// app.use("/", indexRouter)
-// app.use("/users", usersRouter)
-// app.use("/auth", authRouter)
-
-// // catch 404 and forward to error handler
-// app.use(function (req, res, next) {
-//   next(createError(404))
-// })
-
-// // error handler
-// app.use(function (err, req, res, next) {
-//   // set locals, only providing error in development
-//   res.locals.message = err.message
-//   res.locals.error = req.app.get("env") === "development" ? err : {}
-
-//   // render the error page
-//   res.status(err.status || 500)
-//   res.render("error")
-// })
-
-// app.listen(port, () => {
-//   console.log(`Server is running on port ${port}`)
-// })
-
-// module.exports = app
-
-
 require("dotenv").config();
 const createError = require("http-errors");
 const express = require("express");
@@ -85,6 +10,8 @@ const logger = require("morgan");
 const mongoose = require("mongoose");
 const port = process.env.PORT || 8080;
 const cors = require("cors");
+const { about_json } = require('./controllers/dataInfo');
+const { createSuperAdmin } = require('./BackOffice/BackOfAuth')
 
 // Importez votre modèle User
 const User = require("./models/userModel");
@@ -95,11 +22,16 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 var authRouter = require("./routes/auth");
+var backRouter = require("./routes/backof");
 
 var app = express();
 
 app.use(cors());
 app.use(express.json());
+
+// Swagger utils
+var swaggerDocs = require("./swagger")
+const swaggerUi = require("swagger-ui-express")
 
 app.use(logger("dev"))
 app.use(express.json())
@@ -123,12 +55,28 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-
 // Connect to the MongoDB database using the MONGO_URL environment variable
-mongoose.connect(process.env.MONGO_URL, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true,
+})
+  .then(() => {
+    console.log('Connected to MongoDB Atlas');
+    // Check if super admin exists
+    User.findOne({ email: 'admareasync6@gmail.com' })
+    .then(user => {
+      if (user) {
+        console.log('Super admin already exists');
+      } else {
+        console.log('Creating super admin');
+        createSuperAdmin('admareasync6@gmail.com', 'adminAREA');
+      }
+    })
+    .catch(err => {
+      console.error(err);
+    });
+  })
+  .catch((err) => {
+    console.error(err);
+  });
 
 // Configurer la session
 app.use(session({
@@ -193,6 +141,8 @@ app.use(passport.session());
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/auth", authRouter);
+app.use("/backoffice", backRouter);
+app.get('/about.json', about_json);
 
 // Catch 404 and forward to error handler
 app.use(function (req, res, next) {
