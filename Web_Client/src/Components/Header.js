@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import logo from '../Assets/logo.svg';
 import DropdownComponent from './DropdownComponent';
-import { set } from 'mongoose';
 
 function Header() {
 
@@ -10,8 +9,6 @@ function Header() {
   const handleopen = () => {
     setOpen(!open);
   };
-
-  console.log(open, 'open');
 
   return (
     <div>
@@ -30,13 +27,15 @@ function Header() {
               <a href="#" className="hover:underline">
                 Categories
               </a>
-              <a href="#" className="hover:underline">
+              <a href="/login" className="hover:underline">
                 Login
               </a>
             </div>
-            <button className="w-[154px] h-[50px]">
-              Get Started
-            </button>
+            <a href="/register">
+              <button className="w-[154px] h-[50px]">
+                Get Started
+              </button>
+            </a>
           </div>
           <button className="h-full lg:hidden">
             <svg

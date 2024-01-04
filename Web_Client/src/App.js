@@ -1,28 +1,31 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import LandingPage from './LandingPage';
 import LoginForm from './Authentification/LoginForm';
 import RegisterForm from './Authentification/RegisterForm';
 import Forgot from './Authentification/Forgot';
 import HomePage from './HomePage';
-import User from './User';
 
 function App() {
 
   const connected = (component) => {
     
     // check if a token exists
-    // token = localStorage.getItem('authToken')
-    // return token ? <Navigate to="/home" /> : component;
-    
-    // use the bool
-    return User.isLoggedIn ? <Navigate to="/home" /> : component;
+    const token = localStorage.getItem('authToken');
+    console.log("connected " + token);
+
+
+    return token ? <Navigate to="/home" /> : component;
   };
 
   const disconnected = (component) => {
-    console.log(User.isLoggedIn);
-    return User.isLoggedIn ? component : <Navigate to="/login" />;
+
+    const token = localStorage.getItem('authToken');
+    console.log(token);
+    
+    return token ? component : <Navigate to="/login" /> ;
   };
+
 
   return (
     <Router>

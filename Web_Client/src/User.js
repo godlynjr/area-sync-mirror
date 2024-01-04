@@ -2,11 +2,12 @@ const api = "http://localhost:8080";
 
 class Client {
   #personal = null;
-  constructor() {
-    this.isLoggedIn = false;
-  }
+  isLoggedIn = false;
 
-  #fillRequestHeaders() {
+  constructor() {
+  } 
+
+  fillRequestHeaders() {
     return {
       "Content-Type": "application/json",
       'Authorization' : 'Bearer ' + localStorage.getItem('authToken')
@@ -17,14 +18,13 @@ class Client {
     try {
       const response = await fetch(api + "/auth/web/", {
         method: "POST",
-        headers: this.#fillRequestHeaders(),
+        headers: this.fillRequestHeaders(),
         body: JSON.stringify({ email: mail, password: password }),
       })
       .then(response => response.json())
       .then(data => {
-        localStorage.setItem('authToken', data.token);
         this.isLoggedIn = true;
-        // Redirection
+        localStorage.setItem('authToken', data.token);
         window.location.href = '/home';
       })
       .catch(error => {
@@ -37,9 +37,9 @@ class Client {
 
   async getAbout() {
     try {
-      const response = await fetch(api + "/auth/json/", {
-        method: "POST",
-        headers: this.#fillRequestHeaders(),
+      const response = await fetch(api + "/about.json", {
+        method: "GET",
+        headers: this.fillRequestHeaders(),
       });
   
       if (!response.ok) {
