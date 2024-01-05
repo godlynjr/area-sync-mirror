@@ -6,8 +6,7 @@
     "start": "expo start",
     "android": "expo run:android",
     "ios": "expo run:ios",
-    "web": "expo start --web",
-    "android-build": "react-native bundle --platform android --dev false --entry-file App.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/ && cd android && ./gradlew assembleDebug"
+    "web": "expo start --web"
   },
   "dependencies": {
     "@expo/vector-icons": "^13.0.0",
@@ -18,9 +17,9 @@
     "@react-navigation/native-stack": "^6.9.17",
     "@react-navigation/stack": "^6.3.20",
     "axios": "^1.6.2",
-    "et": "^0.0.4",
     "expo": "~49.0.15",
     "expo-constants": "^14.4.2",
+    "expo-modules-autolinking": "^1.5.1",
     "expo-modules-core": "^1.5.12",
     "expo-splash-screen": "~0.20.5",
     "expo-status-bar": "~1.6.0",
