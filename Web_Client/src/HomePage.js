@@ -31,7 +31,7 @@ function HomePage() {
   };
 
   const handleServiceClick = (serviceName) => {
-    console.log(`Clicked on service: ${serviceName}`);
+    window.location.href = '/' + serviceName;
     // You can perform other actions based on the clicked service if needed
   };
 

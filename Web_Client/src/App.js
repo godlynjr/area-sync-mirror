@@ -6,6 +6,14 @@ import RegisterForm from './Authentification/RegisterForm';
 import Forgot from './Authentification/Forgot';
 import HomePage from './HomePage';
 
+import Discord from './Services/Discord';
+import Calendar from './Services/Calendar';
+import Notion from './Services/Notion';
+import Spotify from './Services/Spotify';
+import Mail from './Services/Mail';
+import Tally from './Services/Tally';
+import Github from './Services/Github';
+
 function App() {
 
   const connected = (component) => {
@@ -35,6 +43,15 @@ function App() {
         <Route path="/login" element={connected(<LoginForm />)} />
         <Route path="/forgot" element={connected(<Forgot />)} />
         <Route path="/home" element={disconnected(<HomePage />)} />
+
+        <Route path="/Discord" element={disconnected(<Discord />)} />
+        <Route path="/Notion" element={disconnected(<Notion />)} />
+        <Route path="/Tally" element={disconnected(<Tally />)} />
+        <Route path="/Google Calendar" element={disconnected(<Calendar />)} />
+        <Route path="/Gmail" element={disconnected(<Mail />)} />
+        <Route path="/Github" element={disconnected(<Github />)} />
+        <Route path="/Spotify" element={disconnected(<Spotify />)} />
+        
       </Routes>
     </Router>
   );
