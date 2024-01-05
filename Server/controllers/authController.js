@@ -3,12 +3,11 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/userModel');
 const { google } = require('googleapis');
-const OAuth2Client = new google.auth.OAuth2(
+const oauth2Client = new google.auth.OAuth2(
   process.env.CLIENT_ID,
   process.env.CLIENT_SECRET,
   process.env.REDIRECT_URI
 );
-
 
 const check_mail = async (req, res) => {
     // Routes to check if the user exists
@@ -113,19 +112,21 @@ const web = async (req, res) => {
     }
 };
 
+const scopes = ['https://www.googleapis.com/auth/calendar'];
+
 const authenticateGoogle = (req, res) => {
-  const url = OAuth2Client.generateAuthUrl({
+  const url = oauth2Client.generateAuthUrl({
     access_type: 'offline',
-    scope: ['https://www.googleapis.com/auth/calendar'],
-    state: jwt.sign({ redirectURL: req.headers.referer }, process.env.SECRET_KEY),
+    scope: scopes
   });
   res.redirect(url);
 };
 
 const authenticateGoogleCallback = async (req, res) => {
+    res.send("it's working")
 //   const { code } = req.query;
-//   const { tokens } = await OAuth2Client.getToken(code);
-//   OAuth2Client.setCredentials(tokens);
+//   const { tokens } = await oauth2Client.getToken(code);
+//   oauth2Client.setCredentials(tokens);
 
 //   // Enregistrer le jeton d'accès dans la base de données pour cet utilisateur
 //   const user = await User.findById(req.user._id);
