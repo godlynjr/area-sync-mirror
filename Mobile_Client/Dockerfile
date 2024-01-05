@@ -2,18 +2,16 @@ FROM node:20
 
 WORKDIR /app
 
-COPY package*.json ./
+COPY package.json yarn.lock ./
 
-RUN npm install
+RUN yarn install --frozen-lockfile
 
-COPY . /app
+COPY . .
 
-RUN npx react-native bundle --platform android --dev false --entry-file App.js --bundle-output /app/build/outputs/index.android.bundle --assets-dest /app/build/outputs/res/
+RUN npx react-native bundle --platform android --dev false --entry-file App.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res
 
 RUN cd android && ./gradlew assembleDebug
 
-# EXPOSE 81
+# EXPOSE 8081
 
-VOLUME /app/build/outputs/apk/
-
-CMD npx react-native run-android
+# CMD ["npx", "react-native", "start"]
