@@ -61,162 +61,22 @@ router.get('/google/callback', async (req, res) => {
 router.post('/google-calendar-webhook', async (req, res) => {
     try {
         const eventId = req.headers["x-goog-resource-id"];
-    
         // Traitez les changements (nouvel événement, mise à jour, suppression, etc.)
         // Vous pouvez extraire les détails de l'événement de `changes`
         console.log('Google Calendar event change received:', eventId);
-        
         const eventDetails = await calendar.events.get({
             calendarId: 'primary',
-            eventId: eventId, // replace with actual event ID from notification
+            eventId: eventId,
         });
         console.log('Event details:', eventDetails.data);
         // Ajoutez ici le code pour créer un événement dans Notion
         // en utilisant les informations reçues de l'événement Google Calendar.
-    
         return res.status(200).end();
     } catch (error) {
         console.error(error);
         return res.status(500).end();
     }
 });
-
-router.get('/create_events', async (req, res) => {
-    try {
-        const eventResponse = await calendar.events.insert({
-            calendarId: "primary",
-            auth: oauth2Client,
-            requestBody: {
-                summary: "Newwwwwwwwwwww",
-                description: "Important sur les services ...",
-                start: {
-                    dateTime: dayjs(new Date()).add(1, 'day').toISOString(),
-                    timeZone: "Asia/Kolkata",
-                },
-                end: {
-                    dateTime: dayjs(new Date()).add(1, 'day').add(1, 'hour').toISOString(),
-                    timeZone: "Asia/Kolkata",
-                },
-            }
-        });
-
-        const eventId = eventResponse.data.id;
-        const eventTitle = eventResponse.data.summary;
-
-        // Créer une page Notion avec le titre de l'événement
-        const notionResponse = await notion.pages.create({
-            parent: { database_id: databaseId },
-            properties: {
-                title: { type: 'title', title: [{ text: { content: eventTitle } }] },
-            },
-        });
-
-        const notionPageId = notionResponse.id; // Récupérer l'ID de la page Notion
-        console.log('Notion page created with ID: %s', notionPageId);
-
-        // Ajouter l'ID de la page Notion à la propriété de l'événement sur Google Calendar
-        await calendar.events.patch({
-            calendarId: "primary",
-            eventId: eventId,
-            auth: oauth2Client,
-            requestBody: {
-                extendedProperties: {
-                    private: {
-                        notionPageId: notionPageId,
-                    },
-                },
-            },
-        });
-
-        res.send({ msg: 'Event and Notion page created successfully', eventId });
-    } catch (error) {
-        console.error('Error:', error.message);
-        res.status(500).send({ msg: 'Error creating event or Notion page' });
-    }
-});
-
-
-router.get('/delete_event/:eventId', async (req, res) => {
-    try {
-        const eventId = req.params.eventId;
-
-        // Récupérer l'ID de la page Notion associée à cet événement
-        const eventDetails = await calendar.events.get({
-            calendarId: "primary",
-            eventId: eventId,
-            auth: oauth2Client,
-        });
-
-        const notionPageId = eventDetails.data.extendedProperties?.private?.notionPageId;
-
-        // Supprimer l'événement de Google Calendar
-        await calendar.events.delete({
-            calendarId: "primary",
-            eventId: eventId,
-            auth: oauth2Client,
-        });
-
-        // Supprimer la page Notion correspondante
-        if (notionPageId) {
-            await notion.pages.update({
-                page_id: notionPageId,
-                archived: true, // Mettez à jour le statut de la page pour l'archiver
-            });
-        }
-
-        res.send({ msg: 'Event and Notion page deleted successfully' });
-    } catch (error) {
-        console.error('Error:', error.message);
-        res.status(500).send({ msg: 'Error deleting event or Notion page' });
-    }
-});
-
-
-
-router.get('/update_event/:eventId', async (req, res) => {
-    try {
-        const eventId = req.params.eventId;
-
-        // Récupérer l'ID de la page Notion associée à cet événement
-        const eventDetails = await calendar.events.get({
-            calendarId: "primary",
-            eventId: eventId,
-            auth: oauth2Client,
-        });
-
-        const notionPageId = eventDetails.data.extendedProperties?.private?.notionPageId;
-
-        // Mettre à jour l'événement dans Google Calendar
-        const updatedEvent = await calendar.events.patch({
-            calendarId: "primary",
-            eventId: eventId,
-            auth: oauth2Client,
-            requestBody: {
-                summary: "Updated event title",
-                description: "Updated event description...",
-            },
-        });
-
-        // Mettre à jour la page Notion correspondante
-        if (notionPageId) {
-            const updatedEventTitle = updatedEvent.data.summary;
-            await notion.pages.update({
-                page_id: notionPageId,
-                properties: {
-                    title: { type: 'title', title: [{ text: { content: updatedEventTitle } }] },
-                    // Ajoutez d'autres propriétés Notion en fonction de vos besoins
-                },
-            });
-        }
-
-        res.send({ msg: 'Event and Notion page updated successfully' });
-    } catch (error) {
-        console.error('Error:', error.message);
-        res.status(500).send({ msg: 'Error updating event or Notion page' });
-    }
-});
-
-
 
 /**
  * @swagger
