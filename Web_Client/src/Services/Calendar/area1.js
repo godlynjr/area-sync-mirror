@@ -1,6 +1,6 @@
 import React from "react"
-import Header from "../Components/Header"
-import Areas from "../Components/areas"
+import Header from "../../Components/Header"
+import Areas from "../../Components/areas"
 
 function Discord() {
   const ConnectDiscord = () => {
@@ -45,9 +45,15 @@ function Discord() {
 
       <section className="container mx-auto">
         <div className="grid grid-cols-2 gap-8 text-black sm:gap-10 md:grid-cols-3 lg:grid-cols-3 mt-5">
-          <Areas service="service" featuring="test" description="description" />
-          <Areas service="service" featuring="test" description="description" />
-          <Areas service="service" featuring="test" description="description" />
+          <a href="/Discord-1">
+            <Areas service="service" featuring="test" description="description" />
+          </a>
+          <a href="/Discord-2">
+            <Areas service="service" featuring="test" description="description" />
+          </a>
+          <a href="/Discord-3">
+            <Areas service="service" featuring="test" description="description" />
+          </a>
         </div>
       </section>
     </div>
