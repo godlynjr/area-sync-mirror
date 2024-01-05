@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import { Ionicons } from '@expo/vector-icons';
 
 const SecondPage = ({ navigation }) => {
     const PressMail = (provider) => {
@@ -13,18 +13,18 @@ const SecondPage = ({ navigation }) => {
             <View style={styles.line} />
             <TouchableOpacity style={styles.googlebutton}>
                 <View style={styles.container1}>
-                    <Icon name="google" size={24} color="white" style={styles.icon} />
+                    <Ionicons name="logo-google" size={24} color="white" style={styles.icon} />
                     <Text style={styles.googletext}>Continue with Google</Text>
                 </View>
             </TouchableOpacity>
             <TouchableOpacity style={styles.facebookbutton}>
                 <Text style={styles.facebooktext}>Continue with Facebook</Text>
-                <Icon name="facebook" size={24} color="white" style={styles.icon1} />
+                <Ionicons name="logo-facebook" size={24} color="white" style={styles.icon1} />
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.mailbutton} onPress={PressMail}>
                 <Text style={styles.mailtext}>Continue with Mail</Text>
-                <Icon name="google" size={24} color="white" style={styles.icon2} />
+                <Ionicons name="mail" size={24} color="white" style={styles.icon2} />
             </TouchableOpacity>
         </View>
     );

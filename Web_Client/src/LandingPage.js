@@ -2,7 +2,7 @@ import React from 'react';
 import Header from './Components/Header';
 import Footer from './Components/Footer';
 
-const Home = () => {
+const LandingPage = () => {
   return (
     <div className="App">
       <section className="First-section">
@@ -19,4 +19,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default LandingPage;

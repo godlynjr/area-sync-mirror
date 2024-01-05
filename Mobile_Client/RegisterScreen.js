@@ -1,29 +1,30 @@
 import React, { useState } from 'react';
 import { View, TextInput, TouchableOpacity, Text, Alert, StyleSheet, Image } from 'react-native';
 import User from "./User"
-import Icon from 'react-native-vector-icons/Ionicons';
+import { Ionicons } from '@expo/vector-icons';
 
 const RegisterScreen = ({ navigation }) => {
-  const [email, setEmail] = useState('');
+  // const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
-  const handleRegister = async () => {
-    const register = await User.register(email, password);
-    try {
-      console.log('registerrr', register)
-      if (register === 200) {
-        console.log('user register')
-        navigation.navigate('AppContentScreen');
-      } else if (register === 400) {
-        Alert.alert('ERROR');
+  const handleRegister = async (password) => {
+    const mail =  navigation.getParams('mail');
+    const loginResponse = await User.login(mail, pass);
+    console.log(loginResponse)
+    console.log(mail)
+    console.log(pass)
+      try {
+        console.log('loginResponse', loginResponse)
+        console.log(email)
+        if (loginResponse === 200) {
+          navigation.navigate('AppContentScreen');
+        }
+      } catch (error) {
+        console.error('Erreur de connexion register', error);
       }
-    } catch (error) {
-      console.error('Erreur de connexionregister :', error);
-    }
   };
-
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
@@ -35,36 +36,24 @@ const RegisterScreen = ({ navigation }) => {
         style={styles.image}
       />
       <Text style={styles.text}>
-        {isEnteringEmail ? "What's your email?" : "Create your password"}
+        Create your password
       </Text>
-      {isEnteringEmail ? (
-        <View>
-          <Text style={styles.label}>Email</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Enter Email"
-            value={email}
-            onChangeText={setEmail}
-          />
-        </View>
-      ) : (
-        <View>
-          <Text style={styles.label}>Password</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Enter Password"
-            secureTextEntry={!showPassword}
-            value={password}
-            onChangeText={setPassword}
-          />
-          <TouchableOpacity style={styles.eyeButton} onPress={togglePasswordVisibility}>
-            <Icon name={showPassword ? 'eye-off-outline' : 'eye-outline'} size={24} color="black" />
-          </TouchableOpacity>
-        </View>
-      )}
-      <TouchableOpacity style={styles.button} onPress={handleRegister}>
+      <View>
+        <Text style={styles.label}>Password</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Enter Password"
+          secureTextEntry={!showPassword}
+          value={password}
+          onChangeText={setPassword}
+        />
+        <TouchableOpacity style={styles.eyeButton} onPress={togglePasswordVisibility}>
+          <Ionicons name={showPassword ? 'eye-off-outline' : 'eye-outline'} size={24} color="black" />
+        </TouchableOpacity>
+      </View>
+      <TouchableOpacity style={styles.button} onPress={ () => {handleRegister(password)}}>
         <Text style={styles.buttonText}>
-          {isEnteringEmail ? 'Continue' : 'Sign In'}
+          Register
         </Text>
       </TouchableOpacity>
       {errorMessage ? <Text style={styles.errorMessage}>{errorMessage}</Text> : null}
