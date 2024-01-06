@@ -4,7 +4,6 @@ import { Ionicons } from '@expo/vector-icons';
 
 const SecondPage = ({ navigation }) => {
     const PressMail = (provider) => {
-        navigation.goBack(); // Close the modal
         navigation.navigate('LoginScreen', { provider }); // Redirect to the desired page
     };
 
