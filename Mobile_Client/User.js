@@ -24,7 +24,7 @@ class Client {
         try {
             this.#personal = await this.getData(api + '/me');
         } catch (error) {
-            console.log(error);
+            // console.log(error);
         }
     }
 
@@ -38,13 +38,13 @@ class Client {
             const statusCode = response.status;
             const data = await response.json();
             if (statusCode === 200) {
-                console.log("Is goodlogin");
+                // console.log("Is goodlogin");
                 this.isLoggedIn = true;
                 this.#accesToken = data.access_token;
                 await this.fetchPersonalData();
                 return 200;
             } else if (statusCode === 400) {
-                console.log("Is badlogin");
+                // console.log("Is badlogin");
                 return 400;
             }
         } catch (error) {
@@ -62,12 +62,12 @@ class Client {
             });
             const statusCode = response.status;
             const data = await response.json();
-            console.log(statusCode);
+            // console.log(statusCode);
             if (statusCode === 200) {
-                console.log("mail already exist");
+                // console.log("mail already exist");
                 return 200;
             } else if (statusCode === 201) {
-                console.log("you have to register");
+                // console.log("you have to register");
                 return 201;
             }
         } catch (error) {

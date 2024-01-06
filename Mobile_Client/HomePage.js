@@ -1,10 +1,9 @@
 import React from 'react';
-import { View, SafeAreaView, Text, StyleSheet, TouchableOpacity, Dimensions, Image } from 'react-native';
+import { View, ScrollView, SafeAreaView, Text, StyleSheet, TouchableOpacity, Dimensions, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { widthPercentageToDP, heightPercentageToDP, listenOrientationChange, moderateScale } from 'react-native-responsive-screen';
 
 import { useNavigation } from '@react-navigation/native';
-import { Button } from 'react-native-paper';
 const guidelineWidth = 375; // Width of the device on which the design is based
 const scale = size => (width / guidelineWidth) * size;
 const { width, height } = Dimensions.get('window');
@@ -22,9 +21,6 @@ const HomePage = () => {
           <Ionicons name="notifications" size={24} color="black" />
         </TouchableOpacity>
       </View>
-      {/* <Button icon="camera" mode="contained" onPress={() => console.log('Pressed')}>
-      Press me
-    </Button> */}
       <View style={styles.bigBox}>
         <View style={styles.welcomeBox}>
           <View style={styles.textsBox}>
@@ -42,16 +38,28 @@ const HomePage = () => {
         </View >
       </View>
       <View style={styles.void1}>
-        <View style={styles.Box1}>
-          <Text style={styles.textBox}>
-            Welcome
-          </Text>
-        </View>
-        <View style={styles.Box1}>
-          <Text style={styles.textBox}>
-            Welcome
-          </Text>
-        </View>
+        <ScrollView>
+          <View style={styles.Box1}>
+            {/* <Text style={styles.textBox}>
+              Welcome
+            </Text> */}
+          </View>
+          <View style={styles.Box2}>
+            {/* <Text style={styles.textBox}>
+              Welcome
+            </Text> */}
+          </View>
+          <View style={styles.Box1}>
+            {/* <Text style={styles.textBox}>
+              Welcome
+            </Text> */}
+          </View>
+          <View style={styles.Box2}>
+            {/* <Text style={styles.textBox}>
+              Welcome
+            </Text> */}
+          </View>
+        </ScrollView>
       </View>
     </SafeAreaView>
   );
@@ -108,13 +116,18 @@ const styles = StyleSheet.create({
     gap: 30,
   },
   Box1: {
+    marginTop: 10,
+    paddingVertical: 70,
     backgroundColor: '#F0F0F0',
     padding: 10,
-    borderRadius: 20,
+    borderRadius: 10,
   },
   Box2: {
+    marginTop: 10,
+    paddingVertical: 70,
     backgroundColor: '#F0F0F0',
-    borderRadius: 20,
+    padding: 10,
+    borderRadius: 10,
   },
   box: {
     backgroundColor: '#F0F0F0',

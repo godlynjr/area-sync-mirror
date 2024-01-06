@@ -76,13 +76,12 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   tabButton: {
+    marginTop: -20,
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
   activeTab: {
-    // borderBottomWidth: 2, // Commenter ou supprimer cette ligne
-    // borderBottomColor: '#E0C0FC', // Commenter ou supprimer cette ligne
   },
   tabText: {
     fontSize: 12,

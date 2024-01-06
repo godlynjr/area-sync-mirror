@@ -12,12 +12,7 @@ const RegisterScreen = ({ navigation }) => {
   const handleRegister = async (password) => {
     const mail =  navigation.getParams('mail');
     const loginResponse = await User.login(mail, pass);
-    console.log(loginResponse)
-    console.log(mail)
-    console.log(pass)
       try {
-        console.log('loginResponse', loginResponse)
-        console.log(email)
         if (loginResponse === 200) {
           navigation.navigate('AppContentScreen');
         }
