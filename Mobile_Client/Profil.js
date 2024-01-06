@@ -1,10 +1,11 @@
 
 import React, { useState, } from 'react';
-import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, TouchableOpacity, SafeAreaViewBase } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native'; // Importer useNavigation
 import { widthPercentageToDP, heightPercentageToDP, listenOrientationChange, removeOrientationListener } from 'react-native-responsive-screen';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const { width, height } = Dimensions.get('window');
 const guidelineWidth = 375; // Width of the device on which the design is based
@@ -25,8 +26,8 @@ const Profil = () => {
     navigation.navigate('Edit_profil');
   };
   return (
-    <View style={styles.container}>
-      <View style={styles.content}>
+    <SafeAreaView>
+      <View style={styles.container}>
         <View style={styles.profileInfo}>
           <View style={styles.avatarContainer}>
             <FontAwesome
@@ -37,143 +38,130 @@ const Profil = () => {
           </View>
           <Text style={styles.name}>{user.name}</Text>
         </View>
-        <View style={styles.menu}>
-          <View style={styles.menuItem1}>
-            <TouchableOpacity onPress={PressEdit}>
-              <View style={styles.rowContainer}>
-                <Text style={styles.menuText1}>Edit profile</Text>
-                <Ionicons name="pencil" size={20} color='white' marginLeft={150}/>
-              </View>
-            </TouchableOpacity>
+      </View>
 
-            <View style={styles.line} />
+      <View style={styles.menu}>
+        <View style={styles.menuItem1}>
+          <TouchableOpacity onPress={PressEdit}>
+            <View style={styles.rowContainer}>
+              <Text style={styles.menuText}>Edit profile</Text>
+              <Ionicons name="pencil" size={20} color='white' />
+            </View>
+          </TouchableOpacity>
 
-            <TouchableOpacity>
-              <View style={styles.rowContainer}>
-                <Text style={styles.menuText2}> Change Password</Text>
-                <Ionicons name="key" size={20} color='white' marginLeft={85} />
-              </View>
-            </TouchableOpacity>
+          <View style={styles.line} />
 
-            <View style={styles.line} />
+          <TouchableOpacity>
+            <View style={styles.rowContainer}>
+              <Text style={styles.menuText}> Change Password</Text>
+              <Ionicons name="key" size={20} color='white' />
+            </View>
+          </TouchableOpacity>
 
-            <TouchableOpacity>
-              <View style={styles.rowContainer}>
-                <Text style={styles.menuText3}> Informations</Text>
-                <Ionicons name="information-circle" size={20} color='white' marginLeft={129}/>
-              </View>
-            </TouchableOpacity>
-          </View>
+          <View style={styles.line} />
 
-          <View style={styles.menuItem2}>
+          <TouchableOpacity>
+            <View style={styles.rowContainer}>
+              <Text style={styles.menuText}> Informations</Text>
+              <Ionicons name="information-circle" size={20} color='white' />
+            </View>
+          </TouchableOpacity>
+        </View>
 
-            <TouchableOpacity>
-              <View style={styles.rowContainer}>
-                <Text style={styles.menuText11}> Notifications</Text>
-                <Ionicons name="notifications" size={20} color='white' marginLeft={135} marginTop={20} />
-              </View>
-            </TouchableOpacity>
+        <View style={styles.menuItem2}>
 
-            <View style={styles.line} />
+          <TouchableOpacity>
+            <View style={styles.rowContainer}>
+              <Text style={styles.menuText11}> Notifications</Text>
+              <Ionicons name="notifications" size={20} color='white' marginTop={20} />
+            </View>
+          </TouchableOpacity>
 
-            <TouchableOpacity>
-              <View style={styles.rowContainer}>
-                <Text style={styles.menuText2}> Log out</Text>
-                <Ionicons name="log-out" size={20} color='white' marginLeft={172} marginTop={10}/>
-              </View>
-            </TouchableOpacity>
+          <View style={styles.line} />
 
-            <View style={styles.line} />
+          <TouchableOpacity>
+            <View style={styles.rowContainer}>
+              <Text style={styles.menuText}> Log out</Text>
+              <Ionicons name="log-out" size={20} color='white' marginTop={10} />
+            </View>
+          </TouchableOpacity>
 
-            <TouchableOpacity>
-              <View style={styles.rowContainer}>
-                <Text style={styles.menuText3}> Delete Account</Text>
-                <Ionicons name="trash" size={20} color='white' marginLeft={108} marginTop={10} />
-              </View>
-            </TouchableOpacity>
+          <View style={styles.line} />
 
-            <View style={styles.line} />
+          <TouchableOpacity>
+            <View style={styles.rowContainer}>
+              <Text style={styles.menuText}> Delete Account</Text>
+              <Ionicons name="trash" size={20} color='white' marginTop={10} />
+            </View>
+          </TouchableOpacity>
 
-            <TouchableOpacity>
-              <View style={styles.rowContainer}>
-                <Text style={styles.menuText3}> Help center</Text>
-                <Ionicons name="help-circle" size={20} color='white' marginLeft={138} marginTop={10}/>
-              </View>
-            </TouchableOpacity>
-          </View>
+          <View style={styles.line} />
+
+          <TouchableOpacity>
+            <View style={styles.rowContainer}>
+              <Text style={styles.menuText}> Help center</Text>
+              <Ionicons name="help-circle" size={20} color='white' marginTop={10} />
+            </View>
+          </TouchableOpacity>
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
-const responsiveWidth = widthPercentageToDP('50%'); // Get responsive width
-const responsiveHeight = heightPercentageToDP('30%'); // Get responsive height
-
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
+    position: 'relative',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#494949',
+    paddingVertical: 80,
+    paddingHorizontal: 20
   },
   rowContainer: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
-  },
-  content: {
-    flex: 1,
-    padding: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   profileInfo: {
     alignItems: 'center',
-    marginBottom: 20,
-    backgroundColor: '#DFE1E7',
-    width: 5000,
-    alignItems: 'center',
     justifyContent: 'center',
-    marginTop: -40,
-    height: 300,
   },
   avatarContainer: {
-    marginTop: 15,
     backgroundColor: '#f2f2f2',
     width: 120,
     height: 120,
     borderRadius: 60,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 10,
   },
   name: {
+    marginTop: 10,
     fontSize: 18,
     fontWeight: 'bold',
     textAlign: 'center',
   },
   menu: {
-    marginTop: 20,
     justifyContent: 'center',
     alignItems: 'center',
   },
   menuItem1: {
-    marginTop: -70,
-    marginBottom: 15,
-    paddingVertical: 10,
-    paddingHorizontal: 20,
+    marginTop: -30,
     backgroundColor: '#2D2D2D',
     borderRadius: 25,
     width: 300,
     height: 150,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
   },
   menuItem2: {
-    marginTop: 10,
+    marginTop: 30,
     marginBottom: 15,
-    paddingVertical: 10,
     paddingHorizontal: 20,
     backgroundColor: '#2D2D2D',
     borderRadius: 25,
-    width: widthPercentageToDP('80%'),
-    height: widthPercentageToDP('55%'),
+    width: 350,
+    height: 200,
   },
   line: {
     marginTop: 15,
@@ -181,7 +169,7 @@ const styles = StyleSheet.create({
     height: 1,
     backgroundColor: '#DFE1E7',
   },
-  menuText1: {
+  menuText: {
     marginTop: 10,
     fontSize: 18,
     fontWeight: 'normal',
@@ -193,18 +181,7 @@ const styles = StyleSheet.create({
     fontWeight: 'normal',
     color: '#DFE1E7',
   },
-  menuText2: {
-    marginTop: 10,
-    fontSize: 18,
-    fontWeight: 'normal',
-    color: '#DFE1E7',
-  },
-  menuText3: {
-    marginTop: 10,
-    fontSize: 18,
-    fontWeight: 'normal',
-    color: '#DFE1E7',
-  },
+
 });
 
 export default Profil;

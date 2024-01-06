@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import Services from './Services';
 import Profil from './Profil';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import { Ionicons } from '@expo/vector-icons';
+import HomePage from './HomePage';
 
 const OtherPage = () => {
   const [activeTab, setActiveTab] = useState('Home');
@@ -16,11 +16,11 @@ const OtherPage = () => {
     <View style={styles.container}>
       <View style={styles.content}>
         {/* Contenu de chaque onglet */}
-        {activeTab === 'Home' && <Text>Contenu de l'onglet Home</Text>}
-        {activeTab === 'Search' && <Services />}
+        {activeTab === 'Home' && <HomePage/>}
+        {activeTab === 'Search' && <Services/>}
         {activeTab === 'Add' && <Text>Contenu de l'onglet Add</Text>}
         {activeTab === 'Layers' && <Text>Contenu de l'onglet Recent services</Text>}
-        {activeTab === 'Account' && <Text> <Profil /> </Text>}
+        {activeTab === 'Account' && <Profil/>}
       </View>
 
       <View style={styles.navBar}>
@@ -90,8 +90,6 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
 });
 

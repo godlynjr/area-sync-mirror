@@ -1,16 +1,19 @@
 import React, { useState } from 'react';
-import { View, ScrollView, StyleSheet, Text, Dimensions, Image, TouchableOpacity } from 'react-native';
+import { View, ScrollView, StyleSheet, Text, Dimensions, Image, TouchableOpacity, SafeAreaView } from 'react-native';
 import SearchBar from './SearchBar';
 import DropDownPicker from 'react-native-dropdown-picker';
-import { widthPercentageToDP, heightPercentageToDP, listenOrientationChange, moderateScale } from 'react-native-responsive-screen';
 import { useNavigation } from '@react-navigation/native';
+import { Menu, Divider, Button } from 'react-native-paper';
 
-const { width, height } = Dimensions.get('window');
-const guidelineWidth = 375; // Width of the device on which the design is based
-const scale = size => (width / guidelineWidth) * size;
+// const { width, height } = Dimensions.get('window');
+// const guidelineWidth = 375; // Width of the device on which the design is based
+// const scale = size => (width / guidelineWidth) * size;
 
-const Services = ({}) => {
+const Services = ({ }) => {
     const navigation = useNavigation();
+    const [visible, setVisible] = React.useState(false);
+    const openMenu = () => setVisible(true);
+    const closeMenu = () => setVisible(false);
     const [selectedValue, setSelectedValue] = useState('');
     const handleGithub = async () => {
         navigation.navigate('Service/Github');
@@ -34,23 +37,20 @@ const Services = ({}) => {
         navigation.navigate('Service/Discord');
     };
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             <Text style={styles.Services}>Services</Text>
             <SearchBar />
-            <DropDownPicker
-                items={[
-                    { label: 'Options', value: 'option1' },
-                    { label: 'Optionss', value: 'option2' },
-                    { label: 'Optionsss', value: 'option3' },
-                ]}
-                defaultValue={selectedValue}
-                containerStyle={styles.pickerContainer}
-                style={styles.pickerStyle}
-                dropDownStyle={styles.dropDownStyle}
-                onChangeItem={(item) => setSelectedValue(item.value)}
-            />
-            <View style={styles.container1}>
-                <ScrollView style={styles.box}>
+            <Menu
+                visible={visible}
+                onDismiss={closeMenu}
+                anchor={<Button onPress={openMenu}>Show menu</Button>}>
+                <Menu.Item onPress={() => { }} title="Item 1" />
+                <Menu.Item onPress={() => { }} title="Item 2" />
+                <Divider />
+                <Menu.Item onPress={() => { }} title="Item 3" />
+            </Menu>
+            <View style={styles.serviceContainer}>
+                <ScrollView contentContainerStyle={styles.appletsListContainer} style={styles.box}>
                     <TouchableOpacity onPress={handleGithub}>
                         <Image
                             source={require('./Assets/github.png')}
@@ -59,7 +59,7 @@ const Services = ({}) => {
                     </TouchableOpacity>
                     <TouchableOpacity onPress={handleGoogle}>
                         <Image
-                            source={require('./Assets/google.png')}
+                            source={require('./Assets/google1.png')}
                             style={styles.image1}
                         />
                     </TouchableOpacity>
@@ -76,7 +76,7 @@ const Services = ({}) => {
                         />
                     </TouchableOpacity>
                 </ScrollView>
-                <ScrollView style={styles.box1}>
+                <ScrollView contentContainerStyle={styles.appletsListContainer} style={styles.box}>
                     <TouchableOpacity onPress={handleSpotify}>
                         <Image
                             source={require('./Assets/spotify1.jpeg')}
@@ -97,103 +97,64 @@ const Services = ({}) => {
                     </TouchableOpacity>
                 </ScrollView>
             </View>
-        </View>
+        </SafeAreaView>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
+    },
+    Services: {
+        marginTop: 20,
+        fontSize: 20,
+        fontWeight: 'bold',
+        paddingHorizontal: 10,
+    },
+    serviceContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        gap: 20,
+        // borderRadius: 20,
+        // backgroundColor: 'red',
+        paddingHorizontal: 10
+    },
+    box: {
+        // paddingHorizontal: 25,
+        borderRadius: 20,
+        backgroundColor: '#DFE1E7',
     },
     image: {
-        marginTop: scale(10),
-        marginLeft: scale(10),
-        width: 150,
-        height: 150,
+        width: 130,
+        height: 130,
         borderRadius: 20,
     },
     image1: {
-        marginTop: scale(10),
-        marginLeft: scale(10),
-        width: 150,
-        height: 150,
+        width: 130,
+        height: 130,
         borderRadius: 20,
     },
     image2: {
-        marginTop: scale(10),
-        marginLeft: scale(10),
-        width: 150,
-        height: 150,
+        width: 130,
+        height: 130,
         borderRadius: 20,
     },
     image3: {
-        marginTop: scale(10),
-        marginLeft: scale(10),
-        width: 150,
-        height: 150,
+        width: 130,
+        height: 130,
         borderRadius: 20,
     },
     image4: {
-        marginTop: scale(10),
-        marginLeft: scale(10),
-        width: 150,
-        height: 150,
+        width: 130,
+        height: 130,
         borderRadius: 25,
     },
-    container1: {
-        marginTop: scale(0),
-        flexDirection: 'row',
-        width: scale(350),
-        height: scale(360),
-        borderRadius: 20,
+    scrollViewContent: {
+        flexGrow: 1,
         justifyContent: 'center',
         alignItems: 'center',
     },
-    box: {
-        flex: 1,
-        marginLeft: scale(1),
-        height: heightPercentageToDP('60'),
-        width: widthPercentageToDP('30'),
-        backgroundColor: 'green',
-        borderRadius: 20,
-        backgroundColor: '#DFE1E7',
-    },
-    box1: {
-        flex: 1,
-        marginLeft: scale(8),
-        height: heightPercentageToDP('60'),
-        width: widthPercentageToDP('30'),
-        backgroundColor: '#DFE1E7',
-        borderRadius: 20,
-    },
-
-    pickerContainer: {
-        height: heightPercentageToDP('30'),
-        width: widthPercentageToDP('30'),
-    },
-    Services: {
-        marginTop: scale(30),
-        padding: scale(40),
-        fontSize: 20,
-        fontWeight: 'bold',
-        textAlign: 'center',
-        marginLeft: widthPercentageToDP('-68'),
-    },
-    pickerStyle: {
-        marginTop: scale(60),
-        backgroundColor: '#DFE1E7',
-        borderWidth: 1,
-        width: widthPercentageToDP('88'),
-        height: 50,
-        borderColor: '#DFE1E7',
-        marginLeft: scale(-110),
-        borderRadius: 20,
-    },
-    dropDownStyle: {
-        backgroundColor: '#fafafa',
-    },
+    appletsListContainer: { alignItems: 'center', paddingVertical: 20, gap: 20 }
 });
 
 export default Services;
