@@ -10,7 +10,8 @@ const logger = require("morgan");
 const mongoose = require("mongoose");
 const port = process.env.PORT || 8080;
 const cors = require("cors");
-const {  about_json } = require('./controllers/dataInfo');
+const { about_json } = require('./controllers/dataInfo');
+const { createSuperAdmin } = require('./BackOffice/BackOfAuth')
 
 // Importez votre modèle User
 const User = require("./models/userModel");
@@ -21,6 +22,7 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 var authRouter = require("./routes/auth");
+var backRouter = require("./routes/backof");
 
 var app = express();
 
@@ -54,10 +56,27 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Connect to the MongoDB database using the MONGO_URL environment variable
-mongoose.connect(process.env.MONGO_URL, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true,
+})
+  .then(() => {
+    console.log('Connected to MongoDB Atlas');
+    // Check if super admin exists
+    User.findOne({ email: 'admareasync6@gmail.com' })
+    .then(user => {
+      if (user) {
+        console.log('Super admin already exists');
+      } else {
+        console.log('Creating super admin');
+        createSuperAdmin('admareasync6@gmail.com', 'adminAREA');
+      }
+    })
+    .catch(err => {
+      console.error(err);
+    });
+  })
+  .catch((err) => {
+    console.error(err);
+  });
 
 // Configurer la session
 app.use(session({
@@ -122,6 +141,7 @@ app.use(passport.session());
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/auth", authRouter);
+app.use("/backoffice", backRouter);
 app.get('/about.json', about_json);
 
 // Catch 404 and forward to error handler
