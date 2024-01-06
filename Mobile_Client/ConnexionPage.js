@@ -1,10 +1,11 @@
 import React from 'react';
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const SecondPage = ({ navigation }) => {
-    const PressMail = (provider) => {
-        navigation.navigate('LoginScreen', { provider }); // Redirect to the desired page
+    const pressMail = () => {
+        navigation.goBack(); // Fermer la modal
+        navigation.navigate('LoginScreen', { provider: 'mail' }); // Rediriger vers la page souhaitée avec le fournisseur 'mail'
     };
 
     return (
@@ -12,18 +13,18 @@ const SecondPage = ({ navigation }) => {
             <View style={styles.line} />
             <TouchableOpacity style={styles.googlebutton}>
                 <View style={styles.container1}>
-                    <Ionicons name="logo-google" size={24} color="white" style={styles.icon} />
+                    <Icon name="google" size={24} color="white" style={styles.icon} />
                     <Text style={styles.googletext}>Continue with Google</Text>
                 </View>
             </TouchableOpacity>
             <TouchableOpacity style={styles.facebookbutton}>
                 <Text style={styles.facebooktext}>Continue with Facebook</Text>
-                <Ionicons name="logo-facebook" size={24} color="white" style={styles.icon1} />
+                <Icon name="facebook" size={24} color="white" style={styles.icon1} />
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.mailbutton} onPress={PressMail}>
+            <TouchableOpacity style={styles.mailbutton} onPress={pressMail}>
                 <Text style={styles.mailtext}>Continue with Mail</Text>
-                <Ionicons name="mail" size={24} color="white" style={styles.icon2} />
+                <Icon name="google" size={24} color="white" style={styles.icon2} />
             </TouchableOpacity>
         </View>
     );

@@ -13,6 +13,7 @@ const scale = size => (width / guidelineWidth) * size;
 
 const Profil = () => {
   const navigation = useNavigation(); // Obtenir l'objet navigation
+  const [isEditing, setIsEditing] = useState(true);
 
   const user = {
     name: 'Maman Jacqueline',
@@ -21,10 +22,11 @@ const Profil = () => {
     gender: 'female',
   };
   const iconSize = 30;
-
   const PressEdit = () => {
     navigation.navigate('Edit_profil');
+    setIsEditing(true)
   };
+
   return (
     <SafeAreaView>
       <View style={styles.container}>
@@ -136,6 +138,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   name: {
+    color: 'white',
     marginTop: 10,
     fontSize: 18,
     fontWeight: 'bold',

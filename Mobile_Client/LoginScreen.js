@@ -17,7 +17,6 @@ const LoginScreen = ({ navigation }) => {
       if (emailRegex.test(email)) {
         const isValidEmail = await User.checkMail(email);
         try {
-          console.log('isValidEmail', isValidEmail)
           if (isValidEmail === 200) {
             setIsEnteringEmail(false);
           } else if (isValidEmail === 201) {
@@ -35,7 +34,6 @@ const LoginScreen = ({ navigation }) => {
     } else {
       const loginResponse = await User.login(email, password);
       try {
-        console.log('loginResponse', loginResponse)
         if (loginResponse === 200) {
           navigation.navigate('AppContentScreen');
         }
@@ -47,10 +45,7 @@ const LoginScreen = ({ navigation }) => {
 
   const handleRegister = async () => {
     const loginResponse = await User.login(email, password);
-    console.log(loginResponse)
     try {
-      console.log('loginResponse', loginResponse)
-      console.log(email)
       if (loginResponse === 200) {
         navigation.navigate('AppContentScreen');
       }

@@ -19,7 +19,6 @@ const Edit_profil = ({ navigation }) => { // Ajout de la prop "navigation"
     const handleSave = () => {
         const updatedUser = { ...user, name, email };
         setDisplayName(name); // Met à jour le nom affiché avec la nouvelle valeur
-        console.log(updatedUser);
     };
 
     return (
@@ -57,9 +56,6 @@ const Edit_profil = ({ navigation }) => { // Ajout de la prop "navigation"
         </SafeAreaView>
     );
 };
-
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
     container: {
