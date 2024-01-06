@@ -5,6 +5,7 @@ import Infos from "../Data/Manage.js";
 const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -14,10 +15,13 @@ const LoginForm = () => {
     setPassword(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Logging in with:", { email, password });
-    Infos.login(email, password);
+
+    if (Infos.login(email, password) === false)
+      console.log("false thereeee")
+      setErrorMessage("Bad email or password. Try again.");
   };
 
   return (
@@ -48,6 +52,7 @@ const LoginForm = () => {
             Login
           </button>
         </div>
+        {errorMessage && <div className="text-xl text-red-600 text-center mt-4">{errorMessage}</div>}
       </div>
     </section>
   );
