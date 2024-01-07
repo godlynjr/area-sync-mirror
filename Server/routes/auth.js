@@ -18,6 +18,16 @@ const oauth2Client = new google.auth.OAuth2(
   process.env.REDIRECT_URI
 );
 
+oauth2Client.on('tokens', (tokens) => {
+    if (tokens.refresh_token) {
+      // store the refresh_token in my database!
+        oauth2Client.setCredentials({
+            refresh_token: tokens.refresh_token
+        });
+    }
+    oauth2Client.setCredentials(tokens);
+  });
+
 const calendar = google.calendar({
     version: "v3",
     auth: oauth2Client,
@@ -44,6 +54,7 @@ router.get('/google/callback', async (req, res) => {
     const { tokens } = await oauth2Client.getToken(code);
     oauth2Client.setCredentials(tokens);
 
+
     calendar.events.watch({
         calendarId: calendarId,
         requestBody: {
@@ -60,7 +71,7 @@ router.get('/google/callback', async (req, res) => {
 
 router.post('/google-calendar-webhook', async (req, res) => {
     try {
-        const eventId = req.headers["x-goog-resource-id"];
+        const eventId = JSON.stringify(req.headers);
         // Traitez les changements (nouvel événement, mise à jour, suppression, etc.)
         // Vous pouvez extraire les détails de l'événement de `changes`
         console.log('Google Calendar event change received:', eventId);
