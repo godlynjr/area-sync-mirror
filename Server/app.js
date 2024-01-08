@@ -60,7 +60,7 @@ mongoose.connect(process.env.MONGO_URL, {
 
 // Configurer la session
 app.use(session({
-  secret: 'your-secret-key',
+  secret: '3zTvzr3p67VC61jmV54rIYu1545x4TlY',
   resave: true,
   saveUninitialized: true
 }));
