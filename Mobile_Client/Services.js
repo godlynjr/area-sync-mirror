@@ -35,7 +35,6 @@ const Services = ({ }) => {
     };
 
     const [aboutData, setAboutData] = useState(null);
-
     useEffect(() => {
         user.fetchAboutData();
     }, []);
@@ -129,12 +128,9 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
         gap: 20,
-        // borderRadius: 20,
-        // backgroundColor: 'red',
         paddingHorizontal: 10
     },
     box: {
-        // paddingHorizontal: 25,
         borderRadius: 20,
         backgroundColor: '#DFE1E7',
     },

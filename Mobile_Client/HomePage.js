@@ -1,12 +1,11 @@
 import React from 'react';
 import { View, ScrollView, SafeAreaView, Text, StyleSheet, TouchableOpacity, Dimensions, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { widthPercentageToDP, heightPercentageToDP, listenOrientationChange, moderateScale } from 'react-native-responsive-screen';
 
 import { useNavigation } from '@react-navigation/native';
 const guidelineWidth = 375; // Width of the device on which the design is based
 const scale = size => (width / guidelineWidth) * size;
-const { width, height } = Dimensions.get('window');
+// const { width, height } = Dimensions.get('window');
 
 const HomePage = () => {
   const navigation = useNavigation();

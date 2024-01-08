@@ -1,6 +1,5 @@
 import React, { useState, } from 'react';
 import { View, Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
-import { widthPercentageToDP, heightPercentageToDP, listenOrientationChange, removeOrientationListener } from 'react-native-responsive-screen';
 
 const OnboardingPage = ({ navigation }) => {
   const handlePress = () => {
@@ -21,9 +20,6 @@ const OnboardingPage = ({ navigation }) => {
     </View>
   );
 };
-
-const responsiveWidth = widthPercentageToDP('50%'); // Get responsive width
-const responsiveHeight = heightPercentageToDP('30%'); // Get responsive height
 
 const styles = StyleSheet.create({
   container: {

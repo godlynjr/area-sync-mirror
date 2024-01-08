@@ -101,7 +101,6 @@ const styles = StyleSheet.create({
     container1: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        // alignItems: 'center',
     },
     line: {
         marginTop: 40,
