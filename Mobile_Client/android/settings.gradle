@@ -1,3 +1,25 @@
+pluginManagement {
+    repositories {
+        google()
+        jcenter()
+        mavenCentral()
+        gradlePluginPortal()
+        maven { url "https://www.jitpack.io" }
+        maven { url 'https://maven.google.com' }
+    }
+}
+// dependencyResolutionManagement {
+//     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+//     repositories {
+//         google()
+//         jcenter()
+//         mavenCentral()
+//         gradlePluginPortal()
+//         maven { url "https://www.jitpack.io" }
+//         maven { url 'https://maven.google.com' }
+//     }
+// }
+
 rootProject.name = 'AreaSync'
 
 apply from: new File(["node", "--print", "require.resolve('expo/package.json')"].execute(null, rootDir).text.trim(), "../scripts/autolinking.gradle");
