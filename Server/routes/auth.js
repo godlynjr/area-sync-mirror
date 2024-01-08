@@ -5,8 +5,6 @@ const {  check_mail, login, web, authenticateGoogle, authenticateGoogleCallback}
 // const {  about_json } = require('../controllers/dataInfo');
 const passport = require('passport');
 
-router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
-router.get('/google/callback', passport.authenticate('google', { failureRedirect: '/' }), authenticateGoogleCallback);
 /**
  * @swagger
  * "/check_mail":
