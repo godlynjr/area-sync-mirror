@@ -27,7 +27,8 @@ const SecondPage = ({ navigation }) => {
         const user = await AsyncStorage.getItem("@user");
         if (!user) {
             if (response?.type === 'success') {
-                await getUserInfo(response.authentication.accessToken)
+                await getUserInfo(response.authentication.accessToken);
+                navigation.navigate('AppContentScreen'); // Rediriger vers la page AppContentScreen
             }
         } else {
             setUserInfo(JSON.parse(user));
