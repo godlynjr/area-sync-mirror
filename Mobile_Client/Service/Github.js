@@ -22,8 +22,7 @@ const Discord = ({ navigation }) => {
             Github
           </Text>
           <Text style={styles.text2}>
-            The NAS that does it all. Connect, automate, and sync your apps and data with ease.
-          </Text>
+          GitHub is a collaborative development platform based on Git, a decentralized version control system. It allows developers to work together on projects, manage issue tracking, share source code, and collaborate on Git repositories.</Text>
         </View>
         <View style={styles.bottomContainer}>
           <TouchableOpacity style={styles.bouton}>

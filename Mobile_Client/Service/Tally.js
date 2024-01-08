@@ -22,8 +22,7 @@ const Discord = ({ navigation }) => {
             Tally
           </Text>
           <Text style={styles.text2}>
-            The NAS that does it all. Connect, automate, and sync your apps and data with ease.
-          </Text>
+          Tally is a convenient app for managing expenses and bills. It allows users to track their spending, categorize transactions, set budgets, and receive reminders for upcoming bills.          </Text>
         </View>
         <View style={styles.bottomContainer}>
           <TouchableOpacity style={styles.bouton}>

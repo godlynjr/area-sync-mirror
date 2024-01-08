@@ -22,8 +22,7 @@ const Discord = ({ navigation }) => {
             Calendar
           </Text>
           <Text style={styles.text2}>
-            The NAS that does it all. Connect, automate, and sync your apps and data with ease.
-          </Text>
+          Google Calendar is a popular application for scheduling and managing events. It allows users to create, edit, and share events, set reminders, and view calendars on the go.</Text>
         </View>
         <View style={styles.bottomContainer}>
           <TouchableOpacity style={styles.bouton}>

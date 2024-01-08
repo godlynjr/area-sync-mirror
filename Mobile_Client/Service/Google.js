@@ -12,7 +12,7 @@ const Discord = ({ navigation }) => {
   return (
     <SafeAreaView>
       <View style={styles.container}>
-        <Ionicons style={{position: 'absolute', top: 10, left: 10}} name="arrow-back" size={30} color="#fff" onPress={() => navigation.goBack()} />
+        <Ionicons style={{ position: 'absolute', top: 10, left: 10 }} name="arrow-back" size={30} color="#fff" onPress={() => navigation.goBack()} />
         <Image
           source={require('../Assets/google.png')}
           style={styles.Image}
@@ -22,8 +22,7 @@ const Discord = ({ navigation }) => {
             Google
           </Text>
           <Text style={styles.text2}>
-            The NAS that does it all. Connect, automate, and sync your apps and data with ease.
-          </Text>
+            Google is a leading technology company known for its search engine and online services. It provides a wide range of services including web search, email, cloud storage, productivity tools, maps, and more.</Text>
         </View>
         <View style={styles.bottomContainer}>
           <TouchableOpacity style={styles.bouton}>

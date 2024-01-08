@@ -22,8 +22,7 @@ const Discord = ({ navigation }) => {
             Discord
           </Text>
           <Text style={styles.text2}>
-            The NAS that does it all. Connect, automate, and sync your apps and data with ease.
-          </Text>
+          Discord is a popular communication and chat platform designed for communities, gamers, and teams. It provides voice, video, and text communication channels where users can connect, chat, and collaborate in real-time. Discord offers features like server creation, channel organization, direct messaging, and screen sharing, making it a versatile platform for communication and community engagement.</Text>
         </View>
         <View style={styles.bottomContainer}>
           <TouchableOpacity style={styles.bouton}>

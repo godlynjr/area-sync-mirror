@@ -22,8 +22,7 @@ const Discord = ({ navigation }) => {
             Spotify
           </Text>
           <Text style={styles.text2}>
-            The NAS that does it all. Connect, automate, and sync your apps and data with ease.
-          </Text>
+          Spotify is a leading music streaming platform that offers a vast library of songs, albums, playlists, and podcasts. With Spotify's mobile app, users can discover new music, create personalized playlists, follow their favorite artists, and enjoy high-quality audio streaming.</Text>
         </View>
         <View style={styles.bottomContainer}>
           <TouchableOpacity style={styles.bouton}>

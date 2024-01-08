@@ -71,7 +71,7 @@ class Client {
                 return 201;
             }
         } catch (error) {
-            console.error('Erreur de connexion ghjj:', error);
+            console.error('Erreur de connexion check mail:', error);
             return 500;
         }
     }
