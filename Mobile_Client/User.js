@@ -9,6 +9,7 @@ class Client {
     fillRequestHeaders() {
         return {
             'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + this.#accesToken,
         };
     }
 
@@ -85,7 +86,8 @@ class Client {
                 });
             if (response.ok) {
                 const data = await response.json();
-                // setAboutData(data);
+                console.log(data);
+                return data;
             } else {
                 console.error('Erreur lors de la requête GET1111 :', response.status);
             }

@@ -36,14 +36,16 @@ const Services = ({ }) => {
 
     const [aboutData, setAboutData] = useState(null);
     useEffect(() => {
-        user.fetchAboutData();
+        const servs = user.fetchAboutData();
+        setAboutData(servs);
+        console.log('servs is now ' + servs);
     }, []);
 
     return (
         <SafeAreaView style={styles.container}>
             <Text style={styles.Services}>Services</Text>
             <SearchBar />
-            <Menu
+            {/* <Menu
                 visible={visible}
                 onDismiss={closeMenu}
                 anchor={<Button onPress={openMenu}>Show menu</Button>}>
@@ -51,11 +53,11 @@ const Services = ({ }) => {
                 <Menu.Item onPress={() => { }} title="Item 2" />
                 <Divider />
                 <Menu.Item onPress={() => { }} title="Item 3" />
-            </Menu>
+            </Menu> */}
             <View>
                 {aboutData ? (
                     <View>
-                        <Text>{aboutData}</Text>
+                        <Text>{aboutData.server}</Text>
                         {/* <Text>{aboutData.description}</Text> */}
                     </View>
                 ) : (

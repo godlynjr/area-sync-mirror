@@ -27,12 +27,12 @@ const App = () => {
     <PaperProvider>
       <NavigationContainer>
         <Stack.Navigator initialRouteName="LoginPage" screenOptions={{ headerShown: false }}>
-          {/* <Stack.Screen name="OnboardingPage" component={OnboardingPage} />
+          <Stack.Screen name="OnboardingPage" component={OnboardingPage} />
           <Stack.Group screenOptions={{ presentation: 'modal' }}>
             <Stack.Screen name="ConnexionPage" component={ConnexionPage} />
           </Stack.Group>
           <Stack.Screen name="LoginScreen" component={LoginScreen} />
-          <Stack.Screen name="RegisterScreen" component={RegisterScreen} /> */}
+          <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
           <Stack.Screen name="AppContentScreen" component={AppContentScreen} />
           <Stack.Screen name="TestScreen" component={TestScreen} />
           <Stack.Screen name="Service/Github" component={Github} />
