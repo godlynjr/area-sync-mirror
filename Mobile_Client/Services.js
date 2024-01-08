@@ -1,13 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, ScrollView, StyleSheet, Text, Dimensions, Image, TouchableOpacity, SafeAreaView } from 'react-native';
 import SearchBar from './SearchBar';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { useNavigation } from '@react-navigation/native';
 import { Menu, Divider, Button } from 'react-native-paper';
-
-// const { width, height } = Dimensions.get('window');
-// const guidelineWidth = 375; // Width of the device on which the design is based
-// const scale = size => (width / guidelineWidth) * size;
+import user from './User'
 
 const Services = ({ }) => {
     const navigation = useNavigation();
@@ -36,6 +33,13 @@ const Services = ({ }) => {
     const handleDiscord = async () => {
         navigation.navigate('Service/Discord');
     };
+
+    const [aboutData, setAboutData] = useState(null);
+
+    useEffect(() => {
+        user.fetchAboutData();
+    }, []);
+
     return (
         <SafeAreaView style={styles.container}>
             <Text style={styles.Services}>Services</Text>
@@ -49,6 +53,16 @@ const Services = ({ }) => {
                 <Divider />
                 <Menu.Item onPress={() => { }} title="Item 3" />
             </Menu>
+            <View>
+                {aboutData ? (
+                    <View>
+                        <Text>{aboutData}</Text>
+                        {/* <Text>{aboutData.description}</Text> */}
+                    </View>
+                ) : (
+                    <Text style={styles.text}>Chargement des données...</Text>
+                )}
+            </View>
             <View style={styles.serviceContainer}>
                 <ScrollView contentContainerStyle={styles.appletsListContainer} style={styles.box}>
                     <TouchableOpacity onPress={handleGithub}>
@@ -153,6 +167,9 @@ const styles = StyleSheet.create({
         flexGrow: 1,
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    text: {
+        marginTop: 50,
     },
     appletsListContainer: { alignItems: 'center', paddingVertical: 20, gap: 20 }
 });

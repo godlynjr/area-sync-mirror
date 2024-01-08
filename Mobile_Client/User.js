@@ -75,6 +75,24 @@ class Client {
             return 500;
         }
     }
+
+    async fetchAboutData() {
+        try {
+            const response = await fetch(api + "/about.json",
+                {
+                    method: "GET",
+                    headers: this.fillRequestHeaders(),
+                });
+            if (response.ok) {
+                const data = await response.json();
+                // setAboutData(data);
+            } else {
+                console.error('Erreur lors de la requête GET1111 :', response.status);
+            }
+        } catch (error) {
+            console.error('Erreur lors de la requête GET2222 :', error);
+        }
+    }
 }
 
 const User = new Client();

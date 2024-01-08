@@ -23,11 +23,20 @@ const SecondPage = ({ navigation }) => {
         handleSignInWithGoogle();
     }, [response]);
 
+    const storeUserCredentials = async (user) => {
+        try {
+            await AsyncStorage.setItem("@user", JSON.stringify(user));
+        } catch (error) {
+            // Gérer les erreurs de stockage
+        }
+    };
+
     async function handleSignInWithGoogle() {
         const user = await AsyncStorage.getItem("@user");
         if (!user) {
             if (response?.type === 'success') {
-                await getUserInfo(response.authentication.accessToken);
+                const userInfo = await getUserInfo(response.authentication.accessToken);
+                await storeUserCredentials(userInfo);
                 navigation.navigate('AppContentScreen'); // Rediriger vers la page AppContentScreen
             }
         } else {
