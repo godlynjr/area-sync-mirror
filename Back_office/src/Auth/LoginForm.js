@@ -20,7 +20,6 @@ const LoginForm = () => {
     console.log("Logging in with:", { email, password });
 
     if (Infos.login(email, password) === false)
-      console.log("false thereeee")
       setErrorMessage("Bad email or password. Try again.");
   };
 
