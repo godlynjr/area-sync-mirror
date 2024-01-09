@@ -1,11 +1,6 @@
 const api = "http://localhost:8080";
 
 class Data {
-    #accesToken = undefined;
-
-    // constructor() {
-    // }
-
     #fillRequestHeaders()
     {
       return {
@@ -60,7 +55,6 @@ class Data {
 
     async getUsers() {
         try {
-
             const response = await fetch(api + "/backoffice/users/infos", {
                 method: "GET",
                 headers: this.#fillRequestHeaders(),
@@ -76,6 +70,14 @@ class Data {
             console.log(error);
             throw error;
         }
+    }
+
+    async EditUserById(id) {
+
+    }
+
+    async DeletetUserById(id) {
+
     }
 
     searchUserByName(UserList, name)
