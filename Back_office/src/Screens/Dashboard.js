@@ -5,7 +5,6 @@ import StatusCard from "../Components/StatusCard";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faServer } from '@fortawesome/free-solid-svg-icons';
 import { faUsers } from '@fortawesome/free-solid-svg-icons';
-import { faCodePullRequest } from '@fortawesome/free-solid-svg-icons';
 import Infos from "../Data/Manage.js";
 
 const Dashboard = () => {
@@ -14,7 +13,11 @@ const Dashboard = () => {
     (async () => {
         try {
             const data = await Infos.getStats();
-            setStats(data);
+            const elems = [
+              { label: "Services", color: "purple-600", value: data.services, icon: faServer },
+              { label: "Nb Users", color: "orange-600", value: data.users, icon: faUsers },
+            ];
+            setStats(elems);
         } catch (error) {
             console.error("Error fetching users:", error);
         }
@@ -33,10 +36,21 @@ const Dashboard = () => {
             </h1>
         </div>
         <div className="grid grid-cols-4 gap-[30px] ml-4 mt-[25px] pb-[15px]">
+          {stats.map((item) => (
+            <StatusCard
+              key={item.label} // Assuming each item has a unique label property
+              color={`text-${item.color} text-sm leading-4 font-bold`}
+              text={item.label}
+              Numbers={item.value}
+              Icon={<FontAwesomeIcon icon={item.icon} style={{ color: "#000000", fontSize: "30px" }} />}
+            />
+          ))}
+        </div>
+
+        {/* <div className="grid grid-cols-4 gap-[30px] ml-4 mt-[25px] pb-[15px]">
             <StatusCard color={"text-purple-600 text-sm leading-4 font-bold"} text={"Services"} Numbers={"7"} Icon={<FontAwesomeIcon icon={faServer} style={{color: "#000000", fontSize: "30px"}} />}/>
             <StatusCard color={"text-orange-600 text-sm leading-4 font-bold"} text={"Nb Users"} Numbers={"200"} Icon={<FontAwesomeIcon icon={faUsers} style={{color: "#000000", fontSize: "30px"}} />}/>
-            <StatusCard color={"text-red-600 text-sm leading-4 font-bold"} text={"Requests"} Numbers={"342"} Icon={<FontAwesomeIcon icon={faCodePullRequest} style={{color: "#000000", fontSize: "30px"}} />}/>
-        </div>
+        </div> */}
       </div>
     </div>
   );
