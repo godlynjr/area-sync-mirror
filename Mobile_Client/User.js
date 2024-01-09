@@ -79,22 +79,47 @@ class Client {
 
     async fetchAboutData() {
         try {
-            const response = await fetch(api + "/about.json",
-                {
-                    method: "GET",
-                    headers: this.fillRequestHeaders(),
-                });
+            const token = 'votre_token'; // Remplacez par votre token d'authentification
+            const headers = {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + this.#accesToken,
+            };
+
+            const response = await fetch(api + '/about.json', {
+                method: 'GET',
+                headers: headers,
+            });
+
             if (response.ok) {
                 const data = await response.json();
                 console.log(data);
                 return data;
             } else {
-                console.error('Erreur lors de la requête GET1111 :', response.status);
+                console.error('Erreur lors de la requête GET :', response.status);
             }
         } catch (error) {
-            console.error('Erreur lors de la requête GET2222 :', error);
+            console.error('Erreur lors de la requête GET :', error);
         }
     }
+
+    // async fetchAboutData() {
+    //     try {
+    //         const response = await fetch(api + "/about.json",
+    //             {
+    //                 method: "GET",
+    //                 headers: this.fillRequestHeaders(),
+    //             });
+    //         if (response.ok) {
+    //             const data = await response.json();
+    //             console.log(data);
+    //             return data;
+    //         } else {
+    //             console.error('Erreur lors de la requête GET1111 :', response.status);
+    //         }
+    //     } catch (error) {
+    //         console.error('Erreur lors de la requête GET2222 :', error);
+    //     }
+    // }
 }
 
 const User = new Client();

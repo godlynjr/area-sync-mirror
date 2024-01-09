@@ -36,16 +36,23 @@ const Services = ({ }) => {
 
     const [aboutData, setAboutData] = useState(null);
     useEffect(() => {
-        const servs = user.fetchAboutData();
-        setAboutData(servs);
-        console.log('servs is now ' + servs);
+        const fetchData = async () => {
+            try {
+                const data = await user.fetchAboutData();
+                setAboutData(data);
+                console.log('data is now', data);
+            } catch (error) {
+                console.error('Erreur lors de la récupération des données :', error);
+            }
+        };
+        fetchData();
     }, []);
 
     return (
         <SafeAreaView style={styles.container}>
             <Text style={styles.Services}>Services</Text>
             <SearchBar />
-            {/* <Menu
+            <Menu
                 visible={visible}
                 onDismiss={closeMenu}
                 anchor={<Button onPress={openMenu}>Show menu</Button>}>
@@ -53,13 +60,14 @@ const Services = ({ }) => {
                 <Menu.Item onPress={() => { }} title="Item 2" />
                 <Divider />
                 <Menu.Item onPress={() => { }} title="Item 3" />
-            </Menu> */}
+            </Menu>
             <View>
                 {aboutData ? (
-                    <View>
-                        <Text>{aboutData.server}</Text>
-                        {/* <Text>{aboutData.description}</Text> */}
-                    </View>
+                    aboutData.server.services.map((service, index) => (
+                        <View key={index}>
+                            <Text>{service.name}</Text>
+                        </View>
+                    ))
                 ) : (
                     <Text style={styles.text}>Chargement des données...</Text>
                 )}
@@ -119,6 +127,10 @@ const Services = ({ }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+    },
+    dataStyle: {
+        color: 'red',
+        fontWeight: 'bold',
     },
     Services: {
         marginTop: 20,
