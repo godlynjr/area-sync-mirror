@@ -73,18 +73,38 @@ class Data {
     }
 
     async EditUserById(id) {
+        try {
 
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
     }
 
     async DeletetUserById(id) {
+        try {
+            const response = await fetch(`${api}/backoffice/user/delete/${id}`, {
+                method: "DELETE",
+                headers: this.#fillRequestHeaders(),
+            });
 
+            if (!response.ok)
+                throw new Error('Network response was not ok');
+
+            const data = await response.json();
+            window.location.href = '/UserList';
+            return data;
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
     }
 
-    searchUserByName(UserList, name)
+    searchUserByName(ulist, name)
     {
         const lowerName = name.toLowerCase();
 
-        return UserList.filter((item) => {
+        return ulist.filter((item) => {
         return item.username.toLowerCase() === lowerName || item.email.toLowerCase() === lowerName;
         });
     }
