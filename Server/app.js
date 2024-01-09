@@ -16,9 +16,6 @@ const { createSuperAdmin } = require('./BackOffice/BackOfAuth')
 // Importez votre modèle User
 const User = require("./models/userModel");
 
-// Importez la stratégie Google OAuth2 de Passport
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
-
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 var authRouter = require("./routes/auth");
@@ -78,64 +75,6 @@ mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopol
     console.error(err);
   });
 
-// Configurer la session
-app.use(session({
-  secret: 'your-secret-key',
-  resave: true,
-  saveUninitialized: true
-}));
-
-// Initialisation de Passport
-app.use(passport.initialize());
-app.use(passport.session());
-
-// Définissez la sérialisation et la désérialisation des utilisateurs pour la session
-passport.serializeUser((user, done) => {
-  done(null, user.id);
-});
-
-passport.deserializeUser((id, done) => {
-  User.findById(id, (err, user) => {
-    done(err, user);
-  });
-});
-
-// Utilisez la stratégie Google OAuth2
-passport.use(new GoogleStrategy({
-    clientID: process.env.CLIENT_ID,
-    clientSecret: process.env.CLIENT_SECRET,
-    callbackURL: process.env.REDIRECT_URI
-  },
-  (accessToken, refreshToken, profile, done) => {
-    // Logique pour créer ou récupérer un utilisateur dans la base de données
-    User.findOne({ googleId: profile.id }, (err, user) => {
-      if (err) {
-        return done(err);
-      }
-      if (!user) {
-        // Créez un nouvel utilisateur avec les informations Google
-        const newUser = new User({
-          googleId: profile.id,
-          username: profile.displayName,
-          email: profile.emails[0].value,
-          // Ajoutez d'autres informations de profil si nécessaire
-        });
-        newUser.save((err) => {
-          if (err) {
-            return done(err);
-          }
-          return done(null, newUser);
-        });
-      } else {
-        return done(null, user);
-      }
-    });
-  }
-));
-
-// Connectez Passport à Express
-app.use(passport.initialize());
-app.use(passport.session());
 
 // Connectez les routes
 app.use("/", indexRouter);
