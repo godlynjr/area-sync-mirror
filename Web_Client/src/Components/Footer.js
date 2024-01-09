@@ -18,22 +18,24 @@ function Footer() {
   };
 
   return (
-    <div className='bg-blue-200'>
-      <div className='max-sm:p-5 container mx-auto text-black'>
-        <h2 className='text-2xl' >Get new updates in <br /> your mailbox</h2>
+    <div className="container mx-auto">
+      <div className='max-sm:p-5 py-12 text-black'>
+        <h2 className='text-5xl font-light' >Get new updates in <br /> your mailbox</h2>
+        <p className="my-2">Email address </p>
         <label
           htmlFor="exampleCheckbox"
-          className="inline-flex items-center"
+          className="items-center"
         >
         <div className="mt-2">
           <input
             id="password"
+            placeholder="name@example.com"
             name="password"
-            type="password"
+            type="mail"
             autoComplete="current-password"
             onChange={handleChange}
             required
-            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            className="block w-[250px] rounded-md border-0 py-1.5 p-1"
           />
         </div>
           {/* Actual checkbox input */}
@@ -42,7 +44,7 @@ function Footer() {
             id="exampleCheckbox"
             checked={isChecked}
             onChange={handleCheckboxChange}
-            className="form-checkbox h-5 w-5 text-blue-600"
+            className="form-checkbox h-5 w-5 text-blue-300 mt-1.5"
           />
           {/* Label text */}
           <span className="ml-2">
@@ -56,19 +58,6 @@ function Footer() {
             </a>{" "}
           </span>
         </label>
-        <hr style={{
-          background: 'black',
-          color: 'black',
-          borderColor: 'black',
-          height: '1px',
-        }} className='my-5'/>
-
-        <p>Directly to</p>
-        <p>Login</p>
-        <p>About us</p>
-        <p>Explore</p>
-        <p>Updates</p>
-        <p>Categories</p>
 
         <hr style={{
           background: 'black',
@@ -77,10 +66,17 @@ function Footer() {
           height: '1px',
         }} className='my-5'/>
 
-        <div className='flex flex-col'>
+        
+        <div>
+
+        </div>
+        <div className='flex flex-col space-y-2'>
           <a href='/login'>infos@areasync.com</a>
-
-          <div className='flex space-x-2 my-6'>
+          
+          <div>
+            
+          </div>
+          <div className='flex space-x-2 my-6 lg:my-0'>
             <img src={linkedin}></img>
             <img src={insta}></img>
             <img src={x}></img>

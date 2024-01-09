@@ -39,17 +39,17 @@ const callback = async (req, res) => {
         },
     });
     let json = await response.json();
+    console.log(json);
     console.log('Access Token: ' + json.access_token);
     console.log('Refresh Token: ' + json.refresh_token);
 
-    // Ajoutez cette partie pour obtenir les informations de l'utilisateur
-    // let userResponse = await fetch('https://discord.com/api/users/@me', {
-    //     headers: {
-    //         Authorization: `Bearer ${json.access_token}`,
-    //     },
-    // });
-    // let userJson = await userResponse.json();
-    // console.log(userJson); // Affiche les informations de l'utilisateur dans la console
+    let userResponse = await fetch('https://api.spotify.com/v1/me/playlists', {
+        headers: {
+            Authorization: `Bearer ${json.access_token}`,
+        },
+    });
+    let userJson = await userResponse.json();
+    console.log(userJson.items); // Affiche les informations de l'utilisateur dans la console
 
     // const user = await DiscordUser.findOne({ discordId: userJson.id });
     // if (user) {

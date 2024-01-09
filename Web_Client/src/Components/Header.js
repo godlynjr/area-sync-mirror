@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import logo from '../Assets/logo.svg';
-import DropdownComponent from './DropdownComponent';
 
 function Header() {
 
@@ -18,7 +17,7 @@ function Header() {
 
           <div className="hidden lg:flex space-x-12 h-full justify-center items-center text-black">
             <div className="flex space-x-6">
-              <a href="#" className="hover:underline">
+              {/* <a href="#" className="hover:underline">
                 Explore
               </a>
               <a href="#" className="hover:underline">
@@ -26,15 +25,16 @@ function Header() {
               </a>
               <a href="#" className="hover:underline">
                 Categories
-              </a>
+              </a> */}
               <a href="/login" className="hover:underline">
                 Login
               </a>
             </div>
-            <a href="/register">
-              <button className="w-[154px] h-[50px]">
-                Get Started
-              </button>
+            <a href="/register" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-black bg-figma-yellow rounded-3xl">
+              Get Started
+              <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+              </svg>
             </a>
           </div>
           <button className="h-full lg:hidden">

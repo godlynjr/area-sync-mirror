@@ -121,14 +121,9 @@ const LandingPage = () => {
         </div>
       </section>
 
-
-      {/* <section className='bg-purple-300'>
-        <p className="text-black">logos of the services</p>
+      <section className='bg-[#BCCFD8]'>
+          <Footer />
       </section>
-      <section className=' bg-black'>
-        <p className='text-yellow-400 '>Carousel</p>
-      </section>
-      <Footer/> */}
     </div>
   );
 };

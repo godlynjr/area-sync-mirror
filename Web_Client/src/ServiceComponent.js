@@ -39,8 +39,10 @@ const ServiceComponent = ({ service, onServiceClick }) => {
     }
 
     return (
-        <div className='border border-solid text-center h-20 w-30 ' onClick={handleClick}>
-        {iconComponent}
+        <div className='border border-solid text-center h-20 w-30 rounded-lg' onClick={handleClick}>
+          <div className='flex justify-center items-center my-5'>
+            {iconComponent}
+          </div>
         <p>{service.name}</p>
         {/* Autres détails du service */}
         </div>
