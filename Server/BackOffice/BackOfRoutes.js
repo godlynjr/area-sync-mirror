@@ -17,6 +17,23 @@ function verifyToken(req, res, next) {
         res.status(400).json({ message: 'Invalid token', error: error.toString() });
     }
 }
+// Get the number of users and the number of services
+const getNumbers = async (req, res) => {
+    try {
+        // Vérifier si le superAdmin est connecté
+        if (req.user && req.user.isAdmin) {
+            const users = await User.collection.find({}).toArray();
+            const services = data.services;
+            res.json({ users: users.length, services: services.length });
+        } else {
+            // Refuser l'accès
+            res.status(403).json({ message: 'Access denied' });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error', error: error.toString() });
+    }
+};
 // Get all the users and their infos
 const infos = async (req, res) => {
     try {
@@ -76,4 +93,4 @@ const deleteUser = async (req, res) => {
         res.status(500).json({ message: 'Server error', error: error.toString() });
     }
 };
-module.exports = { infos, verifyToken, services, editUser, deleteUser };
+module.exports = { infos, verifyToken, services, editUser, deleteUser, getNumbers };
