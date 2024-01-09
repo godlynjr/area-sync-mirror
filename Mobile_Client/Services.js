@@ -48,11 +48,29 @@ const Services = ({ }) => {
         fetchData();
     }, []);
 
+//     <View>
+//     {aboutData ? (
+//         aboutData.server.services.map((service, index) => (
+//             <View key={index}>
+//                 <Text>{service.name}</Text>
+//                 {service.imagePath && (
+//                     <Image
+//                         source={require('./Assets/notion.png')}
+//                         style={styles.serviceImage}
+//                     />
+//                 )}
+//             </View>
+//         ))
+//     ) : (
+//         <Text style={styles.text}>Chargement des données...</Text>
+//     )}
+// </View>
+
     return (
         <SafeAreaView style={styles.container}>
             <Text style={styles.Services}>Services</Text>
             <SearchBar />
-            <Menu
+            {/* <Menu
                 visible={visible}
                 onDismiss={closeMenu}
                 anchor={<Button onPress={openMenu}>Show menu</Button>}>
@@ -60,7 +78,7 @@ const Services = ({ }) => {
                 <Menu.Item onPress={() => { }} title="Item 2" />
                 <Divider />
                 <Menu.Item onPress={() => { }} title="Item 3" />
-            </Menu>
+            </Menu> */}
             <View>
                 {aboutData ? (
                     aboutData.server.services.map((service, index) => (
