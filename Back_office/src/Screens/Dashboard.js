@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState , useEffect } from "react";
 import Sidebar from "../Components/Sidebar";
 import NavBar from "../Components/NavBar";
 import StatusCard from "../Components/StatusCard";
@@ -6,8 +6,20 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faServer } from '@fortawesome/free-solid-svg-icons';
 import { faUsers } from '@fortawesome/free-solid-svg-icons';
 import { faCodePullRequest } from '@fortawesome/free-solid-svg-icons';
+import Infos from "../Data/Manage.js";
 
 const Dashboard = () => {
+  const [stats, setStats] = useState([]);
+  useEffect(() => {
+    (async () => {
+        try {
+            const data = await Infos.getStats();
+            setStats(data);
+        } catch (error) {
+            console.error("Error fetching users:", error);
+        }
+    })();
+}, []);
   return (
     <div className="flex">
       <div className="basis-[15%] h-[100vh] border">
