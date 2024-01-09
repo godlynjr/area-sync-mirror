@@ -6,10 +6,9 @@ import Button from "../Components/Button";
 import Search from "../Components/Search";
 import Infos from "../Data/Manage.js";
 
-
-
 const UserList = () => {
     const [users, setUsers] = useState([]);
+    const [searchInput, setSearchInput] = useState('');
     const columns = [
         {
             name: 'Id',
@@ -76,8 +75,16 @@ const UserList = () => {
     };
 
     const handleDelete = (userId) => {
+        const success = Infos.DeletetUserById(userId);
         console.log("Delete user with ID:", userId);
+        console.log("Status: ", success);
     };
+
+    const handleSearchInputChange = (e) => {
+        setSearchInput(e.target.value);
+    };
+
+    const filteredUsers = searchInput !== '' ? Infos.searchUserByName(users, searchInput) : users;
 
     return (
         <div className="flex">
@@ -90,14 +97,14 @@ const UserList = () => {
                     <h1 className="sm:text-[27px] md:text-[29px] text-[31px] text-black-900 text-shadow-ts font-bold font-roboto">
                         List of Users
                     </h1>
-                    <Search />
+                    <Search onChange={handleSearchInputChange} />
                     <div className="container mt-5 rounded-lg border-2 border-gray-300">
                         <DataTable
                             columns={columns}
-                            data={users}
+                            data={filteredUsers}
                             pagination
                             paginationPerPage={8}
-                            paginationRowsPerPageOptions={[8, 16, 24]}
+                            paginationRowsPerPageOptions={[8]}
                             customStyles={customStyles}
                         />
                     </div>
