@@ -6,12 +6,11 @@ class Data {
     // constructor() {
     // }
 
-    #fillRequestHeaders(Format)
+    #fillRequestHeaders()
     {
       return {
-        accept: Format,
         'Content-Type': 'application/json',
-        'Authorization' : 'Bearer ' + localStorage.getItem('auth-token')
+        'auth-token': localStorage.getItem('auth-token')
       };
     }
 
@@ -19,14 +18,14 @@ class Data {
         try {
             const response = await fetch(api + "/backoffice/login", {
                 method: "POST",
-                headers: this.#fillRequestHeaders("application/json"),
+                headers: this.#fillRequestHeaders(),
                 body: JSON.stringify({ email: mail, password: password }),
             });
     
             if (response.ok) {
                 const data = await response.json();
                 localStorage.setItem('auth-token', data.token);
-                // Redirection
+                console.log('Token received:', localStorage.getItem('auth-token'));
                 window.location.href = '/Dashboard';
                 return true;
             } else if (response.status === 400) {
@@ -40,6 +39,45 @@ class Data {
         }
     }
 
+    async getStats() {
+        try {
+            const response = await fetch(api + "/backoffice/dashboard", {
+                method: "GET",
+                headers: this.#fillRequestHeaders(),
+            });
+
+            if (!response.ok)
+                throw new Error('Network response was not ok');
+
+            const data = await response.json();
+            console.log(data);
+            return data;
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
+    }
+
+    async getUsers() {
+        try {
+
+            const response = await fetch(api + "/backoffice/users/infos", {
+                method: "GET",
+                headers: this.#fillRequestHeaders(),
+            });
+
+            if (!response.ok)
+                throw new Error('Network response was not ok');
+
+            const data = await response.json();
+            console.log(data);
+            return data;
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
+    }
+
     searchUserByName(UserList, name)
     {
         const lowerName = name.toLowerCase();
@@ -50,8 +88,6 @@ class Data {
     }
 
     // Ajoutez d'autres méthodes pour gérer d'autres actions ici
-    // /backoffice/users/infos get toutes les infos
-    // /backoffice/services total of services
     // /backoffice/user/edit/id edit special user
     // /backoffice/user/delete/id delete special user
 }
