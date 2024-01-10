@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
->>>>>>> 618d55139ee36fb0ad74a7ad7dc1b2816828a66b
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
   <item android:drawable="@color/splashscreen_background"/>
 </layer-list>

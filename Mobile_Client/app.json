@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "MDN",
-    "slug": "MDN",
+    "name": "Areasync",
+    "slug": "Areasync",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./Assets/icon.png",
@@ -16,14 +16,14 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.godlynjr.MDN"
+      "bundleIdentifier": "com.godlynjr.areasync"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./Assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.godlynjr.MDN"
+      "package": "com.godlynjr.areasync"
     },
     "web": {
       "favicon": "./Assets/favicon.png"

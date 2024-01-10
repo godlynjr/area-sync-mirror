@@ -81,9 +81,9 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace 'com.godlynjr.MDN'
+    namespace 'com.godlynjr.areasync'
     defaultConfig {
-        applicationId 'com.godlynjr.MDN'
+        applicationId 'com.godlynjr.areasync'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

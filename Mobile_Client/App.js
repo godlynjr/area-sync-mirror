@@ -1,5 +1,3 @@
-import { registerRootComponent } from 'expo';
-import {Text, AppRegistry} from 'react-native';
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -24,7 +22,7 @@ import TestScreen from './TestScreen';
 
 const Stack = createNativeStackNavigator();
 
-export default App = () => {
+const App = () => {
   return (
     <PaperProvider>
       <NavigationContainer>
@@ -53,5 +51,4 @@ export default App = () => {
   );
 };
 
-// AppRegistry.registerComponent('MDN', () => App);
-// registerRootComponent(App);
+export default App;

@@ -1,12 +1,18 @@
 import React from 'react';
 import { View, SafeAreaView, Text, StyleSheet, Image, Dimensions, TouchableOpacity } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
+import { widthPercentageToDP, heightPercentageToDP, listenOrientationChange, moderateScale } from 'react-native-responsive-screen';
+const { width, height } = Dimensions.get('window');
+const guidelineWidth = 375; // Width of the device on which the design is based
 import { Ionicons } from '@expo/vector-icons';
+const scale_y = size => (height / guidelineWidth) * size;
 
 const Discord = ({ navigation }) => {
+  const iconSize = 30; // Taille de l'icône en pixels
   return (
     <SafeAreaView>
       <View style={styles.container}>
-        <Ionicons style={{ position: 'absolute', top: 10, left: 10 }} name="arrow-back" size={30} color="#fff" onPress={() => navigation.goBack()} />
+        <Ionicons style={{position: 'absolute', top: 10, left: 10}} name="arrow-back" size={30} color="#fff" onPress={() => navigation.goBack()} />
         <Image
           source={require('../Assets/google.png')}
           style={styles.Image}
@@ -16,7 +22,8 @@ const Discord = ({ navigation }) => {
             Google
           </Text>
           <Text style={styles.text2}>
-            Google is a leading technology company known for its search engine and online services. It provides a wide range of services including web search, email, cloud storage, productivity tools, maps, and more.</Text>
+            The NAS that does it all. Connect, automate, and sync your apps and data with ease.
+          </Text>
         </View>
         <View style={styles.bottomContainer}>
           <TouchableOpacity style={styles.bouton}>

@@ -1,8 +1,14 @@
 import React from 'react';
 import { View, SafeAreaView, Text, StyleSheet, Image, Dimensions, TouchableOpacity } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
+import { widthPercentageToDP, heightPercentageToDP, listenOrientationChange, moderateScale } from 'react-native-responsive-screen';
+const { width, height } = Dimensions.get('window');
+const guidelineWidth = 375; // Width of the device on which the design is based
 import { Ionicons } from '@expo/vector-icons';
+const scale_y = size => (height / guidelineWidth) * size;
 
 const Discord = ({ navigation }) => {
+  const iconSize = 30; // Taille de l'icône en pixels
   return (
     <SafeAreaView>
       <View style={styles.container}>
@@ -16,7 +22,8 @@ const Discord = ({ navigation }) => {
             Github
           </Text>
           <Text style={styles.text2}>
-          GitHub is a collaborative development platform based on Git, a decentralized version control system. It allows developers to work together on projects, manage issue tracking, share source code, and collaborate on Git repositories.</Text>
+            The NAS that does it all. Connect, automate, and sync your apps and data with ease.
+          </Text>
         </View>
         <View style={styles.bottomContainer}>
           <TouchableOpacity style={styles.bouton}>
