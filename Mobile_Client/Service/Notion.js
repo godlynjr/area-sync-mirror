@@ -1,14 +1,8 @@
 import React from 'react';
 import { View, SafeAreaView, Text, StyleSheet, Image, Dimensions, TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
-import { widthPercentageToDP, heightPercentageToDP, listenOrientationChange, moderateScale } from 'react-native-responsive-screen';
-const { width, height } = Dimensions.get('window');
-const guidelineWidth = 375; // Width of the device on which the design is based
 import { Ionicons } from '@expo/vector-icons';
-const scale_y = size => (height / guidelineWidth) * size;
 
 const Discord = ({ navigation }) => {
-  const iconSize = 30; // Taille de l'icône en pixels
   return (
     <SafeAreaView>
       <View style={styles.container}>
@@ -22,8 +16,7 @@ const Discord = ({ navigation }) => {
             Notion
           </Text>
           <Text style={styles.text2}>
-            The NAS that does it all. Connect, automate, and sync your apps and data with ease.
-          </Text>
+          Notion is a versatile productivity and collaboration app that helps individuals and teams stay organized and work efficiently. It offers a flexible workspace where users can create and manage notes, to-do lists, project boards, databases, and documents.</Text>
         </View>
         <View style={styles.bottomContainer}>
           <TouchableOpacity style={styles.bouton}>

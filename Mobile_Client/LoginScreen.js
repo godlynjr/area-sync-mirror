@@ -11,7 +11,7 @@ const LoginScreen = ({ navigation }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
-  const handleContinue = async () => {
+  const hangleConnexion = async () => {
     if (isEnteringEmail) {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (emailRegex.test(email)) {
@@ -76,7 +76,7 @@ const LoginScreen = ({ navigation }) => {
             value={email}
             onChangeText={setEmail}
           />
-          <TouchableOpacity style={styles.button} onPress={handleContinue}>
+          <TouchableOpacity style={styles.button} onPress={hangleConnexion}>
             <Text style={styles.buttonText}>
               Continue
             </Text>
@@ -139,7 +139,7 @@ const LoginScreen = ({ navigation }) => {
                 />
               </TouchableOpacity>
             </View>
-            <TouchableOpacity style={styles.button} onPress={handleContinue}>
+            <TouchableOpacity style={styles.button} onPress={hangleConnexion}>
               <Text style={styles.buttonText}>
                 Sign In
               </Text>
@@ -161,10 +161,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   eyeButton: {
-    position: 'absolute',
-    right: 0,
-    padding: 10,
-    marginTop: 50,
+    marginTop: -32,
+    marginLeft: 320,
   },
   image: {
     width: 350,
@@ -174,7 +172,7 @@ const styles = StyleSheet.create({
   text: {
     fontWeight: 'bold',
     fontSize: 20,
-    marginTop: -90,
+    marginTop: -70,
     textAlign: 'center',
   },
   label: {
@@ -184,21 +182,19 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
   input: {
-    width: 320,
-    height: 40,
+    width: 350,
     borderWidth: 1,
     borderColor: 'gray',
-    marginBottom: 15,
     paddingHorizontal: 10,
+    paddingVertical: 10,
     borderRadius: 15,
   },
   button: {
     width: 250,
-    height: 40,
     backgroundColor: 'black',
-    marginLeft: 40,
-    // paddingHorizontal: 20,
-    // paddingVertical: 10,
+    marginLeft: 50,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
     borderRadius: 15,
     marginTop: 30,
     justifyContent: 'center',

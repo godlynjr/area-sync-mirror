@@ -4,12 +4,7 @@ import { View, Text, StyleSheet, Dimensions, TouchableOpacity, SafeAreaViewBase 
 import { FontAwesome } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native'; // Importer useNavigation
-import { widthPercentageToDP, heightPercentageToDP, listenOrientationChange, removeOrientationListener } from 'react-native-responsive-screen';
 import { SafeAreaView } from 'react-native-safe-area-context';
-
-const { width, height } = Dimensions.get('window');
-const guidelineWidth = 375; // Width of the device on which the design is based
-const scale = size => (width / guidelineWidth) * size;
 
 const Profil = () => {
   const navigation = useNavigation(); // Obtenir l'objet navigation

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, TextInput, Dimensions} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { widthPercentageToDP, heightPercentageToDP, listenOrientationChange, removeOrientationListener } from 'react-native-responsive-screen';
 
 const MySearch = () => {
   const [searchText, setSearchText] = useState('');
@@ -25,9 +24,6 @@ const MySearch = () => {
     </View>
   );
 };
-
-const responsiveWidth = widthPercentageToDP('50%'); // Get responsive width
-const responsiveHeight = heightPercentageToDP('30%'); // Get responsive height
 
 const styles = StyleSheet.create({
   container: {

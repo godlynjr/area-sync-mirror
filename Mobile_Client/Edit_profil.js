@@ -3,7 +3,6 @@ import { View, Text, TextInput, StyleSheet, Dimensions, TouchableOpacity } from 
 import { FontAwesome5 } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
-// import { black } from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
 
 const Edit_profil = ({ navigation }) => { // Ajout de la prop "navigation"
     const user = {
