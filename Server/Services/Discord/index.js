@@ -1,4 +1,4 @@
-const { Client, GatewayIntentBits } = require('discord.js');
+const { Client, GatewayIntentBits } = require('discord.js')
 const config = require("./config.json");
 const fetch = require('node-fetch');
 const DiscordUser = require('../../models/DiscordUser');
@@ -6,13 +6,16 @@ const airtable = require('airtable');
 
 const client = new Client({
     intents: [
-      GatewayIntentBits.Guilds,
-      GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.Guilds,
+		GatewayIntentBits.GuildMessages,
+		GatewayIntentBits.MessageContent,
+		GatewayIntentBits.GuildMembers,
     ]
 });
 
 let DiscordIsActive = false;
 let AirtableIsActive = false;
+let processedMessageIds = new Set();
 
 client.login(config.BOT_TOKEN);
 
@@ -79,24 +82,65 @@ const callback = async (req, res) => {
     });
 };
 
+client.on('ready', () => {
+    console.log(`Logged in as ${client.user.tag}!`);
+});
+
 // ---------------------------------------------------------------------------------------------
 // Area One
 
 // Écoutez l'événement 'messageUpdate'
-client.on('messageUpdate', (oldMessage, newMessage) => {
-    // Vérifiez si le message est épinglé
-    if (newMessage.pinned && !oldMessage.pinned) {
-        // Déclenchez une action lorsque le message est épinglé
-        console.log('Un message a été épinglé :', newMessage.content);
+client.on('messageCreate', async (message) => {
+    console.log('Message :', message);
+    // Fetch all pinned messages in the channel
+    let pinnedMessages = await message.channel.messages.fetchPinned();
+    // Check if the message is in the collection of pinned messages
+    if (pinnedMessages.has(message.id)) {
+        console.log('Un message a été épinglé :', message.content);
 
+        // Effectuez des actions liées à chaque message épinglé ici
         const eventDetails = {
             // remplissez les détails de l'événement ici
         };
         // appelez votre fonction pour créer un événement Google Calendar ici
         // createGoogleCalendarEvent(eventDetails);
-
     }
 });
+
+async function checkPinnedMessages(channel) {
+    try {
+        const pinnedMessages = await channel.messages.fetchPinned();
+
+        // Parcourez les messages épinglés et effectuez des actions si nécessaire
+        pinnedMessages.forEach(async (message) => {
+            if (!processedMessageIds.has(message.id)) {
+                console.log('Nouveau message épinglé :', message.content);
+
+                // Créez un événement Google Calendar pour le nouveau message épinglé
+                const eventDetails = {
+                    // Utilisez les détails du message pour remplir les détails de l'événement
+                    'summary': `Message épinglé : ${message.content}`,
+                    'description': `Un nouveau message a été épinglé dans le canal ${channel.name} par ${message.author.username}.`,
+                    // Ajoutez d'autres détails de l'événement ici
+                };
+                await createGoogleCalendarEvent(eventDetails);
+
+                // Ajoutez l'ID du message à la liste des messages traités
+                processedMessageIds.add(message.id);
+            }
+        });
+    } catch (error) {
+        console.error('Erreur lors de la récupération des messages épinglés :', error);
+    }
+}
+
+// Vérifiez périodiquement les messages épinglés
+setInterval(() => {
+    const channel = client.channels.cache.get('1194380647729463336');
+    if (channel) {
+        checkPinnedMessages(channel);
+    }
+}, 30000);
 
 async function createGoogleCalendarEvent(eventDetails) {
     const {google} = require('googleapis');
@@ -108,7 +152,7 @@ async function createGoogleCalendarEvent(eventDetails) {
         const response = await calendar.events.insert({
             auth: auth,
             calendarId: 'primary',
-            resource: event,
+            resource: eventDetails,
         });
         console.log('Event created: %s', response.data.htmlLink);
     } catch (error) {
@@ -120,8 +164,6 @@ async function createGoogleCalendarEvent(eventDetails) {
 
 // Area Two
 
-console.log('AirtableIsActive:', AirtableIsActive);
-
 const Airtableconnect = async (req, res) => {
     try {
         AirtableIsActive = true;
@@ -131,8 +173,6 @@ const Airtableconnect = async (req, res) => {
         res.status(500).json({ message: 'Server error', error: error.toString() } , { message: 'Airtable is not connected' });
     }
 };
-
-console.log('AirtableIsActive:', AirtableIsActive);
 
 const base = new airtable({ apiKey: process.env.AIRTABLE_API_KEY }).base(process.env.AIRTABLE_BASE_ID);
 
