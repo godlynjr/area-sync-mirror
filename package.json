@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@notionhq/client": "^2.2.14",
     "@react-oauth/google": "^0.12.1",
     "airtable": "^0.12.2",
     "assert": "^2.1.0",

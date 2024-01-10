@@ -6,50 +6,48 @@ const OnboardingPage = ({ navigation }) => {
     navigation.navigate('ConnexionPage');
   };
   return (
-      <View style={styles.container}>
-        <Image
-          source={require('./Assets/area_logo.jpeg')}
-          style={styles.image}
-        />
-        <Text style={styles.texts}>
-          The NAS that does it all. Connect, automate, and sync your apps and data with ease.
-        </Text>
-        <TouchableOpacity style={styles.button} onPress={handlePress}>
-          <Text style={styles.buttonText}>Get Started</Text>
-        </TouchableOpacity>
-      </View>
+    <View style={styles.container}>
+      <Image
+        source={require('./Assets/area_logo.jpeg')}
+        style={styles.image}
+      />
+      <Text style={styles.texts}>
+        The NAS that does it all. Connect, automate, and sync your apps and data with ease.
+      </Text>
+      <TouchableOpacity style={styles.button} onPress={handlePress}>
+        <Text style={styles.buttonText}>Get Started</Text>
+      </TouchableOpacity>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     alignItems: 'center',
-    marginTop: 130,
+    justifyContent: 'center',
   },
   image: {
-    marginTop: 10,
-    width: 350,
-    height: 350,
+    marginTop: 50,
+    width: 400,
+    height:400,
   },
   texts: {
-    marginTop: -90,
+    marginTop: -80,
     fontSize: 15,
     textAlign: 'center',
   },
   button: {
-    marginTop: 60,
+    marginTop: 40,
     backgroundColor: 'black',
     borderRadius: 20,
-    padding: 10,
-    width: 300,
-    height: 50,
+    marginLeft: 10,
+    marginRight: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 100,
   },
   buttonText: {
-    marginTop: 5,
     justifyContent: 'center',
-    alignItems: 'center',
-    marginLeft: 90,
+    textAlign: 'center',    
     color: 'white',
     fontWeight: 'bold',
   },

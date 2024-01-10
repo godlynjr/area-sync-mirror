@@ -1,0 +1,19 @@
+name: Mirror Repository
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Mirror Repository
+      uses: pixta-dev/repository-mirroring-action@v1
+      with:
+        target_repo_url: 'https://github.com/godlynjr/area-sync-mirror.git'

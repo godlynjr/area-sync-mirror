@@ -9,6 +9,7 @@ class Client {
     fillRequestHeaders() {
         return {
             'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + this.#accesToken,
         };
     }
 
@@ -24,7 +25,7 @@ class Client {
         try {
             this.#personal = await this.getData(api + '/me');
         } catch (error) {
-            console.log(error);
+            // console.log(error);
         }
     }
 
@@ -38,14 +39,13 @@ class Client {
             const statusCode = response.status;
             const data = await response.json();
             if (statusCode === 200) {
-                console.log("Is goodlogin");
+                // console.log("Is goodlogin");
                 this.isLoggedIn = true;
                 this.#accesToken = data.access_token;
                 await this.fetchPersonalData();
                 return 200;
-                // window.location.href = '/';
             } else if (statusCode === 400) {
-                console.log("Is badlogin");
+                // console.log("Is badlogin");
                 return 400;
             }
         } catch (error) {
@@ -63,40 +63,63 @@ class Client {
             });
             const statusCode = response.status;
             const data = await response.json();
-            console.log(statusCode);
+            // console.log(statusCode);
             if (statusCode === 200) {
-                console.log("Is goodcheckmail");
+                // console.log("mail already exist");
                 return 200;
-            } else if (statusCode === 400) {
-                console.log("Is badcheckmail");
-                return 400;
+            } else if (statusCode === 201) {
+                // console.log("you have to register");
+                return 201;
             }
         } catch (error) {
-            console.error('Erreur de connexion ghjj:', error);
+            console.error('Erreur de connexion check mail:', error);
             return 500;
         }
     }
 
-    async register(mail, password) {
+    async fetchAboutData() {
         try {
-            const response = await fetch(api + "/auth/register", {
-                method: "POST",
-                headers: this.fillRequestHeaders(),
-                body: JSON.stringify({ email: mail, password: password }),
+            const token = 'votre_token'; // Remplacez par votre token d'authentification
+            const headers = {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + this.#accesToken,
+            };
+
+            const response = await fetch(api + '/about.json', {
+                method: 'GET',
+                headers: headers,
             });
+
             if (response.ok) {
                 const data = await response.json();
                 console.log(data);
-                window.location.href = '/login';
-                return 200;
+                return data;
             } else {
-                throw new Error('Failed to register');
-                return 400;
+                console.error('Erreur lors de la requête GET :', response.status);
             }
         } catch (error) {
-            console.error('Erreur de connexion :', error);
+            console.error('Erreur lors de la requête GET :', error);
         }
     }
+
+    // async fetchAboutData() {
+    //     try {
+    //         const response = await fetch(api + "/about.json",
+    //             {
+    //                 method: "GET",
+    //                 headers: this.fillRequestHeaders(),
+    //             });
+    //         if (response.ok) {
+    //             const data = await response.json();
+    //             console.log(data);
+    //             return data;
+    //         } else {
+    //             console.error('Erreur lors de la requête GET1111 :', response.status);
+    //         }
+    //     } catch (error) {
+    //         console.error('Erreur lors de la requête GET2222 :', error);
+    //     }
+    // }
 }
 
 const User = new Client();
