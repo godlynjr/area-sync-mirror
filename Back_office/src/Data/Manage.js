@@ -24,7 +24,6 @@ class Data {
                 window.location.href = '/Dashboard';
                 return true;
             } else if (response.status === 400) {
-                // Handle 400 Bad Request (wrong email or password)
                 console.error('Erreur de connexion : Identifiants invalides');
                 return false;
             }
@@ -72,9 +71,21 @@ class Data {
         }
     }
 
-    async EditUserById(id) {
+    async EditUserById(user) {
         try {
+            const { userId, username, email, password } = user;
 
+            const response = await fetch(`${api}/backoffice/user/edit/${userId}`, {
+                method: "PUT",
+                headers: this.#fillRequestHeaders(),
+                body: JSON.stringify({ username, email, password, isAdmin: true }),
+            });
+
+            if (!response.ok)
+                throw new Error('Network response was not ok');
+
+            const data = await response.json();
+            return data;
         } catch (error) {
             console.log(error);
             throw error;
