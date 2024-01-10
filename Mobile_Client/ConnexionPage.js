@@ -3,9 +3,9 @@ import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 const SecondPage = ({ navigation }) => {
-    const PressMail = (provider) => {
-        navigation.goBack(); // Close the modal
-        navigation.navigate('LoginScreen', { provider }); // Redirect to the desired page
+    const pressMail = () => {
+        navigation.goBack(); // Fermer la modal
+        navigation.navigate('LoginScreen', { provider: 'mail' }); // Rediriger vers la page souhaitée avec le fournisseur 'mail'
     };
 
     return (
@@ -22,7 +22,7 @@ const SecondPage = ({ navigation }) => {
                 <Icon name="facebook" size={24} color="white" style={styles.icon1} />
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.mailbutton} onPress={PressMail}>
+            <TouchableOpacity style={styles.mailbutton} onPress={pressMail}>
                 <Text style={styles.mailtext}>Continue with Mail</Text>
                 <Icon name="google" size={24} color="white" style={styles.icon2} />
             </TouchableOpacity>

@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { View, TextInput, TouchableOpacity, Text, Alert, StyleSheet, Image } from 'react-native';
 import User from "./User"
-import Icon from 'react-native-vector-icons/Ionicons';
+import { Ionicons } from '@expo/vector-icons';
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isRegistering, setIsRegistering] = useState(false);
   const [isEnteringEmail, setIsEnteringEmail] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -14,29 +15,42 @@ const LoginScreen = ({ navigation }) => {
     if (isEnteringEmail) {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (emailRegex.test(email)) {
-        setIsEnteringEmail(false);
+        const isValidEmail = await User.checkMail(email);
+        try {
+          if (isValidEmail === 200) {
+            setIsEnteringEmail(false);
+          } else if (isValidEmail === 201) {
+            setIsRegistering(true);
+            setIsEnteringEmail(false);
+          }
+        } catch (error) {
+          console.error('Erreur de connexion :', error);
+        }
       } else {
         Alert.alert('Invalid email format');
       }
     } else if (password.trim() === '') {
       Alert.alert('Empty Password', 'Please enter your password.');
     } else {
-      const isValidEmail = await User.checkMail(email);
+      const loginResponse = await User.login(email, password);
       try {
-        console.log('isvalidemail', isValidEmail)
-        if (isValidEmail === 200) {
-          const loginResponse = await User.login(email, password);
-          console.log('loginresponse', loginResponse)
-          if (loginResponse === 200) {
-            navigation.navigate('AppContentScreen');
-          }
-        } else if (isValidEmail === 400) {
-          navigation.navigate('RegisterScreen')
-          // Alert.alert('Invalid email', 'The email is incorrect.');
+        if (loginResponse === 200) {
+          navigation.navigate('AppContentScreen');
         }
       } catch (error) {
-        console.error('Erreur de connexionoooooooooooooooo :', error);
+        console.error('Erreur de connexion :', error);
       }
+    }
+  };
+
+  const handleRegister = async () => {
+    const loginResponse = await User.login(email, password);
+    try {
+      if (loginResponse === 200) {
+        navigation.navigate('AppContentScreen');
+      }
+    } catch (error) {
+      console.error('Erreur de connexion register', error);
     }
   };
 
@@ -50,11 +64,11 @@ const LoginScreen = ({ navigation }) => {
         source={require('./Assets/area_logo.jpeg')}
         style={styles.image}
       />
-      <Text style={styles.text}>
-        {isEnteringEmail ? "What's your email?" : "Enter your password"}
-      </Text>
       {isEnteringEmail ? (
         <View>
+          <Text style={styles.text}>
+            What's your email?
+          </Text>
           <Text style={styles.label}>Email</Text>
           <TextInput
             style={styles.input}
@@ -62,28 +76,80 @@ const LoginScreen = ({ navigation }) => {
             value={email}
             onChangeText={setEmail}
           />
-        </View>
-      ) : (
-        <View>
-          <Text style={styles.label}>Password</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Enter Password"
-            secureTextEntry={!showPassword}
-            value={password}
-            onChangeText={setPassword}
-          />
-          <TouchableOpacity style={styles.eyeButton} onPress={togglePasswordVisibility}>
-            <Icon name={showPassword ? 'eye-off-outline' : 'eye-outline'} size={24} color="black" />
+          <TouchableOpacity style={styles.button} onPress={handleContinue}>
+            <Text style={styles.buttonText}>
+              Continue
+            </Text>
           </TouchableOpacity>
         </View>
+      ) : (
+        isRegistering ? (
+          <View>
+            <Text style={styles.text}>Create your password</Text>
+            <View>
+              <Text style={styles.label}>Password</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="Enter Password"
+                secureTextEntry={!showPassword}
+                value={password}
+                onChangeText={setPassword}
+              />
+              <TouchableOpacity
+                style={styles.eyeButton}
+                onPress={togglePasswordVisibility}
+              >
+                <Ionicons
+                  name={showPassword ? 'eye-off-outline' : 'eye-outline'}
+                  size={24}
+                  color="black"
+                />
+              </TouchableOpacity>
+            </View>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={handleRegister}
+            >
+              <Text style={styles.buttonText}>Register</Text>
+            </TouchableOpacity>
+            {errorMessage ? (
+              <Text style={styles.errorMessage}>{errorMessage}</Text>
+            ) : null}
+          </View>
+        ) : (
+          <View>
+            <Text style={styles.text}>Enter your password</Text>
+            <View>
+              <Text style={styles.label}>Password</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="Enter Password"
+                secureTextEntry={!showPassword}
+                value={password}
+                onChangeText={setPassword}
+              />
+              <TouchableOpacity
+                style={styles.eyeButton}
+                onPress={togglePasswordVisibility}
+              >
+                <Ionicons
+                  name={showPassword ? 'eye-off-outline' : 'eye-outline'}
+                  size={24}
+                  color="black"
+                />
+              </TouchableOpacity>
+            </View>
+            <TouchableOpacity style={styles.button} onPress={handleContinue}>
+              <Text style={styles.buttonText}>
+                Sign In
+              </Text>
+            </TouchableOpacity>
+            {errorMessage ? (
+              <Text style={styles.errorMessage}>{errorMessage}</Text>
+            ) : null}
+          </View>
+        )
       )}
-      <TouchableOpacity style={styles.button} onPress={handleContinue}>
-        <Text style={styles.buttonText}>
-          {isEnteringEmail ? 'Continue' : 'Sign In'}
-        </Text>
-      </TouchableOpacity>
-      {errorMessage ? <Text style={styles.errorMessage}>{errorMessage}</Text> : null}
     </View>
   );
 };
@@ -98,7 +164,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 0,
     padding: 10,
-    marginTop: 20,
+    marginTop: 50,
   },
   image: {
     width: 350,
@@ -109,12 +175,13 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 20,
     marginTop: -90,
-    marginBottom: 20,
+    textAlign: 'center',
   },
   label: {
     fontWeight: 'normal',
     fontSize: 15,
     marginBottom: 5,
+    marginTop: 30,
   },
   input: {
     width: 320,
@@ -129,15 +196,19 @@ const styles = StyleSheet.create({
     width: 250,
     height: 40,
     backgroundColor: 'black',
-    paddingHorizontal: 20,
-    paddingVertical: 10,
+    marginLeft: 40,
+    // paddingHorizontal: 20,
+    // paddingVertical: 10,
     borderRadius: 15,
     marginTop: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   buttonText: {
     color: 'white',
     fontSize: 16,
     fontWeight: 'bold',
+    justifyContent: 'center',
     textAlign: 'center',
   },
 });
