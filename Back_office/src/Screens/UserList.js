@@ -92,6 +92,19 @@ const UserList = () => {
         setSelectedUser(null);
     };
 
+    // const [filteredUsers, setFilteredUsers] = useState(users);
+    // const handleSearch = (searchTerm) => {
+    //     if (searchTerm.trim() === '') {
+    //         // Si la recherche est vide, réinitialiser à la liste complète des utilisateurs
+    //         setFilteredUsers(users);
+    //     } else {
+    //         // Sinon, appliquer la fonction de recherche
+    //         const result = Infos.searchUserByName(users, searchTerm);
+    //         setFilteredUsers(result);
+    //     }
+    //     console.log('Recherche effectuée avec le terme :', searchTerm);
+    // };
+
     return (
         <div className="flex">
             <div className="basis-[15%] h-[100vh] border">
@@ -104,6 +117,7 @@ const UserList = () => {
                         List of Users
                     </h1>
                     <Search />
+                    {/* <Search onSearch={handleSearch} /> */}
                     <div className="container mt-5 rounded-lg border-2 border-gray-300">
                         <DataTable
                             columns={columns}
