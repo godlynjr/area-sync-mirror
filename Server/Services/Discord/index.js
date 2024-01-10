@@ -3,6 +3,9 @@ const config = require("./config.json");
 const fetch = require('node-fetch');
 const DiscordUser = require('../../models/DiscordUser');
 const airtable = require('airtable');
+const verifyToken = require('../../controllers/dataInfo');
+const { googled } = require('../Calendar/calendar');
+
 
 const client = new Client({
     intents: [
@@ -89,6 +92,22 @@ client.on('ready', () => {
 // ---------------------------------------------------------------------------------------------
 // Area One
 
+const CalendarConnect = async (req, res) => {
+    try {
+        const token = req.headers.authorization.split(' ')[1];
+        const isValid = verifyToken(token);
+        if (!isValid) {
+            return res.status(401).json({ message: 'Unauthorized' });
+        }
+        await googled(req, res);
+        DiscordIsActive = true;
+        // res.status(200).json({ message: 'Calendar is connected' });
+    } catch (error) {
+        console.error('Error in CalendarConnect:', error);
+        res.status(500).json({ message: 'Server error', error: error.toString() } , { message: 'Calendar is not connected' });
+    }
+};
+
 // Écoutez l'événement 'messageUpdate'
 client.on('messageCreate', async (message) => {
     console.log('Message :', message);
@@ -143,21 +162,7 @@ setInterval(() => {
 }, 30000);
 
 async function createGoogleCalendarEvent(eventDetails) {
-    const {google} = require('googleapis');
-    const calendar = google.calendar({version: 'v3', auth});
-    const event = {
-        // remplissez les détails de l'événement ici
-    };
-    try {
-        const response = await calendar.events.insert({
-            auth: auth,
-            calendarId: 'primary',
-            resource: eventDetails,
-        });
-        console.log('Event created: %s', response.data.htmlLink);
-    } catch (error) {
-        console.log('There was an error contacting the Calendar service: ' + error);
-    }
+    
 }
 
 // ---------------------------------------------------------------------------------------------
@@ -166,6 +171,11 @@ async function createGoogleCalendarEvent(eventDetails) {
 
 const Airtableconnect = async (req, res) => {
     try {
+        const token = req.headers.authorization.split(' ')[1];
+        const isValid = verifyToken(token);
+        if (!isValid) {
+            return res.status(401).json({ message: 'Unauthorized' });
+        }
         AirtableIsActive = true;
         res.status(200).json({ message: 'Airtable is connected' });
     } catch (error) {
@@ -206,4 +216,4 @@ client.on('guildMemberAdd', member => {
     }
 });
 
-module.exports = { login, callback, Airtableconnect };
+module.exports = { login, callback, Airtableconnect, CalendarConnect };
