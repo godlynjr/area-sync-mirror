@@ -20,16 +20,16 @@ const LandingPage = () => {
           <div className='flex flex-col'>
 
             <div className='flex flex-col items-end text-left'>
-              <p className='text-4xl lg:text-7xl mt-10 font-light'>The future of the automatisation is here.</p>
+              <p className='text-4xl lg:text-7xl mt-10 font-light'>The future of the < br /> automatisation < br /> is here.</p>
 
-              <p className='text-xl font-light pt-5 pl-5 mt-10'>Our automatisations make the lives of
-                millions of users around the world easier
+              <p className='text-xl font-light pt-5 pl-5 mt-10 lg:text-2xl'>Our automatisations make the lives of
+                millions of users around the world < br />easier
                 and more beautiful every day.</p>
             </div>
 
             <div class="max-w-sm p-6 border rounded-3xl shadow bg-black my-5 lg:mr-16">
-                <p class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy technology acquisitions 2021</p>
-                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology acquisitions.</p>
+                <p class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">Newest technology automatisations 2023</p>
+                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Here are the biggest technology automatisations.</p>
 
                 <div className='flex justify-end'>
                   <a href="#" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-black bg-figma-yellow rounded-3xl">
