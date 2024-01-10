@@ -1,13 +1,13 @@
 {
   "expo": {
-    "name": "AreaSync",
-    "slug": "AreaSync",
+    "name": "MDN",
+    "slug": "MDN",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./Assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./Assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -16,22 +16,17 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.anonymous.AreaSync"
+      "bundleIdentifier": "com.godlynjr.MDN"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./Assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.anonymous.AreaSync"
+      "package": "com.godlynjr.MDN"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
-    },
-    "extra": {
-      "eas": {
-        "projectId": "b4135adf-34c0-4065-8bfc-b19d05c322b0"
-      }
+      "favicon": "./Assets/favicon.png"
     }
   }
 }
