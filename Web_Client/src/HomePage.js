@@ -50,15 +50,23 @@ function HomePage() {
   }, []);
 
   return (
-    <div>
+    <div className='bg-figma-green h-full'>
       <Header />
-      <div className='flex flex-row justify-center items-center'>
+
+      {/* <hr style={{
+        background: 'black',
+        color: 'black',
+        borderColor: 'black',
+        height: '1px',
+      }} className='my-1'/> */}
+
+      <div className='flex flex-col justify-center items-center'>
         <p className='lg:text-5xl'>Discover</p>
+        <Searchbar onSearch={handleInputChange} />
       </div>
       <div className='container mx-auto'>
-        <Searchbar onSearch={handleInputChange} />
         {jsonData && (
-          <div className='grid grid-cols-2 gap-8 text-black sm:gap-10 md:grid-cols-3 lg:grid-cols-3 mt-5'>
+          <div className='grid grid-cols-2 gap-5 text-black sm:gap-10 md:grid-cols-3 lg:grid-cols-3 mt-5'>
 
           {jsonData.server.services.map((service, index) => (
             <ServiceComponent key={index} service={service} onServiceClick={handleServiceClick}/>

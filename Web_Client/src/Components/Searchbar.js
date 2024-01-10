@@ -9,13 +9,13 @@ const ServiceSearch = ({ onSearch }) => {
   };
 
   return (
-    <div>
+    <div className='space-x-10 '>
       <input
         type="text"
         placeholder="Rechercher un service..."
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
-        className='border border-solid border-purple-900 rounded-lg bg-red-50'
+        className='border border-solid border-black rounded-lg bg-red-50 my-5 w-96 h-10 px-5'
       />
       <button onClick={handleSearch}>Rechercher</button>
     </div>

@@ -10,41 +10,48 @@ const ServiceComponent = ({ service, onServiceClick }) => {
     };
     
     let iconComponent;
+    let bgColorClass;
 
     switch (service.name.toLowerCase()) {
-        case 'discord':
-          iconComponent = <FaDiscord/>;
-          break;
-        case 'google calendar':
-          iconComponent = <FaCalendar />;
-          break;
-        case 'notion':
-          iconComponent = <SiNotion />;
-          break;
-        case 'spotify':
-          iconComponent = <FaSpotify />;
-          break;
-        case 'gmail':
-          iconComponent = <FaEnvelope />;
-          break;
-        case 'tally':
-          iconComponent = <FaChartBar />;
-          break;
-        case 'github':
-          iconComponent = <FaGithub />;
-          break;
-        default:
-          iconComponent = null;
-          break;
+      case 'discord':
+        iconComponent = <FaDiscord/>;
+        bgColorClass = 'bg-discord';
+        break;
+      case 'google calendar':
+        iconComponent = <FaCalendar />;
+        bgColorClass = 'bg-[#4285f4]';
+        break;
+      case 'notion':
+        iconComponent = <SiNotion />;
+        bgColorClass = 'bg-[#FAF3DD]'
+        break;
+      case 'spotify':
+        iconComponent = <FaSpotify />;
+        bgColorClass = 'bg-[#1DB954]'
+        break;
+      case 'gmail':
+        iconComponent = <FaEnvelope />;
+        bgColorClass = 'bg-[#d3d3d3]'
+        break;
+      case 'tally':
+        iconComponent = <FaChartBar />;
+        bgColorClass = 'bg-[#773b96]'
+        break;
+      case 'github':
+        iconComponent = <FaGithub />;
+        bgColorClass = 'bg-[#333333]'
+        break;
+      default:
+        iconComponent = null;
+        break;
     }
 
     return (
-        <div className='border border-solid text-center h-20 w-30 rounded-lg' onClick={handleClick}>
+        <div className={`border border-solid text-center h-36 w-30 rounded-lg ${bgColorClass}`} onClick={handleClick}>
           <div className='flex justify-center items-center my-5'>
             {iconComponent}
           </div>
-        <p>{service.name}</p>
-        {/* Autres détails du service */}
+          <p>{service.name}</p>
         </div>
     );
 };
