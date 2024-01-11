@@ -1,8 +1,10 @@
+const schedule = require('node-schedule');
 const nodemailer = require('nodemailer');
 
-var scheduledHour = 21; // Par exemple, 9 heures (3 PM)
-var scheduledMinutes = 15; // Par exemple, 30 minutes
-var scheduledSeconds = 0; // Par exemple, 28 seconde
+const scheduledTime = new Date();
+scheduledTime.setHours(2); // Heure (24 heures format)
+scheduledTime.setMinutes(28); // Minutes
+scheduledTime.setSeconds(0); // Secondes
 
 var currentDate = new Date();
 var year = currentDate.getFullYear();
@@ -49,7 +51,7 @@ function sendEmail() {
         subject: 'Message Motivant de la journée',
         text: randomMessage
     };
-    
+
     // Envoyer l'erandomMessage
     transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
@@ -60,9 +62,23 @@ function sendEmail() {
             console.log('------------------------------');
         }
     });
-}; 
+};
 
-sendEmail();
+console.log('Début du script...');
+
+const job = schedule.scheduleJob({ hour: scheduledTime.getHours(), minute: scheduledTime.getMinutes(), second: scheduledTime.getSeconds() }, function () {
+    console.log('Planification de l\'envoi quotidien...');
+    sendEmail();
+
+    // Terminer le processus Node.js après avoir exécuté la tâche planifiée
+    // process.exit();
+});
+
+console.log('Fin du script...');
+
+// Afficher un message lors du démarrage pour indiquer que la planification a été configurée
+console.log('Planification de l\'envoi quotidien à ' + scheduledTime.toLocaleTimeString() + ' configurée.');
+
 
 // function scheduleEmail(hour, minute) {
 //     const now = new Date();
