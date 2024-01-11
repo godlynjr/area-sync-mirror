@@ -40,4 +40,4 @@ const verifyToken = async (token) => {
         return false;
     }
 };
-module.exports = { about_json, verifyToken };
+module.exports = { about_json };

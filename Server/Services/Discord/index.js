@@ -1,9 +1,9 @@
 const { Client, GatewayIntentBits } = require('discord.js')
 const config = require("./config.json");
+const jwt = require('jsonwebtoken');
 const fetch = require('node-fetch');
 const DiscordUser = require('../../models/DiscordUser');
 const airtable = require('airtable');
-const verifyToken = require('../../controllers/dataInfo');
 const { googled } = require('../Calendar/calendar');
 
 
@@ -172,6 +172,7 @@ async function createGoogleCalendarEvent(eventDetails) {
 const Airtableconnect = async (req, res) => {
     try {
         const token = req.headers.authorization.split(' ')[1];
+        console.log('Token:', token);
         const isValid = verifyToken(token);
         if (!isValid) {
             return res.status(401).json({ message: 'Unauthorized' });
@@ -187,33 +188,43 @@ const Airtableconnect = async (req, res) => {
 const base = new airtable({ apiKey: process.env.AIRTABLE_API_KEY }).base(process.env.AIRTABLE_BASE_ID);
 
 client.on('guildMemberAdd', member => {
-    if (!member.guild.me.hasPermission('VIEW_AUDIT_LOG')) {
-        console.log('The bot does not have the permission to view the audit log.');
-        return;
-    }
-
     console.log('The bot has the permission to view the audit log.');
 
-    console.log('Airtable is connected');
     if (AirtableIsActive) {
-        base('Async').create([
-            {
-                "fields": {
-                    "Username": member.user.username,
-                    "Discord ID": member.user.id,
-                    "JoinDate": new Date().toISOString()
-                }
+        const currentDate = new Date();
+        const isoDate = currentDate.toISOString();
+
+        const record = {
+            "fields": {
+                "Username": member.user.username,
+                "Discord ID": member.user.id,
+                "JoinDate": isoDate
             }
-        ], function (err, records) {
+        };
+
+        base('Async').create([record], function (err, records) {
             if (err) {
                 console.error('Error adding user to Airtable:', err);
+                console.error('Record that caused the error:', record);
                 return;
             }
             console.log('Added user to Airtable:', member.user.username);
+            console.log('Airtable response:', records);
         });
     } else {
         console.log('Airtable is not connected');
     }
 });
+
+const verifyToken = async (token) => {
+    // Function to check if the token is valid
+    try {
+        const verified = jwt.verify(token, process.env.SECRET_KEY);
+        return !!verified;
+    } catch (error) {
+        console.error(error);
+        return false;
+    }
+};
 
 module.exports = { login, callback, Airtableconnect, CalendarConnect };
