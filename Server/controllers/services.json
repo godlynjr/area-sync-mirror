@@ -5,7 +5,7 @@
           "actions": [
               {
                   "name": "Message épinglé",
-                  "description": "Chaque fois qu'un message est épinglé dans le serveur, un e-mail est envoyé via Gmail pour vous informer du nouveau membre."
+                  "description": "Chaque fois qu'un message est épinglé dans le serveur, un évenement est créer dans google calendar."
               },
               {
                   "name": "Écoute de playlist",
