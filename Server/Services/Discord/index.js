@@ -16,6 +16,12 @@ const client = new Client({
     ]
 });
 
+// const oauth2Client = new google.auth.OAuth2(
+//     process.env.CLIENT_ID,
+//     process.env.CLIENT_SECRET,
+//     process.env.REDIRECT_URI
+// );
+
 let DiscordIsActive = false;
 let AirtableIsActive = false;
 let processedMessageIds = new Set();
@@ -24,7 +30,7 @@ client.login(config.BOT_TOKEN);
 
 const login = (req, res) => {
     try {
-        const url = 'https://discord.com/api/oauth2/authorize?client_id=1186857028119973959&permissions=8&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Fusers%2Fdiscord%2Fcallback&scope=identify+messages.read+bot+guilds.members.read';
+        const url = 'https://discord.com/api/oauth2/authorize?client_id=1186857028119973959&permissions=8&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Fusers%2Fdiscord%2Fcallback&scope=identify+bot+guilds.members.read+messages.read';
         res.redirect(url);
     } catch (error) {
         console.error(error);
@@ -94,11 +100,11 @@ client.on('ready', () => {
 
 const CalendarConnect = async (req, res) => {
     try {
-        const token = req.headers.authorization.split(' ')[1];
-        const isValid = verifyToken(token);
-        if (!isValid) {
-            return res.status(401).json({ message: 'Unauthorized' });
-        }
+        // const token = req.headers.authorization.split(' ')[1];
+        // const isValid = verifyToken(token);
+        // if (!isValid) {
+        //     return res.status(401).json({ message: 'Unauthorized' });
+        // }
         await googled(req, res);
         DiscordIsActive = true;
         // res.status(200).json({ message: 'Calendar is connected' });
@@ -162,8 +168,32 @@ setInterval(() => {
 }, 30000);
 
 async function createGoogleCalendarEvent(eventDetails) {
-    
+    try {
+        const { summary, description, start, end } = eventDetails;
+
+        const eventResponse = await calendar.events.insert({
+            calendarId: "primary",
+            auth: oauth2Client,
+            requestBody: {
+                summary: summary || "Default Summary", // Use provided summary or a default value
+                description: description || "Default Description", // Use provided description or a default value
+                start: {
+                    dateTime: start || dayjs(new Date()).add(1, 'day').toISOString(), // Use provided start or a default value
+                    timeZone: "Asia/Kolkata",
+                },
+                end: {
+                    dateTime: end || dayjs(new Date()).add(1, 'day').add(1, 'hour').toISOString(), // Use provided end or a default value
+                    timeZone: "Asia/Kolkata",
+                },
+            }
+        });
+
+        console.log('Google Calendar event created:', eventResponse.data);
+    } catch (error) {
+        console.error('Error creating Google Calendar event:', error);
+    }
 }
+
 
 // ---------------------------------------------------------------------------------------------
 
@@ -192,7 +222,7 @@ client.on('guildMemberAdd', member => {
 
     if (AirtableIsActive) {
         const currentDate = new Date();
-        const isoDate = currentDate.toISOString();
+        const isoDate = currentDate.toISOString().split('T')[0];
 
         const record = {
             "fields": {
