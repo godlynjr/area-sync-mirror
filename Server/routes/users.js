@@ -12,6 +12,7 @@ router.get('/discord/callback', callback);
 router.post('/discord/airtable/connect', Airtableconnect);
 router.post('/discord/calendar/connect', CalendarConnect);
 
+// Calendar API
 router.get('/calendar/login', googled);
 router.get('/calendar/callback', callbacks);
 router.get('/calendar/watch', callback_calendar);
@@ -26,7 +27,8 @@ router.get('/youtube/login', loginyt);
 const githubService = new GithubService();
 router.get('/github/login', githubService.login);
 
-// Calendar API
-router.get('/calendar/notion/login', notion_log);
-router.get('/calendar/notion/callback', notion_callback);
+// Notion API authentication
+router.get('/notion/login', notion_log);
+router.get('/notion/callback', notion_callback);
+
 module.exports = router
