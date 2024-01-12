@@ -83,7 +83,7 @@ const callback = async (req, res) => {
         refreshToken: json.refresh_token,
         user: userJson,
     });
-    res.redirect('http://localhost:3000/Discord');
+    res.redirect('http://localhost:8081/Discord');
 };
 
 client.on('ready', () => {
