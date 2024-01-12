@@ -4,6 +4,7 @@ const {  login, callback, Airtableconnect, CalendarConnect } = require('../Servi
 const {  notion_log, notion_callback } = require('../Services/Notion/notion');
 const GithubService = require('../Services/Github/index');
 const {  googled, callbacks, calendarwebhook, callback_calendar } = require('../Services/Calendar/calendar');
+const { loginyt} = require('../Services/Youtube/youtube');
 
 // Discord API
 router.get('/discord/login', login);
@@ -15,6 +16,11 @@ router.get('/calendar/login', googled);
 router.get('/calendar/callback', callbacks);
 router.get('/calendar/watch', callback_calendar);
 router.post('/calendar/google-calendar-webhook', calendarwebhook);
+
+// Youtube API
+router.get('/youtube/login', loginyt);
+// router.get('/youtube/callback', Callback);
+// router.post('/youtube/discord/connect', connect_yt_discord);
 
 // Github API
 const githubService = new GithubService();
