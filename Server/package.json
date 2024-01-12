@@ -19,7 +19,7 @@
     "express": "~4.16.1",
     "express-session": "^1.17.3",
     "faker": "^6.6.6",
-    "googleapis": "^105.0.0",
+    "googleapis": "^129.0.0",
     "http-errors": "~1.6.3",
     "https": "^1.0.0",
     "jade": "^0.31.2",

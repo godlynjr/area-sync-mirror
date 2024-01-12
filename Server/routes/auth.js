@@ -2,8 +2,8 @@
 const express = require('express');
 const router = express.Router();
 const {  check_mail, login, web, authenticateGoogle, authenticateGoogleCallback} = require('../controllers/authController');
-const {  about_json } = require('../controllers/dataInfo');
-
+// const {  about_json } = require('../controllers/dataInfo');
+const passport = require('passport');
 
 /**
  * @swagger
@@ -69,6 +69,6 @@ router.post('/web', web);
  *          500:
  *              description: "Service is temporarily unavailable."
  */
-router.post('/json', about_json);
+// router.post('/json', about_json);
 
 module.exports = router;

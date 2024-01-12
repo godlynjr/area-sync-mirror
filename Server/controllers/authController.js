@@ -45,7 +45,6 @@ const login = async (req, res) => {
                 const hashedPassword = await bcrypt.hash(req.body.password, salt);
                 user.password = hashedPassword;
                 await user.save();
-                
                 const token = jwt.sign({ _id: user._id }, process.env.SECRET_KEY, {expiresIn: '3h'});
                 res.header('auth-token', token).send({ token });
             } else {
