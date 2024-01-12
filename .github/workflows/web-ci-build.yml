@@ -20,11 +20,6 @@ jobs:
 
       - name: Install dependencies
         run: cd Web_Client && npm install
-      
-      - name: Run tests
-        # run: cd Web_Client && npm start
-        env:
-          CI: true
   
   js-formatters:
     needs: Web
