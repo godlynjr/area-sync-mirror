@@ -17,9 +17,6 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '18'
-
-      - name: Install dependencies
-        run: cd Web_Client && npm install
   
   js-formatters:
     needs: Web
