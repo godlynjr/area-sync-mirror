@@ -1,0 +1,5 @@
+# compilation folder
+
+node_modules/
+
+package-lock.json
