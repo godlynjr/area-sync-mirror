@@ -4,7 +4,9 @@ const jwt = require('jsonwebtoken');
 const fetch = require('node-fetch');
 const DiscordUser = require('../../models/DiscordUser');
 const airtable = require('airtable');
-const { googled } = require('../Calendar/calendar');
+const { googled, oauth2Client, calendar } = require('../Calendar/calendar');
+const { google } = require('googleapis');
+const dayjs  = require('dayjs')
 
 
 const client = new Client({
@@ -16,13 +18,8 @@ const client = new Client({
     ]
 });
 
-// const oauth2Client = new google.auth.OAuth2(
-//     process.env.CLIENT_ID,
-//     process.env.CLIENT_SECRET,
-//     process.env.REDIRECT_URI
-// );
-
 let DiscordIsActive = false;
+let CalendarIsActive = false;
 let AirtableIsActive = false;
 let processedMessageIds = new Set();
 
@@ -30,8 +27,8 @@ client.login(config.BOT_TOKEN);
 
 const login = (req, res) => {
     try {
-        const url = 'https://discord.com/api/oauth2/authorize?client_id=1186857028119973959&permissions=8&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Fusers%2Fdiscord%2Fcallback&scope=identify+bot+guilds.members.read+messages.read';
-        res.redirect(url);
+        const url = 'https://discord.com/api/oauth2/authorize?client_id=1186857028119973959&permissions=8&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Fusers%2Fdiscord%2Fcallback&scope=identify+messages.read+bot+guilds.members.read';
+        res.send(url);
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Server error', error: error.toString() });
@@ -82,13 +79,14 @@ const callback = async (req, res) => {
         });
         await newUser.save();
     }
-
+    DiscordIsActive = true;
     // Renvoie les informations en réponse à la requête de rappel
     res.json({
         accessToken: json.access_token,
         refreshToken: json.refresh_token,
         user: userJson,
     });
+    res.redirect('http://localhost:3000/Discord');
 };
 
 client.on('ready', () => {
@@ -100,13 +98,13 @@ client.on('ready', () => {
 
 const CalendarConnect = async (req, res) => {
     try {
-        // const token = req.headers.authorization.split(' ')[1];
-        // const isValid = verifyToken(token);
-        // if (!isValid) {
-        //     return res.status(401).json({ message: 'Unauthorized' });
-        // }
+        const token = req.headers.authorization.split(' ')[1];
+        const isValid = verifyToken(token);
+        if (!isValid) {
+            return res.status(401).json({ message: 'Unauthorized' });
+        }
         await googled(req, res);
-        DiscordIsActive = true;
+        CalendarIsActive = true;
         // res.status(200).json({ message: 'Calendar is connected' });
     } catch (error) {
         console.error('Error in CalendarConnect:', error);
@@ -134,6 +132,11 @@ client.on('messageCreate', async (message) => {
 
 async function checkPinnedMessages(channel) {
     try {
+        if (DiscordIsActive && CalendarIsActive) {
+            console.log('Discord is not active. Skipping checkPinnedMessages.');
+            return;
+        }
+
         const pinnedMessages = await channel.messages.fetchPinned();
 
         // Parcourez les messages épinglés et effectuez des actions si nécessaire
@@ -169,31 +172,30 @@ setInterval(() => {
 
 async function createGoogleCalendarEvent(eventDetails) {
     try {
-        const { summary, description, start, end } = eventDetails;
-
-        const eventResponse = await calendar.events.insert({
-            calendarId: "primary",
-            auth: oauth2Client,
-            requestBody: {
-                summary: summary || "Default Summary", // Use provided summary or a default value
-                description: description || "Default Description", // Use provided description or a default value
-                start: {
-                    dateTime: start || dayjs(new Date()).add(1, 'day').toISOString(), // Use provided start or a default value
-                    timeZone: "Asia/Kolkata",
-                },
-                end: {
-                    dateTime: end || dayjs(new Date()).add(1, 'day').add(1, 'hour').toISOString(), // Use provided end or a default value
-                    timeZone: "Asia/Kolkata",
-                },
-            }
-        });
-
-        console.log('Google Calendar event created:', eventResponse.data);
+      const { summary, description } = eventDetails;
+  
+      const eventResponse = await calendar.events.insert({
+        calendarId: "primary",
+        auth: oauth2Client,
+        requestBody: {
+          summary: summary || "Default Summary", // Use provided summary or a default value
+          description: description || "Default Description", // Use provided description or a default value
+          start: {
+            dateTime: dayjs(new Date()).add(1, 'day').toISOString(), // Use provided start or a default value
+            timeZone: "Africa/Abidjan", // Use Africa timezone
+          },
+          end: {
+            dateTime: dayjs(new Date()).add(1, 'day').add(1, 'hour').toISOString(), // Use provided end or a default value
+            timeZone: "Africa/Abidjan", // Use Africa timezone
+          },
+        }
+      });
+  
+      console.log('Google Calendar event created:', eventResponse.data);
     } catch (error) {
-        console.error('Error creating Google Calendar event:', error);
+      console.error('Error creating Google Calendar event:', error);
     }
 }
-
 
 // ---------------------------------------------------------------------------------------------
 

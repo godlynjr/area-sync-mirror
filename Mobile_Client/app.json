@@ -1,13 +1,13 @@
 {
   "expo": {
-    "name": "AreaSync",
-    "slug": "AreaSync",
+    "name": "Areasync",
+    "slug": "Areasync",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./Assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./Assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -15,16 +15,18 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.godlynjr.areasync"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./Assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.godlynjr.areasync"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./Assets/favicon.png"
     }
   }
 }

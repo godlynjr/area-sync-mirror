@@ -28,6 +28,7 @@ const LoginForm = () => {
     onSuccess: (codeResponse) => {
       setUser(codeResponse);
       // console.log(codeResponse)
+      
       axios
         .get(`https://www.googleapis.com/oauth2/v1/userinfo`, {
           headers: {
@@ -45,7 +46,7 @@ const LoginForm = () => {
 
   return (
     <>
-      <div className="container relative hidden min-h-screen flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-3 lg:px-0 bg-figma-green">
+      <div className="container relative min-h-screen flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-3 lg:px-0 bg-figma-green">
         <div className="relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex lg:col-span-1">
           <div className="absolute inset-0 bg-zinc-900" />
         </div>

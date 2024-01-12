@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, TextInput, Dimensions} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import { Ionicons } from '@expo/vector-icons';
 
 const MySearch = () => {
   const [searchText, setSearchText] = useState('');
@@ -12,7 +12,7 @@ const MySearch = () => {
   return (
     <View style={styles.container}>
       <View style={styles.searchContainer}>
-        <Icon name="search" size={24} color="black" style={styles.icon} />
+        <Ionicons name="search" size={24} color="#999" style={styles.icon} />
         <TextInput
           style={styles.input}
           placeholder="Search..."
@@ -25,27 +25,15 @@ const MySearch = () => {
   );
 };
 
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
-
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    paddingVertical: 20,
   },
   searchContainer: {
-    marginTop: 0,
-    marginLeft: -1,
-    position: 'relative',
+    marginLeft: 10,
+    marginRight: 10,
     flexDirection: 'row',
-    borderWidth: 1,
-    borderColor: "#DFE1E7",
-    // width: 350,
-    width: windowWidth * 0.88,
-        // height: windowHeight * 0.04,
-    height: 50,
-    borderRadius: 50,
+    borderRadius: 10,
     color: '#DFE1E7',
     paddingHorizontal: 10,
     backgroundColor: '#DFE1E7'
