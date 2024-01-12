@@ -2,14 +2,10 @@ const config = require("./config.json");
 const fetch = require('node-fetch');
 var SpotifyWebApi = require('spotify-web-api-node');
 
-const client_id = 'e2e066b4b66e4519b4b5805894bcb6ee'
-const redirect_uri = 'http://localhost:8080/spotify/callback';
-const client_secret = '89bf16e6b39c4434ba4bba6c21a0ecb7';
-https://api.spotify.com/v1/me/playlists
 var spotifyApi = new SpotifyWebApi({
-    clientId: client_id,
-    clientSecret: client_secret,
-    redirectUri: redirect_uri,
+    clientId: process.env.SPOTIFY_ID,
+    clientSecret: process.env.SPOTIFY_SECRET,
+    redirectUri: process.env.SPOTIFY_REDIRECT_URI,
   });
 
 const login = (req, res) => {
