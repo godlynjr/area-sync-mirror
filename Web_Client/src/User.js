@@ -1,3 +1,4 @@
+import axios from 'axios';
 const api = "http://localhost:8080";
 
 class Client {
@@ -39,7 +40,7 @@ class Client {
     try {
       const response = await fetch(api + "/about.json", {
         method: "GET",
-        headers: this.fillRequestHeaders(),
+      //  headers: this.fillRequestHeaders(),
       });
   
       if (!response.ok) {
@@ -52,6 +53,35 @@ class Client {
       console.error('Error during fetch:', error);
       throw error; // Re-throw the error so it can be caught in the calling code
     }
+  }
+
+  async DiscordLogin() {
+
+    axios
+        .get(api + "/spotify/login", {
+        //  headers: this.fillRequestHeaders(),
+        })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => console.log(err));
+
+    // try {
+    //   const response = await fetch(api + "/users/calendar/login", {
+    //     method: "GET",
+    //     headers: this.fillRequestHeaders(),
+    //   });
+  
+    //   if (!response.ok) {
+    //     throw new Error('Network response was not ok');
+    //   }
+
+    //   const data = await response.json();
+    //   return data;
+    // } catch (error) {
+    //   console.error('Error during fetch:', error);
+    //   throw error; // Re-throw the error so it can be caught in the calling code
+    // }
   }
 }
 

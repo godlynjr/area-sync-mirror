@@ -36,12 +36,16 @@ const channel = {
 };
 const scopes = ['https://www.googleapis.com/auth/calendar', 'https://www.googleapis.com/auth/calendar.events'];
 const token = "";
+
 const googled = async (req, res) => {
     const url = oauth2Client.generateAuthUrl({
         access_type: 'offline',
         scope: scopes,
     });
+  
     console.log("fgjh");
+    console.log(url);
+    
     res.redirect(url);
 };
 

@@ -28,6 +28,7 @@ const LoginForm = () => {
     onSuccess: (codeResponse) => {
       setUser(codeResponse);
       // console.log(codeResponse)
+      
       axios
         .get(`https://www.googleapis.com/oauth2/v1/userinfo`, {
           headers: {

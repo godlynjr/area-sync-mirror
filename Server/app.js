@@ -23,10 +23,20 @@ var spotifyRouter = require("./routes/spotify");
 var backRouter = require("./routes/backof");
 
 var app = express();
+var corsOptions = {
+  origin: '*',
+  // credentials:true,
+  optionSessStatus: 200
+}
 
-app.use(cors());
 app.use(express.json());
 
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', 'http://localhost:3000'); // Replace with your frontend domain
+  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  next();
+});
 // Swagger utils
 var swaggerDocs = require("./swagger")
 const swaggerUi = require("swagger-ui-express")
@@ -47,11 +57,11 @@ app.set("view engine", "jade");
 // Ajoutez la ligne suivante pour configurer le moteur de modèle Pug
 app.set('view engine', 'pug');
 
-app.use(logger("dev"));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(cors(
+  {
+    options: corsOptions,
+  }
+));
 
 // Connect to the MongoDB database using the MONGO_URL environment variable
 mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true,
@@ -89,6 +99,7 @@ app.get('/about.json', about_json);
 app.use(function (req, res, next) {
   next(createError(404));
 });
+
 
 // Error handler
 app.use(function (err, req, res, next) {

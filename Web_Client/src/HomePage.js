@@ -53,18 +53,17 @@ function HomePage() {
     <div className='bg-figma-green h-full'>
       <Header />
 
-      {/* <hr style={{
+      <div className='container mx-auto'>
+      <hr style={{
         background: 'black',
         color: 'black',
         borderColor: 'black',
         height: '1px',
-      }} className='my-1'/> */}
-
-      <div className='flex flex-col justify-center items-center'>
-        <p className='lg:text-5xl'>Discover</p>
-        <Searchbar onSearch={handleInputChange} />
-      </div>
-      <div className='container mx-auto'>
+      }} className='my-1'/>
+        <div className='flex flex-col justify-center items-center'>
+          {/* <p className='lg:text-5xl'>Discover</p> */}
+          <Searchbar onSearch={handleInputChange} />
+        </div>
         {jsonData && (
           <div className='grid grid-cols-2 gap-5 text-black sm:gap-10 md:grid-cols-3 lg:grid-cols-3 mt-5'>
 

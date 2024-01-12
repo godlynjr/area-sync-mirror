@@ -1,11 +1,13 @@
 import React from "react"
 import Header from "../../Components/Header"
 import Areas from "../../Components/areas"
+import User from "../../User"
 
 function Discord() {
   const ConnectDiscord = () => {
     // authentication to discord
     console.log("Connecting to Discord")
+    User.DiscordLogin();
   }
 
   return (
@@ -14,12 +16,18 @@ function Discord() {
         <Header />
         <div className="container mx-auto">
           {/* upper header */}
+          <hr style={{
+            background: 'black',
+            color: 'black',
+            borderColor: 'black',
+            height: '1px',
+          }} className='my-1'/>
           <div className="flex flex-row justify-between">
             <div>
-              <a href="/home">back</a>
+              <a href="/home">Back</a>
             </div>
             <div>
-              <a href="https://discord.com">goto</a>
+              <a href="https://discord.com">Visit Discord</a>
             </div>
           </div>
 
