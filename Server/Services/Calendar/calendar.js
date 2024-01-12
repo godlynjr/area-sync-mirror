@@ -35,7 +35,9 @@ const channel = {
     type: 'web_hook',
     address: 'https://bird-distinct-gator.ngrok-free.app/users/calendar/google-calendar-webhook',
 };
+
 const scopes = ['https://www.googleapis.com/auth/calendar', 'https://www.googleapis.com/auth/calendar.events'];
+
 const token = "";
 
 const googled = async (req, res) => {
@@ -47,17 +49,25 @@ const googled = async (req, res) => {
     res.send(url);
 };
 
+async function getUserInfo() {
+    const plus = google.plus({ version: 'v1', auth: oauth2Client });
+    const userInfo = await plus.people.get({ userId: 'me' });
+    console.log('User Info:', userInfo.data);
+    return userInfo.data;
+}
+
 const callbacks = async (req, res) => {
     const code = req.query.code;
     const { tokens } = await oauth2Client.getToken(code);
     oauth2Client.setCredentials(tokens);
+    console.log(tokens);
+    // Récupérer les informations du profil utilisateur
+    // const userInfo = await getUserInfo();
 
     res.redirect('http://localhost:3000/Google Calendar'); 
 };
 
-
 const callback_calendar = async (req, res) => {
-    
     // calendar.events.watch({
     //     calendarId: calendarId,
     //     requestBody: {
@@ -66,6 +76,7 @@ const callback_calendar = async (req, res) => {
     //         address: channel.address,
     //     },
     // });
+
     const response = await calendar.events.list({
         auth: oauth2Client,
         calendarId: 'primary', // 'primary' represents the user's primary calendar
@@ -75,34 +86,31 @@ const callback_calendar = async (req, res) => {
   
     const events = response.data.items;
     numbers = events.length;
-    console.log(`Nombre d'événements à venir : ${numbers}`);
-
     return res.status(200).end();
 };
 
+
 const calendarwebhook = async (req, res) => {
     try {
-        // const eventId = JSON.stringify(req.headers);
-        // Traitez les changements (nouvel événement, mise à jour, suppression, etc.)
-        // Vous pouvez extraire les détails de l'événement de `changes`
-
         const response = await calendar.events.list({
             auth: oauth2Client,
             calendarId: 'primary', // 'primary' represents the user's primary calendar
             singleEvents: true,
             orderBy: 'startTime',
           });
-      
+
         const events = response.data.items;
+        console.log(`events lenght  : ${events.length}`);
+        console.log(`numbers avant : ${numbers}`);
         if (events.length > numbers) {
-            const newEvent = events[events.length - 1];
-
-            // Display information about the new event
-            console.log('Newly added event:');
-            console.log('Title:', newEvent.summary);
-            console.log('Start:', newEvent.start.dateTime || newEvent.start.date);
-            console.log('End:', newEvent.end.dateTime || newEvent.end.date);
-
+            events.sort((a, b) => new Date(b.created) - new Date(a.created));
+            // Récupération de l'événement le plus récent
+            const dernierEvenement = events[0];
+            console.log(`Événement le plus récent :`);
+            console.log(`Titre: ${dernierEvenement.summary}`);
+            console.log(`Début: ${dernierEvenement.start.dateTime || dernierEvenement.start.date}`);
+            console.log(`Fin: ${dernierEvenement.end.dateTime || dernierEvenement.end.date}`);
+            console.log(`Date de création: ${dernierEvenement.created}`);
 
             // Ajoutez ici le code pour créer un événement dans Notion
             // en utilisant les informations reçues de l'événement Google Calendar.

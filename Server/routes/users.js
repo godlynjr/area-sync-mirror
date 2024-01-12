@@ -1,6 +1,7 @@
 const express = require("express")
 const router = express.Router()
 const {  login, callback, Airtableconnect, CalendarConnect } = require('../Services/Discord/index');
+const {  notion_log, notion_callback } = require('../Services/Notion/notion');
 const GithubService = require('../Services/Github/index');
 const {  googled, callbacks, calendarwebhook, callback_calendar } = require('../Services/Calendar/calendar');
 
@@ -18,4 +19,8 @@ router.post('/calendar/google-calendar-webhook', calendarwebhook);
 // Github API
 const githubService = new GithubService();
 router.get('/github/login', githubService.login);
+
+// Calendar API
+router.get('/calendar/notion/login', notion_log);
+router.get('/calendar/notion/callback', notion_callback);
 module.exports = router
