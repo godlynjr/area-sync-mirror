@@ -46,7 +46,7 @@ const callback = async (req, res) => {
     });
     let userJson = await userResponse.json();
     console.log(userJson.items); // Affiche les informations de l'utilisateur dans la console
-    res.redirect('http://localhost:3000/Spotify');
+    res.redirect('http://localhost:8081/Spotify');
     // const user = await DiscordUser.findOne({ discordId: userJson.id });
     // if (user) {
     //     user.accessToken = json.access_token;

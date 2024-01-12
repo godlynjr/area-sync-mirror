@@ -64,7 +64,7 @@ const callbacks = async (req, res) => {
     // Récupérer les informations du profil utilisateur
     // const userInfo = await getUserInfo();
 
-    res.redirect('http://localhost:3000/Google Calendar'); 
+    res.redirect('http://localhost:8081/Google Calendar'); 
 };
 
 const callback_calendar = async (req, res) => {
