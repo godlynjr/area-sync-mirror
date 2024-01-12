@@ -25,7 +25,7 @@ var backRouter = require("./routes/backof");
 var app = express();
 var corsOptions = {
   origin: '*',
-  // credentials:true,
+  credentials:true,
   optionSessStatus: 200
 }
 
