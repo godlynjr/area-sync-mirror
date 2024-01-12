@@ -68,7 +68,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<LandingPage />} />
+        <Route path="/" element={connected(<LandingPage />)} />
         <Route path="/register" element={connected(<RegisterForm />)} />
         <Route path="/login" element={connected(<LoginForm />)} />
         <Route path="/forgot" element={connected(<Forgot />)} />

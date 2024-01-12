@@ -40,7 +40,7 @@ class Client {
     try {
       const response = await fetch(api + "/about.json", {
         method: "GET",
-      //  headers: this.fillRequestHeaders(),
+        headers: this.fillRequestHeaders(),
       });
   
       if (!response.ok) {
@@ -56,32 +56,37 @@ class Client {
   }
 
   async DiscordLogin() {
+    try {
+      axios
+          .get(api + "/spotify/login", {
+           headers: this.fillRequestHeaders(),
+          })
+          .then((res) => {
+            console.log(res.data);
+            window.location.href = res.data;
+          })
+          .catch((err) => console.log(err));
+    } catch (error) {
+      console.error('Error during fetch:', error);
+      throw error;
+    }
+  }
 
-    axios
-        .get(api + "/spotify/login", {
-        //  headers: this.fillRequestHeaders(),
-        })
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((err) => console.log(err));
-
-    // try {
-    //   const response = await fetch(api + "/users/calendar/login", {
-    //     method: "GET",
-    //     headers: this.fillRequestHeaders(),
-    //   });
-  
-    //   if (!response.ok) {
-    //     throw new Error('Network response was not ok');
-    //   }
-
-    //   const data = await response.json();
-    //   return data;
-    // } catch (error) {
-    //   console.error('Error during fetch:', error);
-    //   throw error; // Re-throw the error so it can be caught in the calling code
-    // }
+  async SpotifyLogin() {
+    try {
+      axios
+          .get(api + "/users/spotify/login", {
+           headers: this.fillRequestHeaders(),
+          })
+          .then((res) => {
+            console.log(res.data);
+            window.location.href = res.data;
+          })
+          .catch((err) => console.log(err));
+    } catch (error) {
+      console.error('Error during fetch:', error);
+      throw error;
+    }
   }
 }
 

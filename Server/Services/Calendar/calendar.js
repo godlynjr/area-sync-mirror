@@ -13,6 +13,7 @@ const oauth2Client = new google.auth.OAuth2(
   process.env.CLIENT_SECRET,
   process.env.REDIRECT_URI
 );
+
 oauth2Client.on('tokens', (tokens) => {
     if (tokens.refresh_token) {
       // store the refresh_token in my database!
@@ -42,11 +43,8 @@ const googled = async (req, res) => {
         access_type: 'offline',
         scope: scopes,
     });
-  
-    console.log("fgjh");
-    console.log(url);
-    
-    res.redirect(url);
+
+    res.send(url);
 };
 
 const callbacks = async (req, res) => {
@@ -54,9 +52,7 @@ const callbacks = async (req, res) => {
     const { tokens } = await oauth2Client.getToken(code);
     oauth2Client.setCredentials(tokens);
 
-    res.send({
-        msg: "Successfully loggeed in to Google Calendar",
-    }); 
+    res.redirect('http://localhost:3000/Google Calendar'); 
 };
 
 

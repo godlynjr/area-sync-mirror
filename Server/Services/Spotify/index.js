@@ -1,12 +1,11 @@
 const config = require("./config.json");
 const fetch = require('node-fetch');
-const querystring = require('querystring');
 var SpotifyWebApi = require('spotify-web-api-node');
 
 const client_id = 'e2e066b4b66e4519b4b5805894bcb6ee'
 const redirect_uri = 'http://localhost:8080/spotify/callback';
 const client_secret = '89bf16e6b39c4434ba4bba6c21a0ecb7';
-
+https://api.spotify.com/v1/me/playlists
 var spotifyApi = new SpotifyWebApi({
     clientId: client_id,
     clientSecret: client_secret,
@@ -14,18 +13,9 @@ var spotifyApi = new SpotifyWebApi({
   });
 
 const login = (req, res) => {
-
     try {
-        // const scope = 'user-read-private user-read-email';
-        const authorizeURL = spotifyApi.createAuthorizeURL(['user-read-private', 'user-read-email'], 'state');
-        // res.redirect('https://accounts.spotify.com/authorize?' +
-        //     querystring.stringify({
-        //         response_type: 'code',
-        //         client_id: client_id,
-        //         scope: scope,
-        //         redirect_uri: redirect_uri,
-        //     }));
-        res.redirect(authorizeURL);
+        const authorizeURL = spotifyApi.createAuthorizeURL(['user-read-private', 'user-read-email', 'playlist-read-private'], 'state');
+        res.send(authorizeURL);
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Server error', error: error.toString() });
@@ -60,7 +50,7 @@ const callback = async (req, res) => {
     });
     let userJson = await userResponse.json();
     console.log(userJson.items); // Affiche les informations de l'utilisateur dans la console
-
+    res.redirect('http://localhost:3000/Spotify');
     // const user = await DiscordUser.findOne({ discordId: userJson.id });
     // if (user) {
     //     user.accessToken = json.access_token;
