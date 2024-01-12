@@ -27,8 +27,8 @@ client.login(config.BOT_TOKEN);
 
 const login = (req, res) => {
     try {
-        const url = 'https://discord.com/api/oauth2/authorize?client_id=1186857028119973959&permissions=8&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Fusers%2Fdiscord%2Fcallback&scope=identify+bot+guilds.members.read+messages.read';
-        res.redirect(url);
+        const url = 'https://discord.com/api/oauth2/authorize?client_id=1186857028119973959&permissions=8&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Fusers%2Fdiscord%2Fcallback&scope=identify+messages.read+bot+guilds.members.read';
+        res.send(url);
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Server error', error: error.toString() });
@@ -86,6 +86,7 @@ const callback = async (req, res) => {
         refreshToken: json.refresh_token,
         user: userJson,
     });
+    res.redirect('http://localhost:3000/Discord');
 };
 
 client.on('ready', () => {
