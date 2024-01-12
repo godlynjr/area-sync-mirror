@@ -4,7 +4,9 @@ const jwt = require('jsonwebtoken');
 const fetch = require('node-fetch');
 const DiscordUser = require('../../models/DiscordUser');
 const airtable = require('airtable');
-const { googled } = require('../Calendar/calendar');
+const { googled, oauth2Client, calendar } = require('../Calendar/calendar');
+const { google } = require('googleapis');
+const dayjs  = require('dayjs')
 
 
 const client = new Client({
@@ -17,6 +19,7 @@ const client = new Client({
 });
 
 let DiscordIsActive = false;
+let CalendarIsActive = false;
 let AirtableIsActive = false;
 let processedMessageIds = new Set();
 
@@ -76,7 +79,7 @@ const callback = async (req, res) => {
         });
         await newUser.save();
     }
-
+    DiscordIsActive = true;
     // Renvoie les informations en réponse à la requête de rappel
     res.json({
         accessToken: json.access_token,
@@ -101,7 +104,7 @@ const CalendarConnect = async (req, res) => {
             return res.status(401).json({ message: 'Unauthorized' });
         }
         await googled(req, res);
-        DiscordIsActive = true;
+        CalendarIsActive = true;
         // res.status(200).json({ message: 'Calendar is connected' });
     } catch (error) {
         console.error('Error in CalendarConnect:', error);
@@ -129,6 +132,11 @@ client.on('messageCreate', async (message) => {
 
 async function checkPinnedMessages(channel) {
     try {
+        if (DiscordIsActive && CalendarIsActive) {
+            console.log('Discord is not active. Skipping checkPinnedMessages.');
+            return;
+        }
+
         const pinnedMessages = await channel.messages.fetchPinned();
 
         // Parcourez les messages épinglés et effectuez des actions si nécessaire
@@ -163,7 +171,30 @@ setInterval(() => {
 }, 30000);
 
 async function createGoogleCalendarEvent(eventDetails) {
-    
+    try {
+      const { summary, description } = eventDetails;
+  
+      const eventResponse = await calendar.events.insert({
+        calendarId: "primary",
+        auth: oauth2Client,
+        requestBody: {
+          summary: summary || "Default Summary", // Use provided summary or a default value
+          description: description || "Default Description", // Use provided description or a default value
+          start: {
+            dateTime: dayjs(new Date()).add(1, 'day').toISOString(), // Use provided start or a default value
+            timeZone: "Africa/Abidjan", // Use Africa timezone
+          },
+          end: {
+            dateTime: dayjs(new Date()).add(1, 'day').add(1, 'hour').toISOString(), // Use provided end or a default value
+            timeZone: "Africa/Abidjan", // Use Africa timezone
+          },
+        }
+      });
+  
+      console.log('Google Calendar event created:', eventResponse.data);
+    } catch (error) {
+      console.error('Error creating Google Calendar event:', error);
+    }
 }
 
 // ---------------------------------------------------------------------------------------------
@@ -193,7 +224,7 @@ client.on('guildMemberAdd', member => {
 
     if (AirtableIsActive) {
         const currentDate = new Date();
-        const isoDate = currentDate.toISOString();
+        const isoDate = currentDate.toISOString().split('T')[0];
 
         const record = {
             "fields": {
