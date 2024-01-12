@@ -1,16 +1,15 @@
-
-import React, { useState, } from 'react';
+import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
-import { FontAwesome } from '@expo/vector-icons';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import { Ionicons } from '@expo/vector-icons';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
-const Edit_profil = () => {
+const Edit_profil = ({ navigation }) => { // Ajout de la prop "navigation"
     const user = {
         name: 'Maman Jacqueline',
         age: 25,
         email: 'johndoe@example.com',
-        gender: 'female'? 'female' : 'male',
+        gender: 'female' ? 'female' : 'male',
         password: 'password' // 'female' pour le genre féminin
     };
     const [name, setName] = useState(user.name);
@@ -18,15 +17,14 @@ const Edit_profil = () => {
     const [displayName, setDisplayName] = useState(user.name);
     const handleSave = () => {
         const updatedUser = { ...user, name, email };
-        // Effectuez ici la logique pour mettre à jour les informations de l'utilisateur
         setDisplayName(name); // Met à jour le nom affiché avec la nouvelle valeur
-        console.log(updatedUser);
     };
 
     return (
-        <View style={styles.container}>
-            <View style={styles.content}>
-                <View style={styles.profileInfo}>
+        <SafeAreaView>
+            <View style={styles.container}>
+                <Ionicons style={{ position: 'absolute', top: 10, left: 10 }} name="arrow-back" size={30} color="#fff" onPress={() => navigation.goBack()} />
+                <View style={styles.content}>
                     <View style={styles.avatarContainer}>
                         <FontAwesome5
                             name={user.gender === 'female' ? 'female' : 'male'}
@@ -34,36 +32,43 @@ const Edit_profil = () => {
                             color="#333"
                         />
                     </View>
-                    <Text style={styles.name}>{displayName}</Text>
                 </View>
-                <Text style={styles.names}>Your name</Text>
-                <TextInput
-                    style={styles.input1}
-                    placeholder="Enter Name"
-                    value={name}
-                    onChangeText={setName}
-                />
-                <TextInput
-                    style={styles.input2}
-                    placeholder="Enter Email"
-                    value={email}
-                    onChangeText={setEmail}
-                />
-                <TouchableOpacity style={styles.savebutton} onPress={handleSave}>
-                    <Text style={styles.save}>Save</Text>
-                </TouchableOpacity>
+                <Text style={styles.name}>{displayName}</Text>
             </View>
-        </View>
+            <Text style={styles.names}> Your name</Text>
+            <TextInput
+                style={styles.input}
+                placeholder="Enter Name"
+                value={name}
+                onChangeText={setName}
+            />
+            <Text style={styles.emails}> Your email</Text>
+            <TextInput
+                style={styles.input}
+                placeholder="Enter Email"
+                value={email}
+                onChangeText={setEmail}
+            />
+            <TouchableOpacity style={styles.savebutton} onPress={handleSave}>
+                <Text style={styles.save}>Save</Text>
+            </TouchableOpacity>
+        </SafeAreaView>
     );
 };
 
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
-
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: '#fff',
+        position: 'relative',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#494949',
+        paddingVertical: 80,
+        paddingHorizontal: 20
+    },
+    backButton: {
+        position: 'absolute',
+        top: -10,
+        left: -100,
     },
     rowContainer: {
         flexDirection: 'row',
@@ -72,43 +77,32 @@ const styles = StyleSheet.create({
     container1: {
         justifyContent: 'center',
         alignItems: 'center',
-        marginHorizontal: windowWidth * 0.05,
+        marginHorizontal: 10,
         marginTop: 10,
     },
-    input1: {
+    input: {
+        paddingVertical: 10,
+        marginRight: 10,
+        marginLeft: 10,
         marginTop: 5,
-        width: 320,
-        height: 40,
         borderWidth: 1,
         borderColor: 'gray',
-        marginBottom: 15,
         paddingHorizontal: 10,
-        borderRadius: 15,
-    },
-    input2: {
-        marginTop: 10,
-        width: 320,
-        height: 40,
-        borderWidth: 1,
-        borderColor: 'gray',
-        marginBottom: 15,
-        paddingHorizontal: 10,
-        borderRadius: 15,
+        borderRadius: 10,
     },
     names: {
-        marginTop: 20,
+        marginTop: 40,
+        paddingHorizontal: 10,
         fontWeight: 'normal',
         fontSize: 15,
-        marginLeft: -250,
     },
     emails: {
-        marginTop: 20,
+        marginTop: 40,
+        paddingHorizontal: 10,
         fontWeight: 'normal',
         fontSize: 15,
-        marginLeft: -250,
     },
     save: {
-        marginTop: 10,
         fontSize: 20,
         fontWeight: 'bold',
         textAlign: 'center',
@@ -145,23 +139,24 @@ const styles = StyleSheet.create({
         height: 300,
     },
     savebutton: {
-        marginTop: 60,
-        height: 50,
-        width: 200,
+        marginRight: 80,
+        marginLeft: 80,
+        paddingVertical: 10,
+        marginTop: 40,
         backgroundColor: 'black',
         borderRadius: 20,
     },
     avatarContainer: {
-        marginTop: 15,
-        backgroundColor: '#f2f2f2',
+        backgroundColor: '#DFE1E7',
         width: 120,
         height: 120,
         borderRadius: 60,
         justifyContent: 'center',
         alignItems: 'center',
-        marginBottom: 10,
     },
     name: {
+        color: 'white',
+        marginTop: 60,
         fontSize: 18,
         fontWeight: 'bold',
         textAlign: 'center',

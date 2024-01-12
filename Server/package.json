@@ -10,6 +10,7 @@
     "@notionhq/client": "^2.2.14",
     "airtable": "^0.12.2",
     "axios": "^1.6.5",
+    "airtable": "^0.12.2",
     "bcrypt": "^5.1.1",
     "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",
@@ -31,6 +32,7 @@
     "passport-google-oauth20": "^2.0.0",
     "pug": "^3.0.2",
     "querystring": "^0.2.1",
+    "spotify-web-api-node": "^5.0.2",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.0",
     "uuid": "^9.0.1"

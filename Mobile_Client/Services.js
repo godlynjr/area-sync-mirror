@@ -1,113 +1,205 @@
-import React, { useState } from 'react';
-import { View, ScrollView, StyleSheet, Text, Dimensions, Image } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, ScrollView, StyleSheet, Text, Dimensions, Image, TouchableOpacity, SafeAreaView } from 'react-native';
 import SearchBar from './SearchBar';
 import DropDownPicker from 'react-native-dropdown-picker';
+import { useNavigation } from '@react-navigation/native';
+import { Menu, Divider, Button } from 'react-native-paper';
+import user from './User'
 
-const Services = ({ navigation }) => {
+const Services = ({ }) => {
+    const navigation = useNavigation();
+    const [visible, setVisible] = React.useState(false);
+    const openMenu = () => setVisible(true);
+    const closeMenu = () => setVisible(false);
     const [selectedValue, setSelectedValue] = useState('');
+    const handleGithub = async () => {
+        navigation.navigate('Service/Github');
+    };
+    const handleGoogle = async () => {
+        navigation.navigate('Service/Google');
+    };
+    const handleNotion = async () => {
+        navigation.navigate('Service/Notion');
+    };
+    const handleCalendar = async () => {
+        navigation.navigate('Service/Calendar');
+    };
+    const handleTally = async () => {
+        navigation.navigate('Service/Tally');
+    };
+    const handleSpotify = async () => {
+        navigation.navigate('Service/Spotify');
+    };
+    const handleDiscord = async () => {
+        navigation.navigate('Service/Discord');
+    };
+
+    const [aboutData, setAboutData] = useState(null);
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const data = await user.fetchAboutData();
+                setAboutData(data);
+                console.log('data is now', data);
+            } catch (error) {
+                console.error('Erreur lors de la récupération des données :', error);
+            }
+        };
+        fetchData();
+    }, []);
+
+//     <View>
+//     {aboutData ? (
+//         aboutData.server.services.map((service, index) => (
+//             <View key={index}>
+//                 <Text>{service.name}</Text>
+//                 {service.imagePath && (
+//                     <Image
+//                         source={require('./Assets/notion.png')}
+//                         style={styles.serviceImage}
+//                     />
+//                 )}
+//             </View>
+//         ))
+//     ) : (
+//         <Text style={styles.text}>Chargement des données...</Text>
+//     )}
+// </View>
 
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             <Text style={styles.Services}>Services</Text>
             <SearchBar />
-            <DropDownPicker
-                items={[
-                    { label: 'Options', value: 'option1' },
-                    { label: 'Optionss', value: 'option2' },
-                    { label: 'Optionsss', value: 'option3' },
-                ]}
-                defaultValue={selectedValue}
-                containerStyle={styles.pickerContainer}
-                style={styles.pickerStyle}
-                dropDownStyle={styles.dropDownStyle}
-                onChangeItem={(item) => setSelectedValue(item.value)}
-            />
-            <View style={styles.container1}>
-                <ScrollView style={styles.box}>
-                    <Image
-                        source={require('./Assets/github.png')}
-                        style={styles.image}
-                    />
-                    <Image
-                        source={require('./Assets/google.png')}
-                        style={styles.image}
-                    />
+            {/* <Menu
+                visible={visible}
+                onDismiss={closeMenu}
+                anchor={<Button onPress={openMenu}>Show menu</Button>}>
+                <Menu.Item onPress={() => { }} title="Item 1" />
+                <Menu.Item onPress={() => { }} title="Item 2" />
+                <Divider />
+                <Menu.Item onPress={() => { }} title="Item 3" />
+            </Menu> */}
+            <View>
+                {aboutData ? (
+                    aboutData.server.services.map((service, index) => (
+                        <View key={index}>
+                            <Text>{service.name}</Text>
+                        </View>
+                    ))
+                ) : (
+                    <Text style={styles.text}>Chargement des données...</Text>
+                )}
+            </View>
+            <View style={styles.serviceContainer}>
+                <ScrollView contentContainerStyle={styles.appletsListContainer} style={styles.box}>
+                    <TouchableOpacity onPress={handleGithub}>
+                        <Image
+                            source={require('./Assets/github.png')}
+                            style={styles.image}
+                        />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={handleGoogle}>
+                        <Image
+                            source={require('./Assets/google1.png')}
+                            style={styles.image1}
+                        />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={handleNotion}>
+                        <Image
+                            source={require('./Assets/notion.png')}
+                            style={styles.image1}
+                        />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={handleCalendar}>
+                        <Image
+                            source={require('./Assets/calendar.png')}
+                            style={styles.image4}
+                        />
+                    </TouchableOpacity>
                 </ScrollView>
-                <ScrollView style={styles.box1}>
-                    <Image
-                        source={require('./Assets/spotify1.jpeg')}
-                        style={styles.image}
-                    />
-                    <Image
-                        source={require('./Assets/tally.png')}
-                        style={styles.image}
-                    />
+                <ScrollView contentContainerStyle={styles.appletsListContainer} style={styles.box}>
+                    <TouchableOpacity onPress={handleSpotify}>
+                        <Image
+                            source={require('./Assets/spotify1.jpeg')}
+                            style={styles.image2}
+                        />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={handleTally}>
+                        <Image
+                            source={require('./Assets/tally.png')}
+                            style={styles.image3}
+                        />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={handleDiscord}>
+                        <Image
+                            source={require('./Assets/discord.png')}
+                            style={styles.image1}
+                        />
+                    </TouchableOpacity>
                 </ScrollView>
             </View>
-        </View>
+        </SafeAreaView>
     );
 };
-
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
     },
-    image: {
-        marginTop: 2,
-        width: 150,
-        height: 150,
-        borderRadius: 20,
-    },
-    container1: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginHorizontal: windowWidth * 0.05,
-        marginTop: windowHeight * 0.05,
-    },
-    box: {
-        flex: 1,
-        height: windowHeight * 0.6,
-        backgroundColor: '#DFE1E7',
-        borderRadius: 20,
-        marginHorizontal: windowWidth * 0.02,
-    },
-    box1: {
-        flex: 1,
-        height: windowHeight * 0.6,
-        backgroundColor: '#DFE1E7',
-        borderRadius: 20,
-        marginHorizontal: windowWidth * 0.02,
-    },
-    pickerContainer: {
-        height: windowHeight * 0.04,
-        width: windowWidth * 0.8,
+    dataStyle: {
+        color: 'red',
+        fontWeight: 'bold',
     },
     Services: {
-        marginTop: windowHeight * 0.05,
+        marginTop: 20,
         fontSize: 20,
         fontWeight: 'bold',
-        textAlign: 'center',
-        marginLeft: -240,
+        paddingHorizontal: 10,
     },
-    pickerStyle: {
-        marginTop: -(windowHeight * 0.01),
+    serviceContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        gap: 20,
+        paddingHorizontal: 10
+    },
+    box: {
+        borderRadius: 20,
         backgroundColor: '#DFE1E7',
-        borderWidth: 1,
-        width: windowWidth * 0.88,
-        height: windowHeight * 0.04,
-        borderColor: '#DFE1E7',
-        marginLeft: -15,
-        borderRadius: 10,
     },
-    dropDownStyle: {
-        backgroundColor: '#fafafa',
+    image: {
+        width: 130,
+        height: 130,
+        borderRadius: 20,
     },
+    image1: {
+        width: 130,
+        height: 130,
+        borderRadius: 20,
+    },
+    image2: {
+        width: 130,
+        height: 130,
+        borderRadius: 20,
+    },
+    image3: {
+        width: 130,
+        height: 130,
+        borderRadius: 20,
+    },
+    image4: {
+        width: 130,
+        height: 130,
+        borderRadius: 25,
+    },
+    scrollViewContent: {
+        flexGrow: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    text: {
+        marginTop: 50,
+    },
+    appletsListContainer: { alignItems: 'center', paddingVertical: 20, gap: 20 }
 });
 
 export default Services;

@@ -6,6 +6,8 @@ module.exports = {
       backgroundColor: {
         'figma-green': '#EDEDE5',
         'figma-blue': '#1A1A3B',
+        'figma-yellow': '#E1FF01',
+        'discord': '#7289da',
       },
     },
   },

@@ -13,6 +13,7 @@ const oauth2Client = new google.auth.OAuth2(
   process.env.CLIENT_SECRET,
   process.env.REDIRECT_URI
 );
+
 oauth2Client.on('tokens', (tokens) => {
     if (tokens.refresh_token) {
       // store the refresh_token in my database!
@@ -39,14 +40,13 @@ const scopes = ['https://www.googleapis.com/auth/calendar', 'https://www.googlea
 
 const token = "";
 
-
 const googled = async (req, res) => {
     const url = oauth2Client.generateAuthUrl({
         access_type: 'offline',
         scope: scopes,
     });
-    console.log("fgjh");
-    res.redirect(url);
+
+    res.send(url);
 };
 
 async function getUserInfo() {
@@ -64,10 +64,7 @@ const callbacks = async (req, res) => {
     // Récupérer les informations du profil utilisateur
     // const userInfo = await getUserInfo();
 
-    res.send({
-        msg: "Successfully logged in to Google Calendar",
-        // userInfo: userInfo,
-    });
+    res.redirect('http://localhost:3000/Google Calendar'); 
 };
 
 const callback_calendar = async (req, res) => {
@@ -127,4 +124,4 @@ const calendarwebhook = async (req, res) => {
 };
 
 
-module.exports = { googled, callbacks, calendarwebhook, callback_calendar};
+module.exports = { googled, callbacks, calendarwebhook, callback_calendar, oauth2Client, calendar};
