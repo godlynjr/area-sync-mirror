@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 import CustomButton from "../Components/AuthButton";
 import { ArrowLeftIcon } from "@heroicons/react/solid";
 import User from "../User";
+import logo from "../Assets/as.png";
 
 import { useGoogleLogin } from "@react-oauth/google";
 import axios from 'axios';
 
 const RegisterForm = () => {
   const [isRegistering, setIsRegistering] = useState(false);
-  const [ user, setUser ] = useState([]);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -44,7 +44,6 @@ const RegisterForm = () => {
 
   const signWithGoogle = useGoogleLogin({
     onSuccess: (codeResponse) => {
-      setUser(codeResponse);
   
       axios
         .get(`https://www.googleapis.com/oauth2/v1/userinfo`, {
@@ -77,10 +76,10 @@ const RegisterForm = () => {
                 className="h-5 w-5 text-gray-500"
               />
 
-              <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+              <div className="sm:mx-auto sm:w-full sm:max-w-sm items-center">
                 <img
-                  className="mx-auto h-10 w-auto"
-                  src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+                  className="mx-auto h-auto w-auto"
+                  src={logo}
                   alt="AREASYNC"
                 />
                 <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
