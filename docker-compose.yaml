@@ -6,8 +6,8 @@ services:
       - "8080:8080"
     networks:
       - app-network
-    volumes:
-      - shared-volume:/app
+    # volumes:
+    #   - shared-volume:/app
 
   client_mobile:
     build: ./Mobile_Client
@@ -26,7 +26,7 @@ services:
     networks:
       - app-network
     volumes:
-      - shared-volume:/app/build/outputs/
+      - shared-volume:/app/build/
 
 volumes:
   shared-volume:
