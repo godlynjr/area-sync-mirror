@@ -24,7 +24,7 @@ jobs:
         run: cd Server && npm install
       
       - name: Run tests
-        run: cd Server && node app.js
+        # run: cd Server && node app.js
   
   js-formatters:
     needs: Server

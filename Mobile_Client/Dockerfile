@@ -1,19 +1,20 @@
-FROM node:20
+# FROM node:20 as builder
+FROM reactnativecommunity/react-native-android as builder
+
+RUN npm install -g n && n latest
 
 WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm install
+RUN npm install --no-optional
 
 COPY . /app
 
-RUN npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/
-
 RUN cd android && ./gradlew assembleDebug
 
-# EXPOSE 81
+FROM node:20
 
-VOLUME /app/build/outputs/apk/
+WORKDIR /app
 
-CMD npx react-native run-android
+COPY --from=builder /app/android/app/build/outputs/apk/debug/app-debug.apk /app/client.apk

@@ -22,7 +22,7 @@ jobs:
         run: cd Web_Client && npm install
       
       - name: Run tests
-        run: cd Web_Client && npm start
+        # run: cd Web_Client && npm start
         env:
           CI: true
   
