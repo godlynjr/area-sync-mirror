@@ -116,4 +116,4 @@ const calendarwebhook = async (req, res) => {
 };
 
 
-module.exports = { googled, callbacks, calendarwebhook, callback_calendar};
+module.exports = { googled, callbacks, calendarwebhook, callback_calendar, oauth2Client, calendar};
