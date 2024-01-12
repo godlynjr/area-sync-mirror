@@ -1,25 +1,34 @@
-const { Client, GatewayIntentBits } = require('discord.js');
+const { Client, GatewayIntentBits } = require('discord.js')
 const config = require("./config.json");
+const jwt = require('jsonwebtoken');
 const fetch = require('node-fetch');
 const DiscordUser = require('../../models/DiscordUser');
 const airtable = require('airtable');
+const { googled, oauth2Client, calendar } = require('../Calendar/calendar');
+const { google } = require('googleapis');
+const dayjs  = require('dayjs')
+
 
 const client = new Client({
     intents: [
-      GatewayIntentBits.Guilds,
-      GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.Guilds,
+		GatewayIntentBits.GuildMessages,
+		GatewayIntentBits.MessageContent,
+		GatewayIntentBits.GuildMembers,
     ]
 });
 
 let DiscordIsActive = false;
+let CalendarIsActive = false;
 let AirtableIsActive = false;
+let processedMessageIds = new Set();
 
 client.login(config.BOT_TOKEN);
 
 const login = (req, res) => {
     try {
         const url = 'https://discord.com/api/oauth2/authorize?client_id=1186857028119973959&permissions=8&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Fusers%2Fdiscord%2Fcallback&scope=identify+messages.read+bot+guilds.members.read';
-        res.redirect(url);
+        res.send(url);
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Server error', error: error.toString() });
@@ -70,49 +79,121 @@ const callback = async (req, res) => {
         });
         await newUser.save();
     }
-
+    DiscordIsActive = true;
     // Renvoie les informations en réponse à la requête de rappel
     res.json({
         accessToken: json.access_token,
         refreshToken: json.refresh_token,
         user: userJson,
     });
+    res.redirect('http://localhost:3000/Discord');
 };
+
+client.on('ready', () => {
+    console.log(`Logged in as ${client.user.tag}!`);
+});
 
 // ---------------------------------------------------------------------------------------------
 // Area One
 
-// Écoutez l'événement 'messageUpdate'
-client.on('messageUpdate', (oldMessage, newMessage) => {
-    // Vérifiez si le message est épinglé
-    if (newMessage.pinned && !oldMessage.pinned) {
-        // Déclenchez une action lorsque le message est épinglé
-        console.log('Un message a été épinglé :', newMessage.content);
+const CalendarConnect = async (req, res) => {
+    try {
+        const token = req.headers.authorization.split(' ')[1];
+        const isValid = verifyToken(token);
+        if (!isValid) {
+            return res.status(401).json({ message: 'Unauthorized' });
+        }
+        await googled(req, res);
+        CalendarIsActive = true;
+        // res.status(200).json({ message: 'Calendar is connected' });
+    } catch (error) {
+        console.error('Error in CalendarConnect:', error);
+        res.status(500).json({ message: 'Server error', error: error.toString() } , { message: 'Calendar is not connected' });
+    }
+};
 
+// Écoutez l'événement 'messageUpdate'
+client.on('messageCreate', async (message) => {
+    console.log('Message :', message);
+    // Fetch all pinned messages in the channel
+    let pinnedMessages = await message.channel.messages.fetchPinned();
+    // Check if the message is in the collection of pinned messages
+    if (pinnedMessages.has(message.id)) {
+        console.log('Un message a été épinglé :', message.content);
+
+        // Effectuez des actions liées à chaque message épinglé ici
         const eventDetails = {
             // remplissez les détails de l'événement ici
         };
         // appelez votre fonction pour créer un événement Google Calendar ici
         // createGoogleCalendarEvent(eventDetails);
-
     }
 });
 
-async function createGoogleCalendarEvent(eventDetails) {
-    const {google} = require('googleapis');
-    const calendar = google.calendar({version: 'v3', auth});
-    const event = {
-        // remplissez les détails de l'événement ici
-    };
+async function checkPinnedMessages(channel) {
     try {
-        const response = await calendar.events.insert({
-            auth: auth,
-            calendarId: 'primary',
-            resource: event,
+        if (DiscordIsActive && CalendarIsActive) {
+            console.log('Discord is not active. Skipping checkPinnedMessages.');
+            return;
+        }
+
+        const pinnedMessages = await channel.messages.fetchPinned();
+
+        // Parcourez les messages épinglés et effectuez des actions si nécessaire
+        pinnedMessages.forEach(async (message) => {
+            if (!processedMessageIds.has(message.id)) {
+                console.log('Nouveau message épinglé :', message.content);
+
+                // Créez un événement Google Calendar pour le nouveau message épinglé
+                const eventDetails = {
+                    // Utilisez les détails du message pour remplir les détails de l'événement
+                    'summary': `Message épinglé : ${message.content}`,
+                    'description': `Un nouveau message a été épinglé dans le canal ${channel.name} par ${message.author.username}.`,
+                    // Ajoutez d'autres détails de l'événement ici
+                };
+                await createGoogleCalendarEvent(eventDetails);
+
+                // Ajoutez l'ID du message à la liste des messages traités
+                processedMessageIds.add(message.id);
+            }
         });
-        console.log('Event created: %s', response.data.htmlLink);
     } catch (error) {
-        console.log('There was an error contacting the Calendar service: ' + error);
+        console.error('Erreur lors de la récupération des messages épinglés :', error);
+    }
+}
+
+// Vérifiez périodiquement les messages épinglés
+setInterval(() => {
+    const channel = client.channels.cache.get('1194380647729463336');
+    if (channel) {
+        checkPinnedMessages(channel);
+    }
+}, 30000);
+
+async function createGoogleCalendarEvent(eventDetails) {
+    try {
+      const { summary, description } = eventDetails;
+  
+      const eventResponse = await calendar.events.insert({
+        calendarId: "primary",
+        auth: oauth2Client,
+        requestBody: {
+          summary: summary || "Default Summary", // Use provided summary or a default value
+          description: description || "Default Description", // Use provided description or a default value
+          start: {
+            dateTime: dayjs(new Date()).add(1, 'day').toISOString(), // Use provided start or a default value
+            timeZone: "Africa/Abidjan", // Use Africa timezone
+          },
+          end: {
+            dateTime: dayjs(new Date()).add(1, 'day').add(1, 'hour').toISOString(), // Use provided end or a default value
+            timeZone: "Africa/Abidjan", // Use Africa timezone
+          },
+        }
+      });
+  
+      console.log('Google Calendar event created:', eventResponse.data);
+    } catch (error) {
+      console.error('Error creating Google Calendar event:', error);
     }
 }
 
@@ -120,10 +201,14 @@ async function createGoogleCalendarEvent(eventDetails) {
 
 // Area Two
 
-console.log('AirtableIsActive:', AirtableIsActive);
-
 const Airtableconnect = async (req, res) => {
     try {
+        const token = req.headers.authorization.split(' ')[1];
+        console.log('Token:', token);
+        const isValid = verifyToken(token);
+        if (!isValid) {
+            return res.status(401).json({ message: 'Unauthorized' });
+        }
         AirtableIsActive = true;
         res.status(200).json({ message: 'Airtable is connected' });
     } catch (error) {
@@ -132,38 +217,46 @@ const Airtableconnect = async (req, res) => {
     }
 };
 
-console.log('AirtableIsActive:', AirtableIsActive);
-
 const base = new airtable({ apiKey: process.env.AIRTABLE_API_KEY }).base(process.env.AIRTABLE_BASE_ID);
 
 client.on('guildMemberAdd', member => {
-    if (!member.guild.me.hasPermission('VIEW_AUDIT_LOG')) {
-        console.log('The bot does not have the permission to view the audit log.');
-        return;
-    }
-
     console.log('The bot has the permission to view the audit log.');
 
-    console.log('Airtable is connected');
     if (AirtableIsActive) {
-        base('Async').create([
-            {
-                "fields": {
-                    "Username": member.user.username,
-                    "Discord ID": member.user.id,
-                    "JoinDate": new Date().toISOString()
-                }
+        const currentDate = new Date();
+        const isoDate = currentDate.toISOString().split('T')[0];
+
+        const record = {
+            "fields": {
+                "Username": member.user.username,
+                "Discord ID": member.user.id,
+                "JoinDate": isoDate
             }
-        ], function (err, records) {
+        };
+
+        base('Async').create([record], function (err, records) {
             if (err) {
                 console.error('Error adding user to Airtable:', err);
+                console.error('Record that caused the error:', record);
                 return;
             }
             console.log('Added user to Airtable:', member.user.username);
+            console.log('Airtable response:', records);
         });
     } else {
         console.log('Airtable is not connected');
     }
 });
 
-module.exports = { login, callback, Airtableconnect };
+const verifyToken = async (token) => {
+    // Function to check if the token is valid
+    try {
+        const verified = jwt.verify(token, process.env.SECRET_KEY);
+        return !!verified;
+    } catch (error) {
+        console.error(error);
+        return false;
+    }
+};
+
+module.exports = { login, callback, Airtableconnect, CalendarConnect };

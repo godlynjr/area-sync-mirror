@@ -1,0 +1,10 @@
+var currentDate = new Date();
+var year   = currentDate.getFullYear();
+var month    = currentDate.getMonth() + 1;
+var day    = currentDate.getDate();
+var hours   = currentDate.getHours();
+var minutes  = currentDate.getMinutes();
+var seconds = currentDate.getSeconds();
+var formattedDateTime = `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+console.log("Nous sommes le "+day+"/"+month+"/"+year+" et il est "+hours+" heure "+minutes+" minutes "+seconds+" secondes" );
+console.log(formattedDateTime);

@@ -1,12 +1,14 @@
+import axios from 'axios';
 const api = "http://localhost:8080";
 
 class Client {
   #personal = null;
-  constructor() {
-    this.isLoggedIn = false;
-  }
+  isLoggedIn = false;
 
-  #fillRequestHeaders() {
+  constructor() {
+  } 
+
+  fillRequestHeaders() {
     return {
       "Content-Type": "application/json",
       'Authorization' : 'Bearer ' + localStorage.getItem('authToken')
@@ -17,14 +19,13 @@ class Client {
     try {
       const response = await fetch(api + "/auth/web/", {
         method: "POST",
-        headers: this.#fillRequestHeaders(),
+        headers: this.fillRequestHeaders(),
         body: JSON.stringify({ email: mail, password: password }),
       })
       .then(response => response.json())
       .then(data => {
+        this.isLoggedIn = true;
         localStorage.setItem('authToken', data.token);
-
-        // Redirection
         window.location.href = '/home';
       })
       .catch(error => {
@@ -37,9 +38,9 @@ class Client {
 
   async getAbout() {
     try {
-      const response = await fetch(api + "/auth/json/", {
-        method: "POST",
-        headers: this.#fillRequestHeaders(),
+      const response = await fetch(api + "/about.json", {
+        method: "GET",
+        headers: this.fillRequestHeaders(),
       });
   
       if (!response.ok) {
@@ -51,6 +52,40 @@ class Client {
     } catch (error) {
       console.error('Error during fetch:', error);
       throw error; // Re-throw the error so it can be caught in the calling code
+    }
+  }
+
+  async DiscordLogin() {
+    try {
+      axios
+          .get(api + "/spotify/login", {
+           headers: this.fillRequestHeaders(),
+          })
+          .then((res) => {
+            console.log(res.data);
+            window.location.href = res.data;
+          })
+          .catch((err) => console.log(err));
+    } catch (error) {
+      console.error('Error during fetch:', error);
+      throw error;
+    }
+  }
+
+  async SpotifyLogin() {
+    try {
+      axios
+          .get(api + "/users/spotify/login", {
+           headers: this.fillRequestHeaders(),
+          })
+          .then((res) => {
+            console.log(res.data);
+            window.location.href = res.data;
+          })
+          .catch((err) => console.log(err));
+    } catch (error) {
+      console.error('Error during fetch:', error);
+      throw error;
     }
   }
 }
