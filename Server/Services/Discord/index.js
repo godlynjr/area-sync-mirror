@@ -22,6 +22,7 @@ const client = new Client({
 let DiscordIsActive = false;
 let CalendarIsActive = false;
 let AirtableIsActive = false;
+let TodoistIsActive = false;
 let processedMessageIds = new Set();
 
 client.login(process.env.DISCORD_BOT_TOKEN);
@@ -106,10 +107,8 @@ const CalendarConnect = async (req, res) => {
         }
         if (await googled(req, res)) {
             CalendarIsActive = true;
+            res.status(200).json({ message: 'Calendar is connected' });
         }
-        // await googled(req, res);
-        // CalendarIsActive = true;
-        // res.status(200).json({ message: 'Calendar is connected' });
     } catch (error) {
         console.error('Error in CalendarConnect:', error);
         res.status(500).json({ message: 'Server error', error: error.toString() } , { message: 'Calendar is not connected' });
@@ -118,10 +117,8 @@ const CalendarConnect = async (req, res) => {
 
 async function checkPinnedMessages(channel) {
     try {
-        console.log('DiscordIsActive:', DiscordIsActive);
-        console.log('CalendarIsActive:', CalendarIsActive);
         if (!DiscordIsActive && !CalendarIsActive) {
-            console.log('Discord is not active. Skipping checkPinnedMessages.');
+            console.log('Skipping checkPinnedMessages.');
             return;
         }
 
@@ -239,18 +236,43 @@ client.on('guildMemberAdd', member => {
 // ---------------------------------------------------------------------------------------------
 // Area three
 
+const TodoistConnect = async (req, res) => {
+    try {
+        const token = req.headers.authorization.split(' ')[1];
+        console.log('Token:', token);
+        const isValid = verifyToken(token);
+        if (!isValid) {
+            return res.status(401).json({ message: 'Unauthorized' });
+        }
+        TodoistIsActive = true;
+        res.status(200).json({ message: 'Todoist is connected' });
+    } catch (error) {
+        console.error('Error in TodoistConnect:', error);
+        res.status(500).json({ message: 'Server error', error: error.toString() } , { message: 'Todoist is not connected' });
+    }
+};
+
 // Écoutez l'événement 'messageUpdate'
 client.on('messageCreate', async (message) => {
-    console.log('Message :', message);
+
+    if (!TodoistIsActive && !DiscordIsActive) {
+        console.log('Todoist is not connected');
+        return;
+    }
     
     if (message.content.startsWith(`${prefix}createtask`)) {
         try {
             const taskContent = message.content.slice(prefix.length + 'createtask'.length).trim();
             console.log('taskContent:', taskContent);
+
+            const projects = await todoist.getProjects();
+            const area = projects[3].id;
+            console.log('Projects:', projects);
+            
             // Créez une tâche Todoist à partir du contenu du message
-            const newtask = await todoist.createTask({
-                content: taskContent,
-            })
+            const newtask = await todoist.addTask({ content: taskContent, projectId: area, due_lang: 'fr', due_string: 'demain' })
+            .catch((error) => console.error('Error creating task:', error));
+
 
             // Réagissez au message avec un emoji pour indiquer que la tâche a été créée
             await message.react('✅');
@@ -274,4 +296,4 @@ const verifyToken = async (token) => {
     }
 };
 
-module.exports = { login, callback, Airtableconnect, CalendarConnect };
+module.exports = { login, callback, Airtableconnect, CalendarConnect, TodoistConnect };

@@ -64,7 +64,7 @@ const callbacks = async (req, res) => {
     // Récupérer les informations du profil utilisateur
     // const userInfo = await getUserInfo();
 
-    res.redirect('http://localhost:8081/Google Calendar'); 
+    res.send('http://localhost:8081/Google Calendar');
 };
 
 const callback_calendar = async (req, res) => {
@@ -122,6 +122,5 @@ const calendarwebhook = async (req, res) => {
         return res.status(500).end();
     }
 };
-
 
 module.exports = { googled, callbacks, calendarwebhook, callback_calendar, oauth2Client, calendar};

@@ -3,8 +3,8 @@ const fetch = require('node-fetch');
 var SpotifyWebApi = require('spotify-web-api-node');
 
 var spotifyApi = new SpotifyWebApi({
-    clientId: process.env.SPOTIFY_ID,
-    clientSecret: process.env.SPOTIFY_SECRET,
+    clientId: process.env.SPOTIFY_CLIENT_ID,
+    clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
     redirectUri: process.env.SPOTIFY_REDIRECT_URI,
   });
 
@@ -21,12 +21,13 @@ const login = (req, res) => {
 const callback = async (req, res) => {
     const code = req.query.code;
     const data = {
-        client_id: client_id,
-        client_secret: client_secret,
+        client_id: process.env.SPOTIFY_CLIENT_ID,
+        client_secret: process.env.SPOTIFY_CLIENT_SECRET,
         grant_type: 'authorization_code',
-        redirect_uri: redirect_uri,
+        redirect_uri: process.env.SPOTIFY_REDIRECT_URI,
         code: code,
     };
+
     let response = await fetch('https://accounts.spotify.com/api/token', {
         method: 'POST',
         body: new URLSearchParams(data),
@@ -39,13 +40,13 @@ const callback = async (req, res) => {
     console.log('Access Token: ' + json.access_token);
     console.log('Refresh Token: ' + json.refresh_token);
 
-    let userResponse = await fetch('https://api.spotify.com/v1/me/playlists', {
-        headers: {
-            Authorization: `Bearer ${json.access_token}`,
-        },
-    });
-    let userJson = await userResponse.json();
-    console.log(userJson.items); // Affiche les informations de l'utilisateur dans la console
+    // let userResponse = await fetch('https://api.spotify.com/v1/me/playlists', {
+    //     headers: {
+    //         Authorization: `Bearer ${json.access_token}`,
+    //     },
+    // });
+    // let userJson = await userResponse.json();
+    // console.log(userJson.items); // Affiche les informations de l'utilisateur dans la console
     res.redirect('http://localhost:8081/Spotify');
     // const user = await DiscordUser.findOne({ discordId: userJson.id });
     // if (user) {
