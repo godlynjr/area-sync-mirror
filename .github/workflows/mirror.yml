@@ -17,6 +17,6 @@ jobs:
       uses: pixta-dev/repository-mirroring-action@v1
       with:
         target_repo_url: 
-          git@github.com:EpitechPromo2026/B-DEV-500-COT-5-2-area-bridge.atindokpo.git
+          git@github.com:EpitechPromo2026/B-PRO-400-COT-4-1-slideshow-godlyn.kikissagbe.git
         ssh_private_key:
           ${{ secrets.SSH_AREA }}
