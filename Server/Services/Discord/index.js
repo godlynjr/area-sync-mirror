@@ -1,12 +1,13 @@
-const { Client, GatewayIntentBits } = require('discord.js')
-const config = require("./config.json");
+const prefix = '!';
+const dayjs  = require('dayjs')
 const jwt = require('jsonwebtoken');
 const fetch = require('node-fetch');
-const DiscordUser = require('../../models/DiscordUser');
 const airtable = require('airtable');
+const { TodoistApi } = require('@doist/todoist-api-typescript');
+const todoist = new TodoistApi(process.env.TODOIST_API_KEY);
+const DiscordUser = require('../../models/DiscordUser');
+const { Client, GatewayIntentBits } = require('discord.js')
 const { googled, oauth2Client, calendar } = require('../Calendar/calendar');
-const { google } = require('googleapis');
-const dayjs  = require('dayjs')
 
 
 const client = new Client({
@@ -23,11 +24,11 @@ let CalendarIsActive = false;
 let AirtableIsActive = false;
 let processedMessageIds = new Set();
 
-client.login(config.BOT_TOKEN);
+client.login(process.env.DISCORD_BOT_TOKEN);
 
 const login = (req, res) => {
     try {
-        const url = 'https://discord.com/api/oauth2/authorize?client_id=1186857028119973959&permissions=8&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Fusers%2Fdiscord%2Fcallback&scope=identify+messages.read+bot+guilds.members.read';
+        const url = 'https://discord.com/api/oauth2/authorize?client_id=1186857028119973959&permissions=8&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Fusers%2Fdiscord%2Fcallback&scope=identify+guilds.members.read+bot+messages.read';
         res.send(url);
     } catch (error) {
         console.error(error);
@@ -86,7 +87,7 @@ const callback = async (req, res) => {
         refreshToken: json.refresh_token,
         user: userJson,
     });
-    res.redirect('http://localhost:8081/Discord');
+    // res.redirect('http://localhost:8081/Discord');
 };
 
 client.on('ready', () => {
@@ -103,8 +104,11 @@ const CalendarConnect = async (req, res) => {
         if (!isValid) {
             return res.status(401).json({ message: 'Unauthorized' });
         }
-        await googled(req, res);
-        CalendarIsActive = true;
+        if (await googled(req, res)) {
+            CalendarIsActive = true;
+        }
+        // await googled(req, res);
+        // CalendarIsActive = true;
         // res.status(200).json({ message: 'Calendar is connected' });
     } catch (error) {
         console.error('Error in CalendarConnect:', error);
@@ -112,27 +116,11 @@ const CalendarConnect = async (req, res) => {
     }
 };
 
-// Écoutez l'événement 'messageUpdate'
-client.on('messageCreate', async (message) => {
-    console.log('Message :', message);
-    // Fetch all pinned messages in the channel
-    let pinnedMessages = await message.channel.messages.fetchPinned();
-    // Check if the message is in the collection of pinned messages
-    if (pinnedMessages.has(message.id)) {
-        console.log('Un message a été épinglé :', message.content);
-
-        // Effectuez des actions liées à chaque message épinglé ici
-        const eventDetails = {
-            // remplissez les détails de l'événement ici
-        };
-        // appelez votre fonction pour créer un événement Google Calendar ici
-        // createGoogleCalendarEvent(eventDetails);
-    }
-});
-
 async function checkPinnedMessages(channel) {
     try {
-        if (DiscordIsActive && CalendarIsActive) {
+        console.log('DiscordIsActive:', DiscordIsActive);
+        console.log('CalendarIsActive:', CalendarIsActive);
+        if (!DiscordIsActive && !CalendarIsActive) {
             console.log('Discord is not active. Skipping checkPinnedMessages.');
             return;
         }
@@ -222,7 +210,7 @@ const base = new airtable({ apiKey: process.env.AIRTABLE_API_KEY }).base(process
 client.on('guildMemberAdd', member => {
     console.log('The bot has the permission to view the audit log.');
 
-    if (AirtableIsActive) {
+    if (AirtableIsActive && DiscordIsActive) {
         const currentDate = new Date();
         const isoDate = currentDate.toISOString().split('T')[0];
 
@@ -247,6 +235,33 @@ client.on('guildMemberAdd', member => {
         console.log('Airtable is not connected');
     }
 });
+
+// ---------------------------------------------------------------------------------------------
+// Area three
+
+// Écoutez l'événement 'messageUpdate'
+client.on('messageCreate', async (message) => {
+    console.log('Message :', message);
+    
+    if (message.content.startsWith(`${prefix}createtask`)) {
+        try {
+            const taskContent = message.content.slice(prefix.length + 'createtask'.length).trim();
+            console.log('taskContent:', taskContent);
+            // Créez une tâche Todoist à partir du contenu du message
+            const newtask = await todoist.createTask({
+                content: taskContent,
+            })
+
+            // Réagissez au message avec un emoji pour indiquer que la tâche a été créée
+            await message.react('✅');
+        } catch (error) {
+            console.error('Error creating task:', error);
+            // Handle the error case here
+        }
+    }
+});
+
+// ---------------------------------------------------------------------------------------------
 
 const verifyToken = async (token) => {
     // Function to check if the token is valid
