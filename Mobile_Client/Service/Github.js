@@ -13,7 +13,7 @@ WebBrowser.maybeCompleteAuthSession();
 const discovery = {
   authorizationEndpoint: 'https://github.com/login/oauth/authorize',
   tokenEndpoint: 'https://github.com/login/oauth/access_token',
-  revocationEndpoint: 'https://github.com/settings/connections/applications/95b77fddd2584402dd73',
+  revocationEndpoint: `https://github.com/login/oauth/authorize?client_id=${process.env.GITHUB_CLIENT_ID}&redirect_uri=${process.env.GITHUB_REDIRECT_URI}&scope=repo`,
 };
 
 const Github = ({ navigation }) => {
@@ -45,7 +45,7 @@ const Github = ({ navigation }) => {
         clientId: '95b77fddd2584402dd73',
         scopes: ['repo'],
         redirectUri: 'https://area-sync-stagging.onrender.com/users/github/callback',
-        // clientSecret: 'e7ce0d97c48e868cd3e39456bce864936bf066bf'
+        clientSecret: 'e7ce0d97c48e868cd3e39456bce864936bf066bf'
       },
       discovery
     );
