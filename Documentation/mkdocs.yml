@@ -1,0 +1,16 @@
+site_name: AREASYNC
+
+nav:
+  - Getting Started: getting_started.md
+  - Architecture: architecture.md
+  - How to Build: how_to_build.md
+  - Server: Server.md
+  - Client: Client.md
+  - Services and Actions/Reactions: areas.md
+  - API Used: Api.md
+  - License: License.md
+  - Contributor: contributor.md
+  - FAQ: FAQ.md
+
+theme:
+  name: readthedocs
