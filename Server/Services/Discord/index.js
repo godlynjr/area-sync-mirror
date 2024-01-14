@@ -292,4 +292,4 @@ const verifyToken = async (token) => {
     }
 };
 
-module.exports = { login, callback, Airtableconnect, CalendarConnect, TodoistConnect };
+module.exports = { login, callback, Airtableconnect, CalendarConnect, TodoistConnect , client};
