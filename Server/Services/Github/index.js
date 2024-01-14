@@ -1,12 +1,12 @@
 const IService = require('../IService');
 const fetch = require('node-fetch');
-const config = require('./config.json');
 require('dotenv').config();
+const axios = require('axios');
 
 class GithubService extends IService {
     constructor() {
         super();
-        this.accessToken = null;
+        this.accessToken = {};
     }
     
     async login(req, res) {
@@ -19,36 +19,46 @@ class GithubService extends IService {
             throw error;
         }
     }
-    
+
     async handleCallback(req, res) {
         const code = req.query.code;
         try {
-            const data = {
-                client_id: process.env.GITHUB_CLIENT_ID,
-                client_secret: process.env.GITHUB_CLIENT_SECRET,
-                code: code,
-                redirect_uri: process.env.GITHUB_REDIRECT_URI,
-            };
-
-            const response = await fetch('https://github.com/login/oauth/access_token', {
-                method: 'POST',
-                body: new URLSearchParams(data),
+            const response = await axios({
+                method: 'post',
+                url: 'https://github.com/login/oauth/access_token',
+                data: {
+                    client_id: process.env.GITHUB_CLIENT_ID,
+                    client_secret: process.env.GITHUB_CLIENT_SECRET,
+                    code: code,
+                },
                 headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
+                    accept: 'application/json',
                 },
             });
-            
-            const json = await response.json();
-            console.log('GitHub Response:', json.access_token);
-            this.accessToken = json.access_token;
     
-            console.log('Access Token:', this.accessToken);
+            const accessToken = response.data.access_token;
+            this.accessToken = accessToken ?? '';
+            // For example, you can get the user's public information:
+            // const userResponse = await axios({
+            //     method: 'get',
+            //     url: 'https://api.github.com/user',
+            //     headers: {
+            //         Authorization: `token ${accessToken}`,
+            //     },
+            // });
+    
+            // const user = userResponse.data;
+            // console.log(user);  // This will log the user's public information to the console
+    
+            // // You can send a response back to the client with the user's information
+            // res.json(user);
         } catch (error) {
-            console.error('Error handling GitHub callback:', error.message);
-            throw error;
+            console.error('Error in OAuth callback:', error);
+            res.status(500).json({ message: 'Server error', error: error.toString() });
         }
-    }
+    };
     
+
     async connect() {
         try {
             if (!this.accessToken) {
@@ -61,39 +71,6 @@ class GithubService extends IService {
             console.error('Error connecting to GitHub:', error.message);
             throw error;
         }
-    }
-
-    async disconnect() {
-        // Your implementation to disconnect from GitHub
-        console.log('Disconnecting from GitHub...');
-        // Add your GitHub disconnection logic here
-    }
-
-    async sendMessage(message) {
-        // Implement your logic to send a message on GitHub
-        console.log(`Sending message to GitHub: ${message}`);
-        // Add your GitHub message sending logic here
-    }
-
-    async createNotification(message) {
-        // Your implementation for GitHub-specific logic
-        console.log(`Creating notification in GitHub: ${message}`);
-    }
-
-    // Additional methods specific to GitHub actions
-    async createPageInNotion(pageDetails) {
-        // Implement your logic to create a page in Notion based on GitHub action
-        console.log('Creating a Notion page for GitHub action:', pageDetails);
-    }
-
-    async closeGithubIssue(issueDetails) {
-        // Implement your logic to close a GitHub issue
-        console.log('Closing GitHub issue:', issueDetails);
-    }
-
-    async updateGithubIssue(issueDetails) {
-        // Implement your logic to update a GitHub issue
-        console.log('Updating GitHub issue:', issueDetails);
     }
 
 }
