@@ -2,6 +2,7 @@
   "expo": {
     "name": "Areasync",
     "slug": "Areasync",
+    "scheme": "Areasync",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./Assets/icon.png",

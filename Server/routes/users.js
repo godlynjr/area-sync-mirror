@@ -7,6 +7,7 @@ const GithubService = require('../Services/Github/index');
 const {  googled, callbacks, calendarwebhook, callback_calendar } = require('../Services/Calendar/calendar');
 const { loginyt} = require('../Services/Youtube/youtube');
 const { ConnectSpotify , SpotifyCallback, createPlaylistWithLikedSongs} = require('../Services/Spotify/index');
+const { definePrayerTime, scheduleEmails, sendWeatherEmails } = require("../Services/Date&Time/date&time_service");
 
 // Discord API
 router.get('/discord/login', login);
@@ -33,6 +34,7 @@ router.get('/youtube/login', loginyt);
 // Github API
 const githubService = new GithubService();
 router.get('/github/login', githubService.login);
+router.get('/github/callback', githubService.handleCallback);
 
 // Notion API authentication
 router.get('/notion/login', notion_log);
@@ -43,5 +45,9 @@ router.get('/notion/callback', notion_callback);
 router.get('/spotify/login', ConnectSpotify);
 router.get('/spotify/callback', SpotifyCallback);
 router.post('/spotify/connect', createPlaylistWithLikedSongs)
+// Date&Time
+// router.get('/datetime/sendmotivation', scheduleEmails);
+// router.get('/datetime/sendweather', sendWeatherEmails);
+// router.get('/datetime/sendprayertime', definePrayerTime);
 
 module.exports = router
