@@ -23,7 +23,7 @@ const Date_Time = ({ navigation }) => {
     setIsEnabled2(previousState => !previousState);
   }
   // const [prayerMessages, setPrayerMessages] = useState([]);
-  const api = 'http://10.50.6.210:8080';
+  const api = 'https://area-sync-stagging.onrender.com';
 
   const PrayerService = {
     startPrayerService: async () => {
@@ -113,6 +113,10 @@ const Date_Time = ({ navigation }) => {
       console.error('Erreur lors du démarrage du service de prière', error);
     }
   };
+
+
+
+
   const handleStartMotivationService = async () => {
     try {
       await MotivationService.startMotivationService();

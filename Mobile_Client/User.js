@@ -1,4 +1,4 @@
-const api = 'http://10.50.6.210:8080';
+const api = 'https://area-sync-stagging.onrender.com';
 
 class Client {
     #accesToken = undefined;
