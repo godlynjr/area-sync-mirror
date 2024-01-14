@@ -12,7 +12,7 @@ class GithubService extends IService {
     async login(req, res) {
         try {
             const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=${process.env.GITHUB_CLIENT_ID}&redirect_uri=${process.env.GITHUB_REDIRECT_URI}&scope=repo`;
-            res.redirect(githubAuthUrl);
+            // res.redirect(githubAuthUrl);
             return githubAuthUrl;            // console.log('Redirect the user to:', githubAuthUrl);
         } catch (error) {
             console.error('Error initiating GitHub login:', error.message);
@@ -21,7 +21,7 @@ class GithubService extends IService {
     }
 
     async handleCallback(req, res) {
-        console.log(req);
+        // console.log(req);
         const code = req.query.code;
         try {
             const response = await axios({
@@ -36,11 +36,11 @@ class GithubService extends IService {
                     accept: 'application/json',
                 },
             });
-    
+            
             const accessToken = response.data.access_token;
-            return accessToken;
+            // return accessToken;
             console.log('GitHub access token:', accessToken);
-            res.send("Acces granted");
+            // res.send("Acces granted");
             // accessToken = accessToken || '';
             // For example, you can get the user's public information:
             // const userResponse = await axios({
