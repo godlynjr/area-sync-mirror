@@ -9,8 +9,8 @@ const heuresPriere = [
     { heure: '2:40', message: 'Fajr: Bismillah, que cette journée soit bénie. Que votre journée soit remplie de paix et de réussite.' },
     { heure: '2:35', message: 'Dhuhr: Prenez une pause dans votre journée bien remplie pour vous connecter avec Allah. Que votre journée soit remplie de bénédictions.' },
     { heure: '2:30', message: 'Asr: Prenez un moment pour vous recentrer et vous rappeler de la présence d\'Allah dans votre vie. Que votre après-midi soit paisible.' },
-    { heure: '15:54', message: 'Maghrib: Bismillah, que la fin de cette journée soit remplie de gratitude. Que votre soirée soit bénie et apaisante.' },
-    { heure: '2:15', message: 'Isha: Terminez votre journée en vous tournant vers Allah avec amour et dévotion. Que votre nuit soit paisible et remplie de bénédictions.' }
+    { heure: '22:35', message: 'Maghrib: Bismillah, que la fin de cette journée soit remplie de gratitude. Que votre soirée soit bénie et apaisante.' },
+    { heure: '22:40', message: 'Isha: Terminez votre journée en vous tournant vers Allah avec amour et dévotion. Que votre nuit soit paisible et remplie de bénédictions.' }
 ];
 
 // Configuration du transporteur d'e-mails
@@ -38,21 +38,28 @@ function sendEmail(message) {
             console.log('E-mail envoyé avec succès. ID du message:', info.messageId);
         }
     });
-
 }
 
-const definePrayerTime = () => {
-    heuresPriere.forEach(priere => {
-        const regleEnvoi = new schedule.RecurrenceRule();
-        regleEnvoi.hour = parseInt(priere.heure.split(':')[0]);
-        regleEnvoi.minute = parseInt(priere.heure.split(':')[1]);
+const definePrayerTime = async (req, res) => {
+    try {
+        heuresPriere.forEach(priere => {
+            const regleEnvoi = new schedule.RecurrenceRule();
+            regleEnvoi.hour = parseInt(priere.heure.split(':')[0]);
+            regleEnvoi.minute = parseInt(priere.heure.split(':')[1]);
 
-        const scheduleEnvoi = schedule.scheduleJob(regleEnvoi, () => {
-            sendEmail(priere.message);
-            console.log('Mail envoyé');
+            const scheduleEnvoi = schedule.scheduleJob(regleEnvoi, () => {
+                sendEmail(priere.message);
+                console.log('Mail envoyé');
+            });
         });
-    });
-}
+    } catch (err) {
+        console.error('Error processing YouTube X Gmail request:', err);
+        res.status(500).send({
+            error: 'Internal server error',
+        });
+    }
+};
+
 // definePrayerTime();
 // const definePrayerTime = () => {
 //     heuresPriere.forEach(priere => {
@@ -201,10 +208,20 @@ function scheduleEmail(hour, minute) {
     }, delay);
 }
 
-scheduleEmail(15, 53);
+
+const scheduleEmails = async (req, res) => {
+    try {
+        scheduleEmail(23, 10);
+    } catch (err) {
+        console.error('Error processing YouTube X Gmail request:', err);
+        res.status(500).send({
+            error: 'Internal server error',
+        });
+    }
+};
 
 
-// // AREA 3 
+// // // AREA 3 
 
 const axios = require('axios');
 const cron = require('node-cron');
@@ -275,9 +292,18 @@ async function sendWeatherEmail() {
 // cron.schedule('0 8 * * *', () => {
 //     sendWeatherEmail();
 // });
-cron.schedule('52 15 * * *', () => {
-    sendWeatherEmail();
-});
+const sendWeatherEmails = async (req, res) => {
+    try {
+        cron.schedule('00 09 * * *', () => {
+            sendWeatherEmail();
+        });
+    } catch (err) {
+        console.error('Error processing YouTube X Gmail request:', err);
+        res.status(500).send({
+            error: 'Internal server error',
+        });
+    }
+};
 
-// module.exports = { sendWeatherEmail, scheduleEmail, definePrayerTime };
+module.exports = { definePrayerTime, scheduleEmails, sendWeatherEmails };
 
