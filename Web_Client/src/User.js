@@ -63,6 +63,7 @@ class Client {
       axios
           .get(api + "/users/discord/login", {
            headers: this.fillRequestHeaders(),
+           body: JSON.stringify({ url: Url }),
           })
           .then((res) => {
             console.log(res.data);

@@ -23,6 +23,7 @@ let DiscordIsActive = false;
 let CalendarIsActive = false;
 let AirtableIsActive = false;
 let TodoistIsActive = false;
+let redirectURL = '';
 let processedMessageIds = new Set();
 
 client.login(process.env.DISCORD_BOT_TOKEN);
@@ -30,6 +31,7 @@ client.login(process.env.DISCORD_BOT_TOKEN);
 const login = (req, res) => {
     try {
         const url = 'https://discord.com/api/oauth2/authorize?client_id=1186857028119973959&permissions=8&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Fusers%2Fdiscord%2Fcallback&scope=identify+guilds.members.read+bot+messages.read';
+        redirectURL = req.headers.url;
         res.send(url);
     } catch (error) {
         console.error(error);
@@ -82,14 +84,7 @@ const callback = async (req, res) => {
         await newUser.save();
     }
     DiscordIsActive = true;
-    // Renvoie les informations en réponse à la requête de rappel
-    res.json({
-        accessToken: json.access_token,
-        refreshToken: json.refresh_token,
-        user: userJson,
-    });
-    const redirectUrl = req.headers.Url; // Récupérer l'URL de redirection de l'en-tête
-    res.redirect(redirectUrl); // Utiliser l'URL de redirection de l'en-tête
+    res.redirect(redirectURL); // Use the redirect URL from the header
 };
 
 client.on('ready', () => {
