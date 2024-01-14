@@ -10,9 +10,17 @@ import User from '../User'
 
 const Date_Time = ({ navigation }) => {
   const [isEnabled, setIsEnabled] = useState(false);
+  const [isEnabled1, setIsEnabled1] = useState(false);
+  const [isEnabled2, setIsEnabled2] = useState(false);
 
   const toggleSwitch = () => {
     setIsEnabled(previousState => !previousState);
+  }
+  const toggleSwitch1 = () => {
+    setIsEnabled1(previousState => !previousState);
+  }
+  const toggleSwitch2 = () => {
+    setIsEnabled2(previousState => !previousState);
   }
   // const [prayerMessages, setPrayerMessages] = useState([]);
   const api = 'http://10.50.6.210:8080';
@@ -207,10 +215,10 @@ const Date_Time = ({ navigation }) => {
               <View style={styles.containerb}>
                 <Switch
                   trackColor={{ false: '#767577', true: 'white' }}
-                  thumbColor={isEnabled ? 'gray' : '#f4f3f4'}
+                  thumbColor={isEnabled1 ? 'gray' : '#f4f3f4'}
                   ios_backgroundColor="black"
-                  onValueChange={toggleSwitch}
-                  value={isEnabled}
+                  onValueChange={toggleSwitch1}
+                  value={isEnabled1}
                   style={styles.toggleButton} // Ajout de la propriété de style
                 />
               </View>
@@ -232,10 +240,10 @@ const Date_Time = ({ navigation }) => {
               <View style={styles.containerb}>
                 <Switch
                   trackColor={{ false: '#767577', true: 'white' }}
-                  thumbColor={isEnabled ? 'gray' : '#f4f3f4'}
+                  thumbColor={isEnabled2 ? 'gray' : '#f4f3f4'}
                   ios_backgroundColor="black"
-                  onValueChange={toggleSwitch}
-                  value={isEnabled}
+                  onValueChange={toggleSwitch2}
+                  value={isEnabled2}
                   style={styles.toggleButton} // Ajout de la propriété de style
                 />
               </View>
