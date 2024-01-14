@@ -2,19 +2,48 @@ import React from 'react';
 import { FaDiscord, FaCalendar, FaSpotify, FaEnvelope, FaChartBar, FaGithub } from 'react-icons/fa';
 import { SiNotion } from "react-icons/si";
 
-const Areas = ({ service, featuring, description}) => {
+const Areas = ({ service, featuring, description, bgComponent}) => {
 
+    let ServiceIcon;
     let iconComponent;
 
-    switch (featuring.toLowerCase()) {
+    switch(service.toLowerCase()) {
+      case 'mail':
+        ServiceIcon = <FaEnvelope className='h-5 w-5' />;
+        break;
+      case 'discord':
+        ServiceIcon = <FaDiscord className='h-5 w-5'/>;
+        break;
       case 'calendar':
-        iconComponent = <FaCalendar className='h-5 w-5' />;
+        ServiceIcon = <FaCalendar className='text-white h-5 w-5' />;
         break;
       case 'notion':
-        iconComponent = <SiNotion className='h-5 w-5' />;
+        ServiceIcon = <SiNotion className='text-white h-5 w-5' />;
         break;
       case 'spotify':
-        iconComponent = <FaSpotify className='h-5 w-5' />;
+        ServiceIcon = <FaSpotify className='text-white h-5 w-5' />;
+        break;
+      default:
+        ServiceIcon = null;
+        break;
+    }
+
+    switch (featuring.toLowerCase()) {
+      case 'mail':
+        iconComponent = <FaEnvelope className='h-5 w-5' />;
+        break;
+      case 'discord':
+        iconComponent = <FaDiscord className='h-10 w-10'/>;
+        bgColorClass = 'bg-discord';
+        break;
+      case 'calendar':
+        iconComponent = <FaCalendar className='text-white h-5 w-5' />;
+        break;
+      case 'notion':
+        iconComponent = <SiNotion className='text-white h-5 w-5' />;
+        break;
+      case 'spotify':
+        iconComponent = <FaSpotify className='text-white h-5 w-5' />;
         break;
       default:
         iconComponent = null;
@@ -22,9 +51,9 @@ const Areas = ({ service, featuring, description}) => {
     }
 
     return (
-        <div className='flex flex-col w-30 border border-solid h-72 w-3/4 rounded-lg p-2 bg-discord text-white'>
+        <div className={`flex flex-col w-30 border border-solid h-72 w-3/4 rounded-lg p-2 ${bgComponent} text-white`}>
             <div className="flex flex-row space-x-2">
-                <FaDiscord className='text-white h-5 w-5'/>
+                {ServiceIcon}
                 {iconComponent}
             </div>
             <p className='text-2xl font-bold'>{description}</p>

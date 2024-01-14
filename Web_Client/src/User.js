@@ -57,10 +57,11 @@ class Client {
     }
   }
 
-  async DiscordLogin() {
+  async DiscordLogin(Url) {
+    this.redirectUrl = Url;
     try {
       axios
-          .get(api + "/spotify/login", {
+          .get(api + "/users/discord/login", {
            headers: this.fillRequestHeaders(),
           })
           .then((res) => {

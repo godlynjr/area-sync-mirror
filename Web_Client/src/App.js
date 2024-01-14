@@ -12,7 +12,6 @@ import Discord2 from './Services/Discord/area2';
 import Discord3 from './Services/Discord/area3';
 
 
-
 import Calendar from './Services/Calendar/Calendar';
 import Calendar1 from './Services/Calendar/area1';
 import Calendar2 from './Services/Calendar/area2';

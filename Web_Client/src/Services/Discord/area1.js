@@ -33,7 +33,7 @@ function Area1() {
         
                   className="h-5 w-5 text-white mt-1"
                 />
-              <a href="/home" className="text-lg font-bold">Back</a>
+              <a href="/Discord" className="text-lg font-bold">Back</a>
             </div>
             <div className="border-4 border-solid p-2 rounded-full">
               <a href="https://discord.com" className="text-lg font-semibold">Visit Discord</a>
@@ -42,7 +42,7 @@ function Area1() {
 
           {/* logo and description */}
           <div className="flex flex-col text-center">
-            <div className="flex flex-row self-center">
+            <div className="flex flex-row self-center space-x-2">
               <FaDiscord className="h-12 w-12"/>
               <FaCalendar className="h-12 w-12" />
             </div>
