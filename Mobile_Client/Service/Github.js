@@ -45,7 +45,7 @@ const Github = ({ navigation }) => {
         clientId: '95b77fddd2584402dd73',
         scopes: ['repo'],
         redirectUri: 'https://area-sync-stagging.onrender.com/users/github/callback',
-        clientSecret: 'e7ce0d97c48e868cd3e39456bce864936bf066bf'
+        // clientSecret: 'e7ce0d97c48e868cd3e39456bce864936bf066bf'
       },
       discovery
     );

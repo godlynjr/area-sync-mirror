@@ -13,7 +13,7 @@ class GithubService extends IService {
         try {
             const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=${process.env.GITHUB_CLIENT_ID}&redirect_uri=${process.env.GITHUB_REDIRECT_URI}&scope=repo`;
             res.redirect(githubAuthUrl);
-            // console.log('Redirect the user to:', githubAuthUrl);
+            return githubAuthUrl;            // console.log('Redirect the user to:', githubAuthUrl);
         } catch (error) {
             console.error('Error initiating GitHub login:', error.message);
             throw error;
