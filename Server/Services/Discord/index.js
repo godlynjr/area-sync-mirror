@@ -88,7 +88,8 @@ const callback = async (req, res) => {
         refreshToken: json.refresh_token,
         user: userJson,
     });
-    // res.redirect('http://localhost:8081/Discord');
+    const redirectUrl = req.headers.Url; // Récupérer l'URL de redirection de l'en-tête
+    res.redirect(redirectUrl); // Utiliser l'URL de redirection de l'en-tête
 };
 
 client.on('ready', () => {
