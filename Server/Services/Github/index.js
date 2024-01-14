@@ -21,7 +21,7 @@ class GithubService extends IService {
     }
 
     async handleCallback(req, res) {
-        console.log(req);
+        // console.log(req);
         const code = req.query.code;
         try {
             const response = await axios({
@@ -36,11 +36,11 @@ class GithubService extends IService {
                     accept: 'application/json',
                 },
             });
-    
+            
             const accessToken = response.data.access_token;
-            return accessToken;
+            // return accessToken;
             console.log('GitHub access token:', accessToken);
-            res.send("Acces granted");
+            // res.send("Acces granted");
             // accessToken = accessToken || '';
             // For example, you can get the user's public information:
             // const userResponse = await axios({
