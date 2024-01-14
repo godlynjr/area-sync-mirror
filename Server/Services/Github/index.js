@@ -13,7 +13,7 @@ class GithubService extends IService {
         try {
             const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=${process.env.GITHUB_CLIENT_ID}&redirect_uri=${process.env.GITHUB_REDIRECT_URI}&scope=repo`;
             res.redirect(githubAuthUrl);
-            console.log('Redirect the user to:', githubAuthUrl);
+            // console.log('Redirect the user to:', githubAuthUrl);
         } catch (error) {
             console.error('Error initiating GitHub login:', error.message);
             throw error;
@@ -21,6 +21,7 @@ class GithubService extends IService {
     }
 
     async handleCallback(req, res) {
+        console.log(req);
         const code = req.query.code;
         try {
             const response = await axios({
@@ -37,6 +38,7 @@ class GithubService extends IService {
             });
     
             const accessToken = response.data.access_token;
+            return accessToken;
             console.log('GitHub access token:', accessToken);
             res.send("Acces granted");
             // accessToken = accessToken || '';

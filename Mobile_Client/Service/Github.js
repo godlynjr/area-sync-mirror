@@ -3,7 +3,18 @@ import { View, Switch, SafeAreaView, ScrollView, Text, StyleSheet, Image, Dimens
 import { Ionicons } from '@expo/vector-icons';
 import user from '../User'
 import { WebView } from 'react-native-webview';
+import * as WebBrowser from 'expo-web-browser';
+import { makeRedirectUri, useAuthRequest } from 'expo-auth-session';
+import { Button } from 'react-native';
 
+WebBrowser.maybeCompleteAuthSession();
+
+  // Endpoint
+const discovery = {
+  authorizationEndpoint: 'https://github.com/login/oauth/authorize',
+  tokenEndpoint: 'https://github.com/login/oauth/access_token',
+  revocationEndpoint: 'https://github.com/settings/connections/applications/95b77fddd2584402dd73',
+};
 
 const Github = ({ navigation }) => {
   const [isEnabled, setIsEnabled] = useState(false);
@@ -21,13 +32,33 @@ const Github = ({ navigation }) => {
     setIsEnabled2(previousState => !previousState);
   }
 
-  const handleLogin = async () => {
-    try {
-      const login = await user.loginGithub();
-    } catch (error) {
-      console.error('Erreur lors du démarrage du service de température', error);
-    }
-  };
+  // const handleLogin = async (req, res) => {
+  //   try {
+  //     const login = await user.loginGithub();
+  //     res.redirect(login);
+  //   } catch (error) {
+  //     console.error('Erreur lors du démarrage du service de température', error);
+  //   }
+  // };
+    const [request, response, promptAsync] = useAuthRequest(
+      {
+        clientId: '95b77fddd2584402dd73',
+        scopes: ['repo'],
+        redirectUri: 'https://area-sync-stagging.onrender.com/users/github/callback',
+        clientSecret: 'e7ce0d97c48e868cd3e39456bce864936bf066bf'
+      },
+      discovery
+    );
+
+    React.useEffect(() => {
+      console.log('React: '+ response);
+      if (response?.type === 'success') {
+        const { code } = response.params;
+        console.log(code);
+      } else {
+        console.log(response?.type);
+      }
+    }, [response]);
 
   return (
     <SafeAreaView>
@@ -47,7 +78,7 @@ const Github = ({ navigation }) => {
         </View>
         <View style={styles.bottomContainer}>
           <TouchableOpacity style={styles.bouton}>
-            <Text style={styles.Text} onPress={handleLogin}>
+            <Text style={styles.Text} onPress={() => {promptAsync();}}>
               Connect
             </Text>
           </TouchableOpacity>

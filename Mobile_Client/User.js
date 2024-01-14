@@ -62,6 +62,8 @@ class Client {
                 headers: this.fillRequestHeaders(),
                 // body: JSON.stringify({ email: mail, password: password }),
             });
+            console.log("Reponse: " + response);
+            return response;
         } catch (error) {
             console.error('Erreur de connexion github:', error);
             return 500;
