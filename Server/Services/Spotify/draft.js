@@ -82,8 +82,8 @@ const addNewLikedSongsToPlaylist = (spotifyApi, playlistName) => {
 const sp = () => {
     var SpotifyWebApi = require('spotify-web-api-node');
     var spotifyApi = new SpotifyWebApi({
-        clientId: '6ca8b5e6ea6945ce9a12dcbf7ed30fc0',
-        clientSecret: 'cff2feb9040b4320a8716ff6b0c11b10',
+        clientId: '4e3eb2d01843433985cdcd418a8bc6c8',
+        clientSecret: 'a1083616b82944b8acb117a3a49ab736',
         redirectUri: 'https://www.google.com'
     });
     const authorizeURL = spotifyApi.createAuthorizeURL(['user-library-read', 'playlist-modify-public', 'playlist-modify-private'], 'STATE');

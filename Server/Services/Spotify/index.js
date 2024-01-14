@@ -46,28 +46,76 @@ const SpotifyCallback = async (req, res) => {
     spotifyApi.setAccessToken(data.body['access_token']);
     spotifyApi.setRefreshToken(data.body['refresh_token']);
 
-    // setInterval(() => {
-    //     addNewLikedSongsToPlaylist(spotifyApi, 'YOUR_PLAYLIST_ID');
-    // }, 3000);
-
     res.redirect(redirectURL);
 };
 
 // Area 1
 
+let existingLikedSongs = [];
+
+const getUserLikedSongs = (spotifyApi) => {
+    return spotifyApi.getMySavedTracks()
+        .then(data => {
+            const tracks = data.body.items;
+            const trackURIs = tracks.map(track => track.track.uri);
+            console.log('User liked songs:', trackURIs);
+            return trackURIs;
+        })
+        .catch(error => {
+            console.error('Error getting user liked songs:', error);
+            throw error;
+        });
+};
+
+const addTracksToPlaylist = (spotifyApi, playlistName, trackURIs) => {
+    return spotifyApi.getUserPlaylists()
+        .then(data => {
+            const playlists = data.body.items;
+            const existingPlaylist = playlists.find(playlist => playlist.name === playlistName);
+
+            if (existingPlaylist) {
+                console.log('Playlist already exists:', existingPlaylist);
+                return spotifyApi.addTracksToPlaylist(existingPlaylist.id, trackURIs)
+                    .then(data => {
+                        console.log('Added tracks to playlist!');
+                    })
+                    .catch(error => {
+                        console.error('Error adding tracks to playlist:', error);
+                        throw error;
+                    });
+            } else {
+                return spotifyApi.createPlaylist(playlistName, { description: 'Playlist created by your app', public: true })
+                    .then(data => {
+                        console.log('Created playlist:', data.body);
+                        return spotifyApi.addTracksToPlaylist(data.body.id, trackURIs)
+                            .then(() => {
+                                console.log('Added tracks to playlist!');
+                            })
+                            .catch(error => {
+                                console.error('Error adding tracks to playlist:', error);
+                                throw error;
+                            });
+                    })
+                    .catch(error => {
+                        console.error('Error creating playlist:', error);
+                        throw error;
+                    });
+            }
+        })
+        .catch(error => {
+            console.error('Error getting user playlists:', error);
+            throw error;
+        });
+};
+
 const addNewLikedSongsToPlaylist = (spotifyApi, playlistName) => {
-    // Get the user's current liked songs
     getUserLikedSongs(spotifyApi)
         .then(newTrackURIs => {
-            // Find the newly liked songs by comparing with existingLikedSongs
             const newlyLikedSongs = newTrackURIs.filter(uri => !existingLikedSongs.includes(uri));
 
             if (newlyLikedSongs.length > 0) {
-                // Add the newly liked songs to the playlist
                 addTracksToPlaylist(spotifyApi, playlistName, newlyLikedSongs);
             }
-
-            // Update existingLikedSongs for the next interval
             existingLikedSongs = newTrackURIs;
         })
         .catch(error => {

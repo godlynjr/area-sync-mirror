@@ -31,6 +31,7 @@
     "node-todoist": "^0.3.2",
     "passport": "^0.7.0",
     "passport-google-oauth20": "^2.0.0",
+    "prompt-sync": "^4.2.0",
     "pug": "^3.0.2",
     "querystring": "^0.2.1",
     "spotify-web-api-node": "^5.0.2",

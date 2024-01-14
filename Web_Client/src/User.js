@@ -30,7 +30,7 @@ class Client {
         this.isLoggedIn = true;
         console.log('token received: ', data.token);
         localStorage.setItem('authToken', data.token);
-        // window.location.href = '/home';
+        window.location.href = '/home';
       })
       .catch(error => {
         console.error('Erreur de connexion :', error);
@@ -78,7 +78,8 @@ class Client {
     }
   }
 
-  async SpotifyLogin() {
+  async SpotifyLogin(Url) {
+    this.redirectUrl = Url;
     try {
       axios
           .get(api + "/spotify/login", {
