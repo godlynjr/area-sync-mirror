@@ -1,6 +1,7 @@
 const express = require("express")
 const router = express.Router()
-const {  login, callback, Airtableconnect, CalendarConnect } = require('../Services/Discord/index');
+const {  login, callback, Airtableconnect, CalendarConnect,  TodoistConnect } = require('../Services/Discord/index');
+const { QuoteLogin, DiscordConnection } = require('../Services/Quote/index');
 const {  notion_log, notion_callback } = require('../Services/Notion/notion');
 const GithubService = require('../Services/Github/index');
 const {  googled, callbacks, calendarwebhook, callback_calendar } = require('../Services/Calendar/calendar');
@@ -12,6 +13,11 @@ router.get('/discord/login', login);
 router.get('/discord/callback', callback);
 router.post('/discord/airtable/connect', Airtableconnect);
 router.post('/discord/calendar/connect', CalendarConnect);
+router.post('/discord/todoist/connect', TodoistConnect);
+
+// Quote API
+router.get('/quote/login', QuoteLogin);
+router.get('/quote/discord/connect/:userId', DiscordConnection);
 
 // Calendar API
 router.get('/calendar/login', googled);
