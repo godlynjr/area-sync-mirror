@@ -8,9 +8,12 @@ var spotifyApi = new SpotifyWebApi({
     redirectUri: process.env.SPOTIFY_REDIRECT_URI,
   });
 
-const login = (req, res) => {
+let redirectURL = '';
+
+const ConnectSpotify = (req, res) => {
     try {
         const authorizeURL = spotifyApi.createAuthorizeURL(['user-read-private', 'user-read-email', 'playlist-read-private'], 'state');
+        redirectURL = req.headers.url;
         res.send(authorizeURL);
     } catch (error) {
         console.error(error);
@@ -18,7 +21,7 @@ const login = (req, res) => {
     }
 };
 
-const callback = async (req, res) => {
+const SpotifyCallback = async (req, res) => {
     const code = req.query.code;
     const data = {
         client_id: process.env.SPOTIFY_CLIENT_ID,
@@ -36,39 +39,46 @@ const callback = async (req, res) => {
         },
     });
     let json = await response.json();
-    console.log(json);
-    console.log('Access Token: ' + json.access_token);
-    console.log('Refresh Token: ' + json.refresh_token);
+    // console.log(json);
+    // console.log('Access Token: ' + json.access_token);
+    // console.log('Refresh Token: ' + json.refresh_token);
 
-    // let userResponse = await fetch('https://api.spotify.com/v1/me/playlists', {
-    //     headers: {
-    //         Authorization: `Bearer ${json.access_token}`,
-    //     },
-    // });
-    // let userJson = await userResponse.json();
-    // console.log(userJson.items); // Affiche les informations de l'utilisateur dans la console
-    res.redirect('http://localhost:8081/Spotify');
-    // const user = await DiscordUser.findOne({ discordId: userJson.id });
-    // if (user) {
-    //     user.accessToken = json.access_token;
-    //     user.refreshToken = json.refresh_token;
-    //     await user.save();
-    // } else {
-    //     const newUser = new DiscordUser({
-    //         discordId: userJson.id,
-    //         username: userJson.username,
-    //         accessToken: json.access_token,
-    //         refreshToken: json.refresh_token,
-    //     });
-    //     await newUser.save();
-    // }
+    spotifyApi.setAccessToken(data.body['access_token']);
+    spotifyApi.setRefreshToken(data.body['refresh_token']);
 
-    // // Renvoie les informations en réponse à la requête de rappel
-    // res.json({
-    //     accessToken: json.access_token,
-    //     refreshToken: json.refresh_token,
-    //     user: userJson,
-    // });
+    // setInterval(() => {
+    //     addNewLikedSongsToPlaylist(spotifyApi, 'YOUR_PLAYLIST_ID');
+    // }, 3000);
+
+    res.redirect(redirectURL);
 };
 
-module.exports = { login, callback };
+// Area 1
+
+const addNewLikedSongsToPlaylist = (spotifyApi, playlistName) => {
+    // Get the user's current liked songs
+    getUserLikedSongs(spotifyApi)
+        .then(newTrackURIs => {
+            // Find the newly liked songs by comparing with existingLikedSongs
+            const newlyLikedSongs = newTrackURIs.filter(uri => !existingLikedSongs.includes(uri));
+
+            if (newlyLikedSongs.length > 0) {
+                // Add the newly liked songs to the playlist
+                addTracksToPlaylist(spotifyApi, playlistName, newlyLikedSongs);
+            }
+
+            // Update existingLikedSongs for the next interval
+            existingLikedSongs = newTrackURIs;
+        })
+        .catch(error => {
+            console.error('Error adding new liked songs to playlist:', error);
+        });
+};
+
+const createPlaylistWithLikedSongs = (req, res) => {
+    setInterval(() => {
+        addNewLikedSongsToPlaylist(spotifyApi, 'AREASYNC_PLAYLIST');
+    }, 3000);
+}
+
+module.exports = { ConnectSpotify , SpotifyCallback, createPlaylistWithLikedSongs };

@@ -6,6 +6,7 @@ const {  notion_log, notion_callback } = require('../Services/Notion/notion');
 const GithubService = require('../Services/Github/index');
 const {  googled, callbacks, calendarwebhook, callback_calendar } = require('../Services/Calendar/calendar');
 const { loginyt} = require('../Services/Youtube/youtube');
+const { ConnectSpotify , SpotifyCallback, createPlaylistWithLikedSongs} = require('../Services/Spotify/index');
 
 // Discord API
 router.get('/discord/login', login);
@@ -36,5 +37,11 @@ router.get('/github/login', githubService.login);
 // Notion API authentication
 router.get('/notion/login', notion_log);
 router.get('/notion/callback', notion_callback);
+
+
+// SPOTIFY API
+router.get('/spotify/login', ConnectSpotify);
+router.get('/spotify/callback', SpotifyCallback);
+router.post('/spotify/connect', createPlaylistWithLikedSongs)
 
 module.exports = router
