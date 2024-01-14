@@ -32,14 +32,6 @@ const Github = ({ navigation }) => {
     setIsEnabled2(previousState => !previousState);
   }
 
-  // const handleLogin = async (req, res) => {
-  //   try {
-  //     const login = await user.loginGithub();
-  //     res.redirect(login);
-  //   } catch (error) {
-  //     console.error('Erreur lors du démarrage du service de température', error);
-  //   }
-  // };
     const [request, response, promptAsync] = useAuthRequest(
       {
         clientId: 'b2ee2cb6c81a5d28e59c',
@@ -51,14 +43,17 @@ const Github = ({ navigation }) => {
     );
 
     React.useEffect(() => {
-      console.log('React: '+ response);
+      console.log('React: ', response);
       if (response?.type === 'success') {
         const { code } = response.params;
         console.log(code);
+      } else if (response?.type === 'error') {
+        console.error(response.error);
       } else {
         console.log(response?.type);
       }
     }, [response]);
+    
 
   return (
     <SafeAreaView>
