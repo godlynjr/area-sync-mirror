@@ -40,6 +40,7 @@ class GithubService extends IService {
             const accessToken = response.data.access_token;
             // return accessToken;
             console.log('GitHub access token:', accessToken);
+            res.status(200).send("Connected to GitHub");
             // res.send("Acces granted");
             // accessToken = accessToken || '';
             // For example, you can get the user's public information:
