@@ -42,10 +42,10 @@ const Github = ({ navigation }) => {
   // };
     const [request, response, promptAsync] = useAuthRequest(
       {
-        clientId: '95b77fddd2584402dd73',
+        clientId: 'b2ee2cb6c81a5d28e59c',
         scopes: ['repo'],
         redirectUri: 'https://area-sync-stagging.onrender.com/users/github/callback',
-        clientSecret: 'e7ce0d97c48e868cd3e39456bce864936bf066bf'
+        clientSecret: 'a3eb2a70249b5fc3d628fdefc97bef4a45105f83'
       },
       discovery
     );
