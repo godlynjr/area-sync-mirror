@@ -1,6 +1,7 @@
 const IService = require('../IService');
 const fetch = require('node-fetch');
 const config = require('./config.json');
+require('dotenv').config();
 
 class GithubService extends IService {
     constructor() {
@@ -10,7 +11,7 @@ class GithubService extends IService {
     
     async login(req, res) {
         try {
-            const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=${config.GITHUB_CLIENT_ID}&redirect_uri=${config.GITHUB_REDIRECT_URI}&scope=repo`;
+            const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=${process.env.GITHUB_CLIENT_ID}&redirect_uri=${process.env.GITHUB_REDIRECT_URI}&scope=repo`;
             res.redirect(githubAuthUrl);
             console.log('Redirect the user to:', githubAuthUrl);
         } catch (error) {
@@ -19,13 +20,14 @@ class GithubService extends IService {
         }
     }
     
-    async handleCallback(code) {
+    async handleCallback(req, res) {
+        const code = req.query.code;
         try {
             const data = {
-                client_id: config.GITHUB_CLIENT_ID,
-                client_secret: config.GITHUB_CLIENT_SECRET,
+                client_id: process.env.GITHUB_CLIENT_ID,
+                client_secret: process.env.GITHUB_CLIENT_SECRET,
                 code: code,
-                redirect_uri: config.GITHUB_REDIRECT_URI,
+                redirect_uri: process.env.GITHUB_REDIRECT_URI,
             };
 
             const response = await fetch('https://github.com/login/oauth/access_token', {
@@ -37,6 +39,7 @@ class GithubService extends IService {
             });
             
             const json = await response.json();
+            console.log('GitHub Response:', json.access_token);
             this.accessToken = json.access_token;
     
             console.log('Access Token:', this.accessToken);
@@ -93,7 +96,6 @@ class GithubService extends IService {
         console.log('Updating GitHub issue:', issueDetails);
     }
 
-    // Add more GitHub-specific methods as needed
 }
 
 module.exports = GithubService;

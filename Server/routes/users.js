@@ -26,6 +26,7 @@ router.get('/youtube/login', loginyt);
 // Github API
 const githubService = new GithubService();
 router.get('/github/login', githubService.login);
+router.get('/github/callback', githubService.handleCallback);
 
 // Notion API authentication
 router.get('/notion/login', notion_log);
