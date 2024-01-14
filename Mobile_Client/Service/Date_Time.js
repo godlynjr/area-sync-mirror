@@ -287,8 +287,8 @@ const styles = StyleSheet.create({
     marginTop: 30,
     paddingHorizontal: 20,
     // backgroundColor: 'red',
-    // alignItems: 'center',
-    // justifyContent: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
     gap: 20,
   },
   serv1: {
@@ -318,8 +318,8 @@ const styles = StyleSheet.create({
   containerb: {
     paddingVertical: 20,
     paddingHorizontal: 30,
-    // alignItems: 'center',
-    // justifyContent: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   toggleButton: {
     transform: [{ scaleX: 1.5 }, { scaleY: 1.5 }] // Appliquer une mise à l'échelle
