@@ -4,9 +4,9 @@ require('dotenv').config();
 const axios = require('axios');
 
 class GithubService extends IService {
-    constructor() {
+    constructor(_accessToken = '') {
         super();
-        this.accessToken = {};
+        this.accessToken = _accessToken;
     }
     
     async login(req, res) {
@@ -37,7 +37,9 @@ class GithubService extends IService {
             });
     
             const accessToken = response.data.access_token;
-            this.accessToken = accessToken ?? '';
+            console.log('GitHub access token:', accessToken);
+            res.send("Acces granted");
+            // accessToken = accessToken || '';
             // For example, you can get the user's public information:
             // const userResponse = await axios({
             //     method: 'get',
