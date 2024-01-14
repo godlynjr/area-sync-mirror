@@ -21,48 +21,38 @@ class GithubService extends IService {
     }
 
     async handleCallback(req, res) {
-        // console.log(req);
         const code = req.query.code;
         try {
             const response = await axios({
                 method: 'post',
                 url: 'https://github.com/login/oauth/access_token',
                 data: {
-                    client_id: process.env.GITHUB_CLIENT_ID,
-                    client_secret: process.env.GITHUB_CLIENT_SECRET,
-                    code: code,
+                client_id: process.env.GITHUB_CLIENT_ID,
+                client_secret: process.env.GITHUB_CLIENT_SECRET,
+                code: code,
                 },
                 headers: {
-                    accept: 'application/json',
+                accept: 'application/json',
                 },
             });
-            
+      
             const accessToken = response.data.access_token;
-            // return accessToken;
+            const tokenType = response.data.token_type;
+            const scope = response.data.scope;
+        
+            res.status(200).json({
+                access_token: accessToken,
+                token_type: tokenType,
+                scope: scope,
+            });
+        
             console.log('GitHub access token:', accessToken);
-            res.status(200).send("Connected to GitHub");
-            // res.send("Acces granted");
-            // accessToken = accessToken || '';
-            // For example, you can get the user's public information:
-            // const userResponse = await axios({
-            //     method: 'get',
-            //     url: 'https://api.github.com/user',
-            //     headers: {
-            //         Authorization: `token ${accessToken}`,
-            //     },
-            // });
-    
-            // const user = userResponse.data;
-            // console.log(user);  // This will log the user's public information to the console
-    
-            // // You can send a response back to the client with the user's information
-            // res.json(user);
         } catch (error) {
-            console.error('Error in OAuth callback:', error);
-            res.status(500).json({ message: 'Server error', error: error.toString() });
+          console.error('Error exchanging code for access token:', error);
+          // Handle error and respond accordingly
+          res.status(500).send('Internal Server Error');
         }
-    };
-    
+      };
 
     async connect() {
         try {

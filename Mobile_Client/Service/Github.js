@@ -43,14 +43,17 @@ const Github = ({ navigation }) => {
     );
 
     React.useEffect(() => {
-      console.log('React: '+ response);
+      console.log('React: ', response);
       if (response?.type === 'success') {
         const { code } = response.params;
         console.log(code);
+      } else if (response?.type === 'error') {
+        console.error(response.error);
       } else {
         console.log(response?.type);
       }
     }, [response]);
+    
 
   return (
     <SafeAreaView>
