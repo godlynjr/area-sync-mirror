@@ -33,8 +33,8 @@ router.get('/notion/login', notion_log);
 router.get('/notion/callback', notion_callback);
 
 // Date&Time
-router.get('/datetime/sendmotivation', scheduleEmail);
-router.get('/datetime/sendweather', sendWeatherEmail);
-router.get('/datetime/sendprayertime', definePrayerTime);
+// router.get('/datetime/sendmotivation', scheduleEmail);
+// router.get('/datetime/sendweather', sendWeatherEmail);
+// router.get('/datetime/sendprayertime', definePrayerTime);
 
 module.exports = router
