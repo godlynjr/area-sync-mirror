@@ -79,7 +79,7 @@ class Client {
 
     async fetchAboutData() {
         try {
-            const token = 'votre_token'; // Remplacez par votre token d'authentification
+            // const token = 'votre_token'; // Remplacez par votre token d'authentification
             const headers = {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + this.#accesToken,
@@ -101,26 +101,94 @@ class Client {
             console.error('Erreur lors de la requête GET :', error);
         }
     }
-
-    // async fetchAboutData() {
+    // Fonction pour récupérer les messages de prière depuis le serveur
+    // async getPrayerMessages() {
     //     try {
-    //         const response = await fetch(api + "/about.json",
-    //             {
-    //                 method: "GET",
-    //                 headers: this.fillRequestHeaders(),
-    //             });
-    //         if (response.ok) {
-    //             const data = await response.json();
-    //             console.log(data);
-    //             return data;
-    //         } else {
-    //             console.error('Erreur lors de la requête GET1111 :', response.status);
+    //         const headers = {
+    //             'Content-Type': 'application/json',
+    //             'Authorization': 'Bearer ' + this.#accesToken,
+    //         };
+    //         const response = await fetch(api + '/datetime/sendprayertime', {
+    //             method: 'GET',
+    //             headers: headers,
+    //         });
+    //         if (!response.ok) {
+    //             throw new Error('Erreur lors de la récupération des messages de prière');
     //         }
+    //         const prayerMessages = await response.json();
+    //         return prayerMessages;
     //     } catch (error) {
-    //         console.error('Erreur lors de la requête GET2222 :', error);
+    //         console.error('Erreur lors de la récupération des messages de prière:', error);
+    //         throw error;
     //     }
-    // }
-}
+    // };
+    async startPrayerService() {
+        try {
+            const headers = {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + this.#accesToken,
+            };
+            const response = await fetch(api + '/datetime/sendprayertime', {
+                method: 'POST',
+                headers: headers,
+            });
+            if (response.ok) {
+                console.log('Service de prière démarré avec succès');
+            } else {
+                throw new Error('La requête a échoué');
+            }
+        } catch (error) {
+            console.error('Erreur lors du démarrage du service de prière', error);
+            throw error;
+        }
+    }
+};
+
+// async getPrayerMessages() {
+//     try {
+//       const headers = {
+//         'Content-Type': 'application/json',
+//         'Authorization': 'Bearer ' + this.#accesToken,
+//       };
+//       const body = JSON.stringify(/* Les données à envoyer avec la requête POST, si nécessaire */);
+
+//       const response = await fetch(api + '/datetime/sendprayertime', {
+//         method: 'POST',
+//         headers: headers,
+//         body: body,
+//       });
+
+//       if (!response.ok) {
+//         throw new Error('Erreur lors de la récupération des messages de prière');
+//       }
+
+//       const prayerMessages = await response.json();
+//       return prayerMessages;
+//     } catch (error) {
+//       console.error('Erreur lors de la récupération des messages de prière:', error);
+//       throw error;
+//     }
+//   }
+
+// async fetchAboutData() {
+//     try {
+//         const response = await fetch(api + "/about.json",
+//             {
+//                 method: "GET",
+//                 headers: this.fillRequestHeaders(),
+//             });
+//         if (response.ok) {
+//             const data = await response.json();
+//             console.log(data);
+//             return data;
+//         } else {
+//             console.error('Erreur lors de la requête GET1111 :', response.status);
+//         }
+//     } catch (error) {
+//         console.error('Erreur lors de la requête GET2222 :', error);
+//     }
+// }
+
 
 const User = new Client();
 export default User;
