@@ -32,14 +32,6 @@ const Github = ({ navigation }) => {
     setIsEnabled2(previousState => !previousState);
   }
 
-  // const handleLogin = async (req, res) => {
-  //   try {
-  //     const login = await user.loginGithub();
-  //     res.redirect(login);
-  //   } catch (error) {
-  //     console.error('Erreur lors du démarrage du service de température', error);
-  //   }
-  // };
     const [request, response, promptAsync] = useAuthRequest(
       {
         clientId: 'b2ee2cb6c81a5d28e59c',
