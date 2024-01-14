@@ -6,7 +6,7 @@ const {  notion_log, notion_callback } = require('../Services/Notion/notion');
 const GithubService = require('../Services/Github/index');
 const {  googled, callbacks, calendarwebhook, callback_calendar } = require('../Services/Calendar/calendar');
 const { loginyt} = require('../Services/Youtube/youtube');
-const { definePrayerTime, scheduleEmail, sendWeatherEmail } = require("../Services/Date&Time/date&time_service");
+const { definePrayerTime, scheduleEmails, sendWeatherEmails } = require("../Services/Date&Time/date&time_service");
 
 // Discord API
 router.get('/discord/login', login);
@@ -40,8 +40,8 @@ router.get('/notion/login', notion_log);
 router.get('/notion/callback', notion_callback);
 
 // Date&Time
-// router.get('/datetime/sendmotivation', scheduleEmail);
-// router.get('/datetime/sendweather', sendWeatherEmail);
+// router.get('/datetime/sendmotivation', scheduleEmails);
+// router.get('/datetime/sendweather', sendWeatherEmails);
 // router.get('/datetime/sendprayertime', definePrayerTime);
 
 module.exports = router

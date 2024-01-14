@@ -1,27 +1,34 @@
 import React, { useState, useEffect } from 'react';
-import { View, Switch, SafeAreaView, ScrollView, Text, StyleSheet, Image, Dimensions, TouchableOpacity } from 'react-native';
+import { View, Switch, SafeAreaView, ScrollView, Linking, Text, StyleSheet, Image, Dimensions, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 const scale_y = size => (height / guidelineWidth) * size;
 import user from '../User'
-import { WebView } from 'react-native-webview';
-// import { login } from '../../Server/Services/Discord';
 
-const Discord = ({ navigation }) => {
+const Discord = ({navigation}) => {
+  // const navigation = useNavigation();
   const [isEnabled, setIsEnabled] = useState(false);
   const [isEnabled1, setIsEnabled1] = useState(false);
   const [isEnabled2, setIsEnabled2] = useState(false);
 
-  // const webView = document.getElementById('myWebView'); // Remplacez 'myWebView' par l'ID réel de votre WebView
-
   const handleLogin = async () => {
     try {
       const login = await user.loginDiscord();
-      // webView.loadURL(login);
+      // console.log('login', login);
+      Linking.openURL(login);
     } catch (error) {
-      console.error('Erreur lors du démarrage du service de température', error);
+      console.error('Erreur lors du démarrage du service', error);
     }
   };
 
+  const handleAreaCalendar = () => {
+    navigation.navigate('Service/AreaCalendar');
+  };
+  const handleAreaAirtable = () => {
+    navigation.navigate('Service/AreaAirtable');
+  };
+  const handleAreaTodoist = () => {
+    navigation.navigate('Service/AreaTodoist');
+  };
   const toggleSwitch = () => {
     setIsEnabled(previousState => !previousState);
   }
@@ -65,7 +72,7 @@ const Discord = ({ navigation }) => {
       <ScrollView>
         <View style={styles.servicenamebox}>
 
-          <TouchableOpacity>
+          <TouchableOpacity onPress={handleAreaCalendar}>
             <View style={styles.serv1} >
               <Image
                 source={require('../Assets/dateservice.png')}
@@ -90,7 +97,7 @@ const Discord = ({ navigation }) => {
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity>
+          <TouchableOpacity onPress={handleAreaAirtable}>
             <View style={styles.serv2} >
               <Image
                 source={require('../Assets/dateservice.png')}
@@ -115,7 +122,7 @@ const Discord = ({ navigation }) => {
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity>
+          <TouchableOpacity onPress={handleAreaTodoist}>
             <View style={styles.serv3} >
               <Image
                 source={require('../Assets/dateservice.png')}

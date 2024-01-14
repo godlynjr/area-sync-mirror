@@ -46,7 +46,7 @@ const Services = ({ }) => {
             try {
                 const data = await user.fetchAboutData();
                 setAboutData(data);
-                console.log('data is now', data);
+                // console.log('data is now', data);
             } catch (error) {
                 console.error('Erreur lors de la récupération des données :', error);
             }

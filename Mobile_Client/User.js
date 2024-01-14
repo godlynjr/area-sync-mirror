@@ -54,7 +54,32 @@ class Client {
         }
     }
 
-    
+    async discord_calendar() {
+        try {
+            const response = await fetch(api + "/users/discord/calendar/connect", {
+                method: "POST",
+                headers: this.fillRequestHeaders(),
+                // body: JSON.stringify({ email: mail, password: password }),
+            });
+            const statusCode = response.status;
+            const data = await response.json();
+            // if (statusCode === 200) {
+            //     // console.log("Is goodlogin");
+            //     this.isLoggedIn = true;
+            //     this.#accesToken = data.access_token;
+            //     await this.fetchPersonalData();
+            //     return 200;
+            // } else if (statusCode === 400) {
+            //     // console.log("Is badlogin");
+            //     return 400;
+            // }
+        } catch (error) {
+            console.error('Erreur de connexion :', error);
+            return 500;
+        }
+    }
+
+
     async loginGithub() {
         try {
             const response = await fetch(api + "/users/github/login", {
@@ -80,7 +105,7 @@ class Client {
             return 500;
         }
     }
-    
+
     async loginCalendar() {
         try {
             const response = await fetch(api + "/users/calendar/login", {
@@ -94,19 +119,71 @@ class Client {
         }
     }
 
-    async loginDiscord() {
+    async loginDiscords() {
+        console.log('logindiscord');
         try {
             const response = await fetch(api + "/users/discord/login", {
                 method: "GET",
                 headers: this.fillRequestHeaders(),
                 // body: JSON.stringify({ email: mail, password: password }),
-            });
+            })
+                .then(response => {
+                    console.log('ange ' + response);
+                    const data = response.text();
+                    console.log(data);
+                    return data
+                })
+            // .catch(error => {
+            //     console.error(error);
+            // });
         } catch (error) {
             console.error('Erreur de connexion discord:', error);
             return 500;
         }
     }
 
+    async loginDiscord() {
+        console.log('Try to connect to Discord');
+        return new Promise((resolve, reject) => {
+            fetch(api + '/users/discord/login', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + this.#accesToken,
+                },
+                credentials: 'include',
+            })
+                .then(response => {
+                    if (response.status === 200) {
+                        response.text()
+                            .then(data => {
+                                console.log('Response JSON:', data);
+                                resolve(data);
+                            })
+                            .catch(jsonError => {
+                                console.error('Error:', jsonError);
+                                reject(jsonError);
+                            });
+                    } else {
+                        response.json()
+                            .then(data => {
+                                console.log('Response JSON:', data);
+                                console.log(data.err);
+                                alert(data.err);
+                                reject(data.err);
+                            })
+                            .catch(error => {
+                                console.error(error);
+                                reject(error);
+                            });
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
+                    reject(error);
+                });
+        });
+    }
 
     async checkMail(mail) {
         try {
@@ -138,15 +215,13 @@ class Client {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + this.#accesToken,
             };
-
             const response = await fetch(api + '/about.json', {
                 method: 'GET',
                 headers: headers,
             });
-
             if (response.ok) {
                 const data = await response.json();
-                console.log(data);
+                // console.log(data);
                 return data;
             } else {
                 console.error('Erreur lors de la requête GET :', response.status);
@@ -155,27 +230,7 @@ class Client {
             console.error('Erreur lors de la requête GET :', error);
         }
     }
-    // Fonction pour récupérer les messages de prière depuis le serveur
-    // async getPrayerMessages() {
-    //     try {
-    //         const headers = {
-    //             'Content-Type': 'application/json',
-    //             'Authorization': 'Bearer ' + this.#accesToken,
-    //         };
-    //         const response = await fetch(api + '/datetime/sendprayertime', {
-    //             method: 'GET',
-    //             headers: headers,
-    //         });
-    //         if (!response.ok) {
-    //             throw new Error('Erreur lors de la récupération des messages de prière');
-    //         }
-    //         const prayerMessages = await response.json();
-    //         return prayerMessages;
-    //     } catch (error) {
-    //         console.error('Erreur lors de la récupération des messages de prière:', error);
-    //         throw error;
-    //     }
-    // };
+
     async startPrayerService() {
         try {
             const headers = {
@@ -198,32 +253,6 @@ class Client {
     }
 };
 
-// async getPrayerMessages() {
-//     try {
-//       const headers = {
-//         'Content-Type': 'application/json',
-//         'Authorization': 'Bearer ' + this.#accesToken,
-//       };
-//       const body = JSON.stringify(/* Les données à envoyer avec la requête POST, si nécessaire */);
-
-//       const response = await fetch(api + '/datetime/sendprayertime', {
-//         method: 'POST',
-//         headers: headers,
-//         body: body,
-//       });
-
-//       if (!response.ok) {
-//         throw new Error('Erreur lors de la récupération des messages de prière');
-//       }
-
-//       const prayerMessages = await response.json();
-//       return prayerMessages;
-//     } catch (error) {
-//       console.error('Erreur lors de la récupération des messages de prière:', error);
-//       throw error;
-//     }
-//   }
-
 // async fetchAboutData() {
 //     try {
 //         const response = await fetch(api + "/about.json",
@@ -242,7 +271,6 @@ class Client {
 //         console.error('Erreur lors de la requête GET2222 :', error);
 //     }
 // }
-
 
 const User = new Client();
 export default User;
