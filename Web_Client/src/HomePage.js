@@ -14,14 +14,14 @@ function HomePage() {
   };
 
   const handleSearch = (searchTerm) => {
+    console.log(searchTerm);
     if (searchTerm.trim() === '') {
-      // If the search term is empty, display the default list
-      setFilteredServices(jsonData);
+      setFilteredServices(jsonData.server.services);
     } else {
-      // Filter the list based on the search term
       const filtered = jsonData.server.services.filter((service) =>
         service.name.toLowerCase().includes(searchTerm.toLowerCase())
       );
+      console.log(filtered);
       setFilteredServices(filtered);
     }
   };
@@ -32,7 +32,6 @@ function HomePage() {
 
   const handleServiceClick = (serviceName) => {
     window.location.href = '/' + serviceName;
-    // You can perform other actions based on the clicked service if needed
   };
 
   useEffect(() => {
@@ -40,6 +39,7 @@ function HomePage() {
       try {
         const data = await User.getAbout();
         setJsonData(data);
+        setFilteredServices(data.server.services);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -61,13 +61,12 @@ function HomePage() {
         height: '1px',
       }} className='my-1'/>
         <div className='flex flex-col justify-center items-center'>
-          {/* <p className='lg:text-5xl'>Discover</p> */}
           <Searchbar onSearch={handleInputChange} />
         </div>
         {jsonData && (
           <div className='grid grid-cols-2 gap-5 text-black sm:gap-10 md:grid-cols-3 lg:grid-cols-3 mt-5'>
 
-          {jsonData.server.services.map((service, index) => (
+          {filteredServices.map((service, index) => (
             <ServiceComponent key={index} service={service} onServiceClick={handleServiceClick}/>
             ))}
 
@@ -80,19 +79,3 @@ function HomePage() {
 }
 
 export default HomePage;
-
-{/* <p>Service Description: {service.description}</p> */}
-
-              {/* <h4>Actions:</h4>
-              <ul>
-                {service.actions && service.actions.map(action => (
-                  <li key={action.name}>{action.description}</li>
-                ))}
-              </ul>
-
-              <h4>Reactions:</h4>
-              <ul>
-                {service.reactions && service.reactions.map(reaction => (
-                  <li key={reaction.name}>{reaction.description}</li>
-                ))}
-              </ul> */}
