@@ -6,11 +6,19 @@ const { width, height } = Dimensions.get('window');
 const guidelineWidth = 375; // Width of the device on which the design is based
 import { Ionicons } from '@expo/vector-icons';
 const scale_y = size => (height / guidelineWidth) * size;
-
-const Discord = ({ navigation }) => {
+import user from '../User'
+const Notion = ({ navigation }) => {
   const [isEnabled, setIsEnabled] = useState(false);
   const [isEnabled1, setIsEnabled1] = useState(false);
   const [isEnabled2, setIsEnabled2] = useState(false);
+
+  const handleLogin = async () => {
+    try {
+      const login = await user.loginNotion();
+    } catch (error) {
+      console.error('Erreur lors du démarrage du service de température', error);
+    }
+  };
 
   const toggleSwitch = () => {
     setIsEnabled(previousState => !previousState);
@@ -25,7 +33,7 @@ const Discord = ({ navigation }) => {
   return (
     <SafeAreaView>
       <View style={styles.container}>
-        <Ionicons style={{position: 'absolute', top: 10, left: 10}} name="arrow-back" size={30} color="#fff" onPress={() => navigation.goBack()} />
+        <Ionicons style={{ position: 'absolute', top: 10, left: 10 }} name="arrow-back" size={30} color="#fff" onPress={() => navigation.goBack()} />
         <Image
           source={require('../Assets/notion.png')}
           style={styles.Image}
@@ -56,10 +64,10 @@ const Discord = ({ navigation }) => {
 
           <TouchableOpacity>
             <View style={styles.serv1} >
-            <Image
+              <Image
                 source={require('../Assets/dateservice.png')}
                 style={styles.image}
-                />
+              />
               <Text style={styles.Test1}>
                 Start service3
               </Text>
@@ -81,10 +89,10 @@ const Discord = ({ navigation }) => {
 
           <TouchableOpacity>
             <View style={styles.serv2} >
-            <Image
+              <Image
                 source={require('../Assets/dateservice.png')}
                 style={styles.image}
-                />
+              />
               <Text style={styles.Test1}>
                 Start service3
               </Text>
@@ -106,10 +114,10 @@ const Discord = ({ navigation }) => {
 
           <TouchableOpacity>
             <View style={styles.serv3} >
-            <Image
+              <Image
                 source={require('../Assets/dateservice.png')}
                 style={styles.image}
-                />
+              />
               <Text style={styles.Test1}>
                 Start service3
               </Text>
@@ -152,8 +160,8 @@ const styles = StyleSheet.create({
   containerb: {
     paddingVertical: 20,
     paddingHorizontal: 30,
-    // alignItems: 'center',
-    // justifyContent: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   toggleButton: {
     transform: [{ scaleX: 1.5 }, { scaleY: 1.5 }] // Appliquer une mise à l'échelle
@@ -184,8 +192,8 @@ const styles = StyleSheet.create({
     marginTop: 30,
     paddingHorizontal: 20,
     // backgroundColor: 'red',
-    // alignItems: 'center',
-    // justifyContent: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
     gap: 20,
   },
   serv1: {
@@ -249,4 +257,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Discord;
+export default Notion;

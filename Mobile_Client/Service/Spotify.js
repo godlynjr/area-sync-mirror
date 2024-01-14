@@ -7,7 +7,7 @@ const guidelineWidth = 375; // Width of the device on which the design is based
 import { Ionicons } from '@expo/vector-icons';
 const scale_y = size => (height / guidelineWidth) * size;
 
-const Discord = ({ navigation }) => {
+const Spotify = ({ navigation }) => {
   const iconSize = 30; // Taille de l'icône en pixels
   const [isEnabled, setIsEnabled] = useState(false);
   const [isEnabled1, setIsEnabled1] = useState(false);
@@ -147,8 +147,8 @@ const styles = StyleSheet.create({
   containerb: {
     paddingVertical: 20,
     paddingHorizontal: 30,
-    // alignItems: 'center',
-    // justifyContent: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   toggleButton: {
     transform: [{ scaleX: 1.5 }, { scaleY: 1.5 }] // Appliquer une mise à l'échelle
@@ -171,8 +171,8 @@ const styles = StyleSheet.create({
     marginTop: 30,
     paddingHorizontal: 20,
     // backgroundColor: 'red',
-    // alignItems: 'center',
-    // justifyContent: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
     gap: 20,
   },
   serv1: {
@@ -249,4 +249,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Discord;
+export default Spotify;

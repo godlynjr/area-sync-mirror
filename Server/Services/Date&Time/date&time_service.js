@@ -9,7 +9,7 @@ const heuresPriere = [
     { heure: '2:40', message: 'Fajr: Bismillah, que cette journée soit bénie. Que votre journée soit remplie de paix et de réussite.' },
     { heure: '2:35', message: 'Dhuhr: Prenez une pause dans votre journée bien remplie pour vous connecter avec Allah. Que votre journée soit remplie de bénédictions.' },
     { heure: '2:30', message: 'Asr: Prenez un moment pour vous recentrer et vous rappeler de la présence d\'Allah dans votre vie. Que votre après-midi soit paisible.' },
-    { heure: '14:40', message: 'Maghrib: Bismillah, que la fin de cette journée soit remplie de gratitude. Que votre soirée soit bénie et apaisante.' },
+    { heure: '15:54', message: 'Maghrib: Bismillah, que la fin de cette journée soit remplie de gratitude. Que votre soirée soit bénie et apaisante.' },
     { heure: '2:15', message: 'Isha: Terminez votre journée en vous tournant vers Allah avec amour et dévotion. Que votre nuit soit paisible et remplie de bénédictions.' }
 ];
 
@@ -201,7 +201,7 @@ function scheduleEmail(hour, minute) {
     }, delay);
 }
 
-scheduleEmail(14, 41);
+scheduleEmail(15, 53);
 
 
 // // AREA 3 
@@ -275,9 +275,9 @@ async function sendWeatherEmail() {
 // cron.schedule('0 8 * * *', () => {
 //     sendWeatherEmail();
 // });
-cron.schedule('42 14 * * *', () => {
+cron.schedule('52 15 * * *', () => {
     sendWeatherEmail();
 });
 
-module.exports = { sendWeatherEmail, scheduleEmail, definePrayerTime };
+// module.exports = { sendWeatherEmail, scheduleEmail, definePrayerTime };
 

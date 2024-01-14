@@ -1,13 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { View, Switch, SafeAreaView, ScrollView, Text, StyleSheet, Image, Dimensions, TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
-import { widthPercentageToDP, heightPercentageToDP, listenOrientationChange, moderateScale } from 'react-native-responsive-screen';
-const { width, height } = Dimensions.get('window');
-const guidelineWidth = 375; // Width of the device on which the design is based
 import { Ionicons } from '@expo/vector-icons';
-const scale_y = size => (height / guidelineWidth) * size;
+import user from '../User'
+import { WebView } from 'react-native-webview';
+import * as WebBrowser from 'expo-web-browser';
+import { makeRedirectUri, useAuthRequest } from 'expo-auth-session';
+import { Button } from 'react-native';
 
-const Discord = ({ navigation }) => {
+WebBrowser.maybeCompleteAuthSession();
+
+  // Endpoint
+const discovery = {
+  authorizationEndpoint: 'https://github.com/login/oauth/authorize',
+  tokenEndpoint: 'https://github.com/login/oauth/access_token',
+  revocationEndpoint: 'https://github.com/settings/connections/applications/95b77fddd2584402dd73',
+};
+
+const Github = ({ navigation }) => {
   const [isEnabled, setIsEnabled] = useState(false);
   const [isEnabled1, setIsEnabled1] = useState(false);
   const [isEnabled2, setIsEnabled2] = useState(false);
@@ -22,6 +31,35 @@ const Discord = ({ navigation }) => {
   const toggleSwitch2 = () => {
     setIsEnabled2(previousState => !previousState);
   }
+
+  // const handleLogin = async (req, res) => {
+  //   try {
+  //     const login = await user.loginGithub();
+  //     res.redirect(login);
+  //   } catch (error) {
+  //     console.error('Erreur lors du démarrage du service de température', error);
+  //   }
+  // };
+    const [request, response, promptAsync] = useAuthRequest(
+      {
+        clientId: '95b77fddd2584402dd73',
+        scopes: ['repo'],
+        redirectUri: 'https://area-sync-stagging.onrender.com/users/github/callback',
+        clientSecret: 'e7ce0d97c48e868cd3e39456bce864936bf066bf'
+      },
+      discovery
+    );
+
+    React.useEffect(() => {
+      console.log('React: '+ response);
+      if (response?.type === 'success') {
+        const { code } = response.params;
+        console.log(code);
+      } else {
+        console.log(response?.type);
+      }
+    }, [response]);
+
   return (
     <SafeAreaView>
       <View style={styles.container}>
@@ -40,7 +78,7 @@ const Discord = ({ navigation }) => {
         </View>
         <View style={styles.bottomContainer}>
           <TouchableOpacity style={styles.bouton}>
-            <Text style={styles.Text}>
+            <Text style={styles.Text} onPress={() => {promptAsync();}}>
               Connect
             </Text>
           </TouchableOpacity>
@@ -153,8 +191,8 @@ const styles = StyleSheet.create({
   containerb: {
     paddingVertical: 20,
     paddingHorizontal: 30,
-    // alignItems: 'center',
-    // justifyContent: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   toggleButton: {
     transform: [{ scaleX: 1.5 }, { scaleY: 1.5 }] // Appliquer une mise à l'échelle
@@ -171,8 +209,8 @@ const styles = StyleSheet.create({
     marginTop: 30,
     paddingHorizontal: 20,
     // backgroundColor: 'red',
-    // alignItems: 'center',
-    // justifyContent: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
     gap: 20,
   },
   serv1: {
@@ -249,4 +287,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Discord;
+export default Github;

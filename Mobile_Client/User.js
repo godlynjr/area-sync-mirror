@@ -54,6 +54,62 @@ class Client {
         }
     }
 
+    
+    async loginGithub() {
+        try {
+            const response = await fetch(api + "/users/github/login", {
+                method: "GET",
+                headers: this.fillRequestHeaders(),
+                // body: JSON.stringify({ email: mail, password: password }),
+            });
+            console.log("Reponse: " + response);
+            return response;
+        } catch (error) {
+            console.error('Erreur de connexion github:', error);
+            return 500;
+        }
+    }
+
+    async loginNotion() {
+        try {
+            const response = await fetch(api + "/users/notion/login", {
+                method: "GET",
+                headers: this.fillRequestHeaders(),
+                // body: JSON.stringify({ email: mail, password: password }),
+            });
+        } catch (error) {
+            console.error('Erreur de connexion github:', error);
+            return 500;
+        }
+    }
+    
+    async loginCalendar() {
+        try {
+            const response = await fetch(api + "/users/calendar/login", {
+                method: "GET",
+                headers: this.fillRequestHeaders(),
+                // body: JSON.stringify({ email: mail, password: password }),
+            });
+        } catch (error) {
+            console.error('Erreur de connexion github:', error);
+            return 500;
+        }
+    }
+
+    async loginDiscord() {
+        try {
+            const response = await fetch(api + "/users/discord/login", {
+                method: "GET",
+                headers: this.fillRequestHeaders(),
+                // body: JSON.stringify({ email: mail, password: password }),
+            });
+        } catch (error) {
+            console.error('Erreur de connexion discord:', error);
+            return 500;
+        }
+    }
+
+
     async checkMail(mail) {
         try {
             const response = await fetch(api + "/auth/check_mail", {
