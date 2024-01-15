@@ -3,6 +3,7 @@ const router = express.Router();
 const axios = require('axios');
 const { google } = require('googleapis');
 const nodemailer = require('nodemailer');
+const { authorize } = require('passport');
 // const { spotifyApi } = require('../Spotify/index');
 const OAuth2Data = new google.auth.OAuth2(
     process.env.CLIENT_ID,
@@ -12,13 +13,14 @@ const OAuth2Data = new google.auth.OAuth2(
 const isAREA1 = false;
 const SCOPES =
     ['https://www.googleapis.com/auth/youtube.readonly',
-    'https://www.googleapis.com/auth/gmail.send',
-    'https://www.googleapis.com/auth/youtube.force-ssl'];
+        'https://www.googleapis.com/auth/gmail.send',
+        'https://www.googleapis.com/auth/youtube.force-ssl',
+        'https://www.googleapis.com/auth/drive.file'];
 
 OAuth2Data.on('tokens', (tokens) => {
     if (tokens.refresh_token) {
-      // store the refresh_token in my database!
-      OAuth2Data.setCredentials({
+        // store the refresh_token in my database!
+        OAuth2Data.setCredentials({
             refresh_token: tokens.refresh_token
         });
     }
@@ -26,6 +28,11 @@ OAuth2Data.on('tokens', (tokens) => {
 });
 
 const youtube = google.youtube({
+    version: "v3",
+    auth: OAuth2Data,
+});
+
+const driver = google.drive({
     version: "v3",
     auth: OAuth2Data,
 });
@@ -44,39 +51,21 @@ const Callback = async (req, res) => {
     const code = req.query.code
     if (code) {
         try {
-            const {tokens} = await OAuth2Data.getToken(code);
+            const { tokens } = await OAuth2Data.getToken(code);
             console.log('Successfully authenticated');
             OAuth2Data.setCredentials(tokens);
             res.send({
                 msg: "Successfully loggeed in to Youtube",
-            }); 
+            });
             // res.redirect('http://localhost:8081/Youtube');
-        } catch(err) {
+        } catch (err) {
             console.log('Error authenticating')
             console.log(err);
         }
     }
 };
 
-const youtubeXgmail = async (req, res) => {
-    try {
-        const { youtubeUrl } = req.body; // Assuming the YouTube URL is sent in the request body
-
-        // Extract channel ID from the YouTube URL
-        const channelId = await extractChannelId(youtubeUrl);
-        monitorChannelForNewVideos(channelId);
-
-        res.send({
-            msg: `Monitoring YouTube channel with ID ${channelId} for new videos.`,
-        });
-    } catch (err) {
-        console.error('Error processing YouTube X Gmail request:', err);
-        res.status(500).send({
-            error: 'Internal server error',
-        });
-    }
-};
-
+//  AREA 1 ------------------
 // Helper function to extract YouTube channel ID from the URL
 const extractChannelId = async (url) => {
     const channelNameMatch = url.match(/(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=|channel\/|@))([^\/\n\s]+)/);
@@ -127,7 +116,7 @@ const monitorChannelForNewVideos = async (channelId) => {
         } catch (error) {
             console.error('Error fetching YouTube channel data:', error);
         }
-    }, 300000); // 1minutes interval (adjust as needed)
+    }, 300000); // 5minutes interval (adjust as needed)
 };
 
 const gmailUser = 'admareasync6@gmail.com';
@@ -161,10 +150,124 @@ const sendEmailNotification = async (videoTitle, videoId) => {
     }
 };
 
+const youtubeXgmail = async (req, res) => {
+    try {
+        const { youtubeUrl } = req.body; // Assuming the YouTube URL is sent in the request body
+
+        // Extract channel ID from the YouTube URL
+        const channelId = await extractChannelId(youtubeUrl);
+        monitorChannelForNewVideos(channelId);
+
+        res.send({
+            msg: `Monitoring YouTube channel with ID ${channelId} for new videos.`,
+        });
+    } catch (err) {
+        console.error('Error processing YouTube X Gmail request:', err);
+        res.status(500).send({
+            error: 'Internal server error',
+        });
+    }
+};
+
+//  AREA 2 ------------------
+
+const sendVideoToDrive = async (videoTitle, videoDescription, videoId) => {
+    try {
+        // Échappez les caractères spéciaux dans le titre de la vidéo
+        const safeVideoTitle = videoTitle.replace(/[^\w\s]/gi, '');
+        
+        // Create a file metadata
+        const fileMetadata = {
+            name: `${safeVideoTitle}_Info.txt`, // Set a suitable file name
+            mimeType: 'text/plain',
+        };
+
+        // Create the content of the text file
+        const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
+        const fileInfoContent = `Title: ${videoTitle}\nDescription: ${videoDescription}\nURL: ${videoUrl}`;
+
+        // Check if a file with the same name and content already exists in Google Drive
+        const existingFiles = await driver.files.list({
+            q: `name='${fileMetadata.name}' and trashed=false`,
+        });
+
+        if (existingFiles.data.files.length > 0) {
+            console.log('File already exists in Google Drive. Skipping upload.');
+            return;
+        }
+
+        // Upload the text file to Google Drive
+        const media = {
+            mimeType: 'text/plain',
+            body: fileInfoContent,
+        };
+
+        const driveResponse = await driver.files.create({
+            resource: fileMetadata,
+            media: media,
+        });
+
+        console.log('Video information uploaded to Google Drive:', driveResponse.data);
+    } catch (error) {
+        console.error('Error uploading video to Google Drive:', error);
+    }
+};
+
+
+const youtubeXdrive = async (req, res) => {
+        try {
+            // Assuming the YouTube Data API is used to get the liked videos
+            const likedVideosResponse = await youtube.videos.list({
+                part: 'snippet',
+                myRating: 'like',
+                maxResults: 1,
+            });
+
+            const likedVideo = likedVideosResponse.data.items[0];
+
+            if (likedVideo) {
+                // Extract necessary information
+                const videoTitle = likedVideo.snippet.title;
+                const videoId = likedVideo.id;
+                const videoDescription = likedVideo.snippet.description;
+
+                // Call a function to send the video to Google Drive
+                await sendVideoToDrive(videoTitle, videoDescription, videoId);
+                res.send({
+                    msg: `The liked video "${videoTitle}" infos has been sent to Google Drive.`,
+                });
+
+            } else {
+                res.send({
+                    msg: 'No liked videos found.',
+                });
+            }
+            // Set a timeout to call this function again in 10 minutes
+            // setTimeout(youtubeXdrive, 60000);
+        } catch (err) {
+            console.error('Error processing YouTube X Drive request:', err);
+            res.status(500).send({
+                error: 'Internal server error',
+            });
+        }
+};
+
+const youtubeXspotify = async (req, res) => {
+    try {
+
+    } catch (err) {
+        console.error('Error processing YouTube X Sportify request:', err);
+        res.status(500).send({
+            error: 'Internal server error',
+        });
+    }
+};
+
 module.exports = {
     loginyt,
     Callback,
     youtubeXgmail,
-    // youtubeXspotify,
+    youtubeXdrive,
+    youtubeXspotify,
     youtube,
 };
