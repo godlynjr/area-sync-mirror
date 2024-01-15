@@ -31,6 +31,8 @@ router.post('/calendar/google-calendar-webhook', calendarwebhook);
 router.get('/youtube/login', loginyt);
 router.get('/youtube/callback', Callback);
 router.post('/youtube/gmail/connect', youtubeXgmail);
+router.post('/youtube/drive/connect', youtubeXdrive);
+router.post('/youtube/spotify/connect', youtubeXspotify);
 
 // Github API
 const githubService = new GithubService();
