@@ -5,8 +5,7 @@ const { QuoteLogin, DiscordConnection } = require('../Services/Quote/index');
 const {  notion_log, notion_callback } = require('../Services/Notion/notion');
 const GithubService = require('../Services/Github/index');
 const {  googled, callbacks, calendarwebhook, callback_calendar } = require('../Services/Calendar/calendar');
-const { loginyt, Callback, youtubeXgmail } = require('../Services/Youtube/youtube');
-const { loginyt} = require('../Services/Youtube/youtube');
+const { loginyt, Callback, youtubeXgmail, youtubeXdrive, youtubeXspotify } = require('../Services/Youtube/youtube');
 const { ConnectSpotify , SpotifyCallback, createPlaylistWithLikedSongs} = require('../Services/Spotify/index');
 const { definePrayerTime, scheduleEmails, sendWeatherEmails } = require("../Services/Date&Time/date&time_service");
 
