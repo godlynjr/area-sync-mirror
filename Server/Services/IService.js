@@ -1,5 +1,8 @@
 class IService
 {
+    constructor() {
+      // _accessToken = null;
+    }
     async connect()
     {
       throw new Error('Method not implemented');

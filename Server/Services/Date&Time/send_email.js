@@ -102,3 +102,50 @@ console.log('Planification de l\'envoi quotidien à ' + scheduledTime.toLocaleTi
 // }
 
 // scheduleEmail(21, 24);
+
+
+// {
+//   "name": "server",
+//   "version": "0.0.0",
+//   "private": true,
+//   "scripts": {
+//     "start": "node ./bin/www"
+//   },
+//   "dependencies": {
+//     "@doist/todoist-api-typescript": "^3.0.1",
+//     "@google-cloud/local-auth": "^2.1.0",
+//     "@notionhq/client": "^2.2.14",
+//     "airtable": "^0.12.2",
+//     "axios": "^1.6.5",
+//     "bcrypt": "^5.1.1",
+//     "cookie-parser": "~1.4.4",
+//     "cors": "^2.8.5",
+//     "dayjs": "^1.11.10",
+//     "debug": "~2.6.9",
+//     "discord.js": "^14.14.1",
+//     "dotenv": "^16.3.1",
+//     "express": "^4.18.2",
+//     "express-session": "^1.17.3",
+//     "faker": "^5.5.3",
+//     "googleapis": "^129.0.0",
+//     "http-errors": "~1.6.3",
+//     "https": "^1.0.0",
+//     "jade": "^0.29.0",
+//     "jsonwebtoken": "^9.0.2",
+//     "mongoose": "^8.0.3",
+//     "morgan": "~1.9.1",
+//     "node-todoist": "^0.3.2",
+//     "passport": "^0.7.0",
+//     "passport-google-oauth20": "^2.0.0",
+//     "pug": "^3.0.2",
+//     "querystring": "^0.2.1",
+//     "spotify-web-api-node": "^5.0.2",
+//     "swagger-jsdoc": "^6.2.8",
+//     "swagger-ui-express": "^5.0.0",
+//     "todoist-js": "^0.3.1",
+//     "uuid": "^9.0.1"
+//   },
+//   "devDependencies": {
+//     "nodemon": "^3.0.2"
+//   }
+// }
