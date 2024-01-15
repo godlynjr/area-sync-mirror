@@ -19,7 +19,6 @@ const User = require("./models/userModel");
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 var authRouter = require("./routes/auth");
-var spotifyRouter = require("./routes/spotify");
 var backRouter = require("./routes/backof");
 
 var app = express();
@@ -84,7 +83,6 @@ mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopol
 // Connectez les routes
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
-app.use("/spotify", spotifyRouter);
 app.use("/auth", authRouter);
 app.use("/backoffice", backRouter);
 app.get('/about.json', about_json);
