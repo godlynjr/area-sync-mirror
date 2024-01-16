@@ -1,62 +1,12 @@
-const config = require("./config.json");
-const fetch = require('node-fetch');
-var SpotifyWebApi = require('spotify-web-api-node');
-
-var spotifyApi = new SpotifyWebApi({
-    clientId: process.env.SPOTIFY_CLIENT_ID,
-    clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
-    redirectUri: process.env.SPOTIFY_REDIRECT_URI,
-  });
-
-let redirectURL = '';
-
-const ConnectSpotify = (req, res) => {
-    try {
-        const authorizeURL = spotifyApi.createAuthorizeURL(['user-read-private', 'user-read-email', 'playlist-read-private'], 'state');
-        redirectURL = req.headers.url;
-        res.send(authorizeURL);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Server error', error: error.toString() });
-    }
-};
-
-const SpotifyCallback = async (req, res) => {
-    const code = req.query.code;
-    const data = {
-        client_id: process.env.SPOTIFY_CLIENT_ID,
-        client_secret: process.env.SPOTIFY_CLIENT_SECRET,
-        grant_type: 'authorization_code',
-        redirect_uri: process.env.SPOTIFY_REDIRECT_URI,
-        code: code,
-    };
-
-    let response = await fetch('https://accounts.spotify.com/api/token', {
-        method: 'POST',
-        body: new URLSearchParams(data),
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-        },
-    });
-    let json = await response.json();
-    // console.log(json);
-    // console.log('Access Token: ' + json.access_token);
-    // console.log('Refresh Token: ' + json.refresh_token);
-
-    spotifyApi.setAccessToken(data.body['access_token']);
-    spotifyApi.setRefreshToken(data.body['refresh_token']);
-
-    res.redirect(redirectURL);
-};
-
-// Area 1
-
+// Variable to store existing liked songs URIs
 let existingLikedSongs = [];
 
 const getUserLikedSongs = (spotifyApi) => {
+    // Get the user's liked songs
     return spotifyApi.getMySavedTracks()
         .then(data => {
             const tracks = data.body.items;
+            // Extract track URIs
             const trackURIs = tracks.map(track => track.track.uri);
             console.log('User liked songs:', trackURIs);
             return trackURIs;
@@ -84,6 +34,7 @@ const addTracksToPlaylist = (spotifyApi, playlistName, trackURIs) => {
                         throw error;
                     });
             } else {
+                // Playlist does not exist, create it
                 return spotifyApi.createPlaylist(playlistName, { description: 'Playlist created by your app', public: true })
                     .then(data => {
                         console.log('Created playlist:', data.body);
@@ -109,13 +60,18 @@ const addTracksToPlaylist = (spotifyApi, playlistName, trackURIs) => {
 };
 
 const addNewLikedSongsToPlaylist = (spotifyApi, playlistName) => {
+    // Get the user's current liked songs
     getUserLikedSongs(spotifyApi)
         .then(newTrackURIs => {
+            // Find the newly liked songs by comparing with existingLikedSongs
             const newlyLikedSongs = newTrackURIs.filter(uri => !existingLikedSongs.includes(uri));
 
             if (newlyLikedSongs.length > 0) {
+                // Add the newly liked songs to the playlist
                 addTracksToPlaylist(spotifyApi, playlistName, newlyLikedSongs);
             }
+
+            // Update existingLikedSongs for the next interval
             existingLikedSongs = newTrackURIs;
         })
         .catch(error => {
@@ -123,10 +79,35 @@ const addNewLikedSongsToPlaylist = (spotifyApi, playlistName) => {
         });
 };
 
-const createPlaylistWithLikedSongs = (req, res) => {
-    setInterval(() => {
-        addNewLikedSongsToPlaylist(spotifyApi, 'AREASYNC_PLAYLIST');
-    }, 3000);
-}
+const sp = () => {
+    var SpotifyWebApi = require('spotify-web-api-node');
+    var spotifyApi = new SpotifyWebApi({
+        clientId: '4e3eb2d01843433985cdcd418a8bc6c8',
+        clientSecret: 'a1083616b82944b8acb117a3a49ab736',
+        redirectUri: 'https://www.google.com'
+    });
+    const authorizeURL = spotifyApi.createAuthorizeURL(['user-library-read', 'playlist-modify-public', 'playlist-modify-private'], 'STATE');
+    console.log(authorizeURL);
+    const prompt = require('prompt-sync')();
+    var code = prompt("Enter Code: ");
+    spotifyApi.authorizationCodeGrant(code)
+        .then(data => {
+            console.log('The token expires in ' + data.body['expires_in']);
+            console.log('The access token is ' + data.body['access_token']);
+            console.log('The refresh token is ' + data.body['refresh_token']);
 
-module.exports = { ConnectSpotify , SpotifyCallback, createPlaylistWithLikedSongs };
+            // Configure the API with the new access token
+            spotifyApi.setAccessToken(data.body['access_token']);
+            spotifyApi.setRefreshToken(data.body['refresh_token']);
+
+            // Set the interval to check and add new liked songs
+            setInterval(() => {
+                addNewLikedSongsToPlaylist(spotifyApi, 'YOUR_PLAYLIST_ID');
+            }, 3000);
+        })
+        .catch(error => {
+            console.error('Error getting access token:', error);
+        });
+};
+
+sp();

@@ -28,23 +28,24 @@ const Date_Time = ({ navigation }) => {
   const PrayerService = {
     startPrayerService: async () => {
       try {
+        // const token = 'votre_token'; // Remplacez par votre token d'authentification
         const headers = {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + undefined,
         };
-        const response = await fetch(api + '/users/datetime/sendprayertime', {
+        const response = await fetch(api + '/users//datetime/sendprayertime', {
           method: 'GET',
           headers: headers,
-          // body: JSON.stringify(),
         });
         if (response.ok) {
-          console.log('Service de prière démarré avec succès');
+          const data = await response.json();
+          // console.log(data);
+          return data;
         } else {
-          throw new Error('La requête a échoué prayer');
+          console.error('Erreur lors de la requête GET 4587:', response.status);
         }
       } catch (error) {
-        console.error('Erreur lors du démarrage du service de prière', error);
-        throw error;
+        console.error('Erreur lors de la requête GET :', error);
       }
     }
   };
@@ -114,9 +115,6 @@ const Date_Time = ({ navigation }) => {
     }
   };
 
-
-
-
   const handleStartMotivationService = async () => {
     try {
       await MotivationService.startMotivationService();
@@ -124,6 +122,7 @@ const Date_Time = ({ navigation }) => {
       console.error('Erreur lors du démarrage du service de motivation', error);
     }
   };
+  
   const handleStartweatherService = async () => {
     try {
       await WeatherService.startWeatherService();

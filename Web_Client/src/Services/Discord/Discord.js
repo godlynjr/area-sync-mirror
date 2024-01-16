@@ -3,10 +3,14 @@ import Header from "../../Components/Header"
 import Areas from "../../Components/areas"
 import User from "../../User"
 import { ArrowLeftIcon } from "@heroicons/react/solid";
+import { useLocation } from 'react-router-dom';
 
 function Discord() {
+  const location = useLocation();
+
   const ConnectDiscord = () => {
-    User.SpotifyLogin();
+    const currentPath = location.pathname;
+    User.DiscordLogin(currentPath);
   }
 
   return (
@@ -56,16 +60,16 @@ function Discord() {
         </div>
       </section>
 
-      <section className="container mx-auto">
+      <section className="container mx-auto my-5">
         <div className="grid grid-cols-2 gap-8 text-black sm:gap-10 md:grid-cols-3 lg:grid-cols-3 mt-5">
           <a href="/Discord-1">
-            <Areas service="service" featuring="test" description="description" />
+            <Areas service="discord" featuring="calendar" description="Chaque fois qu'un message est épinglé dans le serveur, un évenement est créer dans google calendar." bgComponent={'bg-discord'}/>
           </a>
           <a href="/Discord-2">
-            <Areas service="service" featuring="test" description="description" />
+            <Areas service="discord" featuring="spotify" description="Lorsque vous commencez à écouter une playlist spécifique sur Spotify, un message est posté dans un canal Discord pour partager la playlist avec les autres." bgComponent={'bg-discord'}/>
           </a>
           <a href="/Discord-3">
-            <Areas service="service" featuring="test" description="description" />
+            <Areas service="discord" featuring="notion" description="Lorsqu'une nouvelle tâche est ajoutée à une liste de tâches dans Notion, un message est posté dans un canal Discord pour informer les autres de la nouvelle tâche." bgComponent={'bg-discord'}/>
           </a>
         </div>
       </section>
