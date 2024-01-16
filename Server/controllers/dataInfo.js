@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const jwt = require('jsonwebtoken');
 
 const about_json = async (req, res) => {
     // Routes to get the about.json file
@@ -33,7 +34,7 @@ const about_json = async (req, res) => {
 const verifyToken = async (token) => {
     // Function to check if the token is valid
     try {
-        const verified = verify(token, process.env.SECRET_KEY);
+        const verified = jwt.verify(token, process.env.SECRET_KEY);
         return !!verified;
     } catch (error) {
         console.error(error);
