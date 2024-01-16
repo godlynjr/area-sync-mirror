@@ -7,8 +7,8 @@ const router = express.Router();
 
 const heuresPriere = [
     { heure: '2:40', message: 'Fajr: Bismillah, que cette journée soit bénie. Que votre journée soit remplie de paix et de réussite.' },
-    { heure: '2:35', message: 'Dhuhr: Prenez une pause dans votre journée bien remplie pour vous connecter avec Allah. Que votre journée soit remplie de bénédictions.' },
-    { heure: '2:30', message: 'Asr: Prenez un moment pour vous recentrer et vous rappeler de la présence d\'Allah dans votre vie. Que votre après-midi soit paisible.' },
+    { heure: '20:36', message: 'Dhuhr: Prenez une pause dans votre journée bien remplie pour vous connecter avec Allah. Que votre journée soit remplie de bénédictions.' },
+    { heure: '20:35', message: 'Asr: Prenez un moment pour vous recentrer et vous rappeler de la présence d\'Allah dans votre vie. Que votre après-midi soit paisible.' },
     { heure: '22:35', message: 'Maghrib: Bismillah, que la fin de cette journée soit remplie de gratitude. Que votre soirée soit bénie et apaisante.' },
     { heure: '22:40', message: 'Isha: Terminez votre journée en vous tournant vers Allah avec amour et dévotion. Que votre nuit soit paisible et remplie de bénédictions.' }
 ];
@@ -42,16 +42,18 @@ function sendEmail(message) {
 
 const definePrayerTime = async (req, res) => {
     try {
+        console.log('its start');
         heuresPriere.forEach(priere => {
             const regleEnvoi = new schedule.RecurrenceRule();
             regleEnvoi.hour = parseInt(priere.heure.split(':')[0]);
             regleEnvoi.minute = parseInt(priere.heure.split(':')[1]);
-
+            
             const scheduleEnvoi = schedule.scheduleJob(regleEnvoi, () => {
                 sendEmail(priere.message);
                 console.log('Mail envoyé');
             });
         });
+        console.log('its finish');
     } catch (err) {
         console.error('Error processing YouTube X Gmail request:', err);
         res.status(500).send({
@@ -305,5 +307,5 @@ const sendWeatherEmails = async (req, res) => {
     }
 };
 
-module.exports = { definePrayerTime, scheduleEmails, sendWeatherEmails };
+module.exports = { definePrayerTime};
 
