@@ -61,18 +61,221 @@ class Client {
                 headers: this.fillRequestHeaders(),
                 // body: JSON.stringify({ email: mail, password: password }),
             });
+            console.log('Good');
             const statusCode = response.status;
-            const data = await response.json();
-            // if (statusCode === 200) {
-            //     // console.log("Is goodlogin");
-            //     this.isLoggedIn = true;
-            //     this.#accesToken = data.access_token;
-            //     await this.fetchPersonalData();
-            //     return 200;
-            // } else if (statusCode === 400) {
-            //     // console.log("Is badlogin");
-            //     return 400;
-            // }
+            const data = await response.text();
+            console.log(statusCode);
+            console.log(data);
+            console.log('BAD');
+        } catch (error) {
+            console.error('Erreur de connexion :', error);
+            return 500;
+        }
+    }
+
+    //     router.get('/quote/login', QuoteLogin);
+
+    async loginQuote() {
+        console.log('Try to connect to Quote');
+        return new Promise((resolve, reject) => {
+            fetch(api + '/users/quote/login', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + this.#accesToken,
+                },
+                credentials: 'include',
+            })
+                .then(response => {
+                    if (response.status === 200) {
+                        response.text()
+                            .then(data => {
+                                console.log('Response JSON:', data);
+                                resolve(data);
+                            })
+                            .catch(jsonError => {
+                                console.error('Error:', jsonError);
+                                reject(jsonError);
+                            });
+                    } else {
+                        response.json()
+                            .then(data => {
+                                console.log('Response JSON:', data);
+                                console.log(data.err);
+                                alert(data.err);
+                                reject(data.err);
+                            })
+                            .catch(error => {
+                                console.error(error);
+                                reject(error);
+                            });
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
+                    reject(error);
+                });
+        });
+    }
+    // router.get('/quote/discord/connect/:userId', DiscordConnection);
+
+    async quoteFirstArea() {
+        console.log('Try to connect to Quote Area');
+        return new Promise((resolve, reject) => {
+            fetch(api + '/users/quote/discord/connect/:userId', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + this.#accesToken,
+                },
+                credentials: 'include',
+            })
+                .then(response => {
+                    if (response.status === 200) {
+                        response.text()
+                            .then(data => {
+                                console.log('Response JSON:', data);
+                                resolve(data);
+                            })
+                            .catch(jsonError => {
+                                console.error('Error:', jsonError);
+                                reject(jsonError);
+                            });
+                    } else {
+                        response.json()
+                            .then(data => {
+                                console.log('Response JSON:', data);
+                                console.log(data.err);
+                                alert(data.err);
+                                reject(data.err);
+                            })
+                            .catch(error => {
+                                console.error(error);
+                                reject(error);
+                            });
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
+                    reject(error);
+                });
+        });
+    }
+
+    async discord_airtable() {
+        try {
+            const response = await fetch(api + "/users/discord/airtable/connect", {
+                method: "POST",
+                headers: this.fillRequestHeaders(),
+                // body: JSON.stringify({ email: mail, password: password }),
+            });
+            const statusCode = response.status;
+            const data = await response.text();
+            console.log(data);
+        } catch (error) {
+            console.error('Erreur de connexion :', error);
+            return 500;
+        }
+    }
+    // router.get('/calendar/login', googled);
+
+    async loginCalendar() {
+        console.log('Try to connect to Calendar');
+        return new Promise((resolve, reject) => {
+            fetch(api + '/users/calendar/login', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + this.#accesToken,
+                },
+                credentials: 'include',
+            })
+                .then(response => {
+                    if (response.status === 200) {
+                        response.json()
+                            .then(data => {
+                                console.log('Response JSON:', data);
+                                resolve(data);
+                            })
+                            .catch(jsonError => {
+                                console.error('Error:', jsonError);
+                                reject(jsonError);
+                            });
+                    } else {
+                        response.json()
+                            .then(data => {
+                                console.log('Response JSON:', data);
+                                console.log(data.err);
+                                alert(data.err);
+                                reject(data.err);
+                            })
+                            .catch(error => {
+                                console.error(error);
+                                reject(error);
+                            });
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
+                    reject(error);
+                });
+        });
+    }
+    // router.get('/calendar/watch', callback_calendar);
+    async calendarFirstArea() {
+        console.log('Try to connect to Calendar First Area');
+        return new Promise((resolve, reject) => {
+            fetch(api + '/users/calendar/watch', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + this.#accesToken,
+                },
+                credentials: 'include',
+            })
+                .then(response => {
+                    if (response.status === 200) {
+                        response.json()
+                            .then(data => {
+                                console.log('Response JSON:', data);
+                                resolve(data);
+                            })
+                            .catch(jsonError => {
+                                console.error('Error:', jsonError);
+                                reject(jsonError);
+                            });
+                    } 
+                    // else {
+                    //     response.json()
+                    //         .then(data => {
+                    //             console.log('Response JSON:', data);
+                    //             console.log(data.err);
+                    //             alert(data.err);
+                    //             reject(data.err);
+                    //         })
+                    //         .catch(error => {
+                    //             console.error(error);
+                    //             reject(error);
+                    //         });
+                    // }
+                })
+                .catch(error => {
+                    console.error(error);
+                    reject(error);
+                });
+        });
+    }
+
+    async discord_todoist() {
+        try {
+            const response = await fetch(api + "/users/discord/todoist/connect", {
+                method: "POST",
+                headers: this.fillRequestHeaders(),
+                // body: JSON.stringify({ email: mail, password: password }),
+            });
+            const statusCode = response.status;
+            const data = await response.text();
+            console.log(data);
         } catch (error) {
             console.error('Erreur de connexion :', error);
             return 500;
@@ -108,18 +311,18 @@ class Client {
         }
     }
 
-    async loginCalendar() {
-        try {
-            const response = await fetch(api + "/users/calendar/login", {
-                method: "GET",
-                headers: this.fillRequestHeaders(),
-                // body: JSON.stringify({ email: mail, password: password }),
-            });
-        } catch (error) {
-            console.error('Erreur de connexion github:', error);
-            return 500;
-        }
-    }
+    // async loginCalendar() {
+    //     try {
+    //         const response = await fetch(api + "/users/calendar/login", {
+    //             method: "GET",
+    //             headers: this.fillRequestHeaders(),
+    //             // body: JSON.stringify({ email: mail, password: password }),
+    //         });
+    //     } catch (error) {
+    //         console.error('Erreur de connexion github:', error);
+    //         return 500;
+    //     }
+    // }
 
     async loginDiscords() {
         console.log('logindiscord');

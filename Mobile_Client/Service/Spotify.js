@@ -35,8 +35,7 @@ const Spotify = ({ navigation }) => {
             Spotify
           </Text>
           <Text style={styles.text2}>
-            The NAS that does it all. Connect, automate, and sync your apps and data with ease.
-          </Text>
+          A music streaming service that allows users to access a vast library of songs, create personalized playlists, and discover music based on their preferences.          </Text>
         </View>
         <View style={styles.bottomContainer}>
           <TouchableOpacity style={styles.bouton}>
@@ -54,17 +53,17 @@ const Spotify = ({ navigation }) => {
       <ScrollView>
         <View style={styles.servicenamebox}>
 
-          <TouchableOpacity>
+          {/* <TouchableOpacity> */}
             <View style={styles.serv1} >
               <Image
                 source={require('../Assets/dateservice.png')}
                 style={styles.image}
               />
               <Text style={styles.Test1}>
-                Start service3
+              Suppression de chanson
               </Text>
               <Text style={styles.Test1}>
-                by AREASYNC
+              Lorsque vous supprimez une chanson de votre playlist Spotify, une note est créée dans Notion pour suivre les chansons que vous avez supprimées
               </Text>
               <View style={styles.containerb}>
                 <Switch
@@ -77,19 +76,19 @@ const Spotify = ({ navigation }) => {
                 />
               </View>
             </View>
-          </TouchableOpacity>
+          {/* </TouchableOpacity> */}
 
-          <TouchableOpacity>
+          {/* <TouchableOpacity> */}
             <View style={styles.serv2} >
               <Image
                 source={require('../Assets/dateservice.png')}
                 style={styles.image}
               />
               <Text style={styles.Test1}>
-                Start service3
+              Nouvel événement musical
               </Text>
               <Text style={styles.Test1}>
-                by AREASYNC
+              Lorsqu'un nouvel événement est ajouté à votre Google Calendar avec un thème musical spécifique, une nouvelle playlist est créée dans Spotify avec des chansons correspondant à ce thème
               </Text>
               <View style={styles.containerb}>
                 <Switch
@@ -102,19 +101,19 @@ const Spotify = ({ navigation }) => {
                 />
               </View>
             </View>
-          </TouchableOpacity>
+          {/* </TouchableOpacity> */}
 
-          <TouchableOpacity>
+          {/* <TouchableOpacity> */}
             <View style={styles.serv3} >
               <Image
                 source={require('../Assets/dateservice.png')}
                 style={styles.image}
               />
               <Text style={styles.Test1}>
-                Start service3
+              Chanson jouée 10 fois
               </Text>
               <Text style={styles.Test1}>
-                by AREASYNC
+              Lorsqu'une chanson est jouée plus de 10 fois sur Spotify, une nouvelle entrée est créée dans Tally pour suivre les chansons les plus écoutées
               </Text>
             </View>
             <View style={styles.containerb}>
@@ -127,7 +126,7 @@ const Spotify = ({ navigation }) => {
                 style={styles.toggleButton} // Ajout de la propriété de style
               />
             </View>
-          </TouchableOpacity>
+          {/* </TouchableOpacity> */}
 
         </View>
       </ScrollView>
@@ -151,10 +150,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   toggleButton: {
-    transform: [{ scaleX: 1.5 }, { scaleY: 1.5 }] // Appliquer une mise à l'échelle
+    transform: [{ scaleX: 1.0 }, { scaleY: 1.0 }] // Appliquer une mise à l'échelle
   },
   Test1: {
-    fontSize: 18,
+    fontSize: 12,
     marginTop: 20,
     fontWeight: 'bold',
     paddingHorizontal: 22,

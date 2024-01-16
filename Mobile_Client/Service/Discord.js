@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { View, Switch, SafeAreaView, ScrollView, Linking, Text, StyleSheet, Image, Dimensions, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-const scale_y = size => (height / guidelineWidth) * size;
 import user from '../User'
 
-const Discord = ({navigation}) => {
-  // const navigation = useNavigation();
+const Discord = ({ navigation }) => {
   const [isEnabled, setIsEnabled] = useState(false);
   const [isEnabled1, setIsEnabled1] = useState(false);
   const [isEnabled2, setIsEnabled2] = useState(false);
@@ -20,25 +18,39 @@ const Discord = ({navigation}) => {
     }
   };
 
-  const handleAreaCalendar = () => {
-    navigation.navigate('Service/AreaCalendar');
+  const handleAreaCalendar = async () => {
+    try {
+      const login = await user.discord_calendar();
+    } catch (error) {
+      console.error('Erreur lors du démarrage de l\'AREA calendar de discord', error);
+    }
+    // navigation.navigate('Service/AreaCalendar');
   };
-  const handleAreaAirtable = () => {
-    navigation.navigate('Service/AreaAirtable');
+  const handleAreaAirtable = async () => {
+    try {
+      const login = await user.discord_airtable();
+    } catch (error) {
+      console.error('Erreur lors du démarrage de l\'AREA airtable de discord', error);
+    }    // navigation.navigate('Service/AreaAirtable');
   };
-  const handleAreaTodoist = () => {
-    navigation.navigate('Service/AreaTodoist');
+  const handleAreaTodoist = async () => {
+    try {
+      console.log('its start');
+      const login = await user.discord_todoist();
+      console.log('its finish');
+    } catch (error) {
+      console.error('Erreur lors du démarrage de l\'AREA todoist de discord', error);
+    }    // navigation.navigate('Service/AreaTodoist');
   };
   const toggleSwitch = () => {
     setIsEnabled(previousState => !previousState);
-  }
+  };
   const toggleSwitch1 = () => {
     setIsEnabled1(previousState => !previousState);
-  }
+  };
   const toggleSwitch2 = () => {
     setIsEnabled2(previousState => !previousState);
-  }
-  const iconSize = 30; // Taille de l'icône en pixels
+  };
   return (
     <SafeAreaView>
       <View style={styles.container}>
@@ -52,8 +64,7 @@ const Discord = ({navigation}) => {
             Discord
           </Text>
           <Text style={styles.text2}>
-            The NAS that does it all. Connect, automate, and sync your apps and data with ease.
-          </Text>
+            A voice and text communication application primarily used by gaming communities to chat, coordinate, and share real-time information.                 </Text>
         </View>
         <View style={styles.bottomContainer}>
           {/* <WebView source={{ uri: login }} style={{ flex: 1 }} onPress={handleLogin} />; */}
@@ -72,80 +83,92 @@ const Discord = ({navigation}) => {
       <ScrollView>
         <View style={styles.servicenamebox}>
 
-          <TouchableOpacity onPress={handleAreaCalendar}>
-            <View style={styles.serv1} >
-              <Image
-                source={require('../Assets/dateservice.png')}
-                style={styles.image}
+          {/* <TouchableOpacity > */}
+          <View style={styles.serv1} >
+            <Image
+              source={require('../Assets/dateservice.png')}
+              style={styles.image}
+            />
+            <Text style={styles.Test1}>
+              Message épinglé
+            </Text>
+            <Text style={styles.Test1}>
+              Chaque fois qu'un message est épinglé dans le serveur, un évenement est créer dans google calendar            </Text>
+            <View style={styles.containerb}>
+              <Switch
+                trackColor={{ false: '#767577', true: 'white' }}
+                thumbColor={isEnabled ? 'gray' : '#f4f3f4'}
+                ios_backgroundColor="black"
+                onValueChange={(value) => {
+                  toggleSwitch(value);
+                  if (value) {
+                    handleAreaCalendar();
+                  }
+                }}
+                value={isEnabled}
+                style={styles.toggleButton} // Ajout de la propriété de style
               />
-              <Text style={styles.Test1}>
-                Start service1
-              </Text>
-              <Text style={styles.Test1}>
-                by AREASYNC
-              </Text>
-              <View style={styles.containerb}>
-                <Switch
-                  trackColor={{ false: '#767577', true: 'white' }}
-                  thumbColor={isEnabled ? 'gray' : '#f4f3f4'}
-                  ios_backgroundColor="black"
-                  onValueChange={toggleSwitch}
-                  value={isEnabled}
-                  style={styles.toggleButton} // Ajout de la propriété de style
-                />
-              </View>
             </View>
-          </TouchableOpacity>
+          </View>
+          {/* </TouchableOpacity> */}
 
-          <TouchableOpacity onPress={handleAreaAirtable}>
-            <View style={styles.serv2} >
-              <Image
-                source={require('../Assets/dateservice.png')}
-                style={styles.image}
+          {/* <TouchableOpacity> */}
+          <View style={styles.serv2} >
+            <Image
+              source={require('../Assets/dateservice.png')}
+              style={styles.image}
+            />
+            <Text style={styles.Test1}>
+              Écoute de playlist
+            </Text>
+            <Text style={styles.Test1}>
+              Lorsque vous commencez à écouter une playlist spécifique sur Spotify, un message est posté dans un canal Discord pour partager la playlist avec les autres            </Text>
+            <View style={styles.containerb}>
+              <Switch
+                trackColor={{ false: '#767577', true: 'white' }}
+                thumbColor={isEnabled1 ? 'gray' : '#f4f3f4'}
+                ios_backgroundColor="black"
+                onValueChange={(value) => {
+                  toggleSwitch1(value);
+                  if (value) {
+                    handleAreaAirtable();
+                  }
+                }}
+                value={isEnabled1}
+                style={styles.toggleButton} // Ajout de la propriété de style
               />
-              <Text style={styles.Test1}>
-                Start service1
-              </Text>
-              <Text style={styles.Test1}>
-                by AREASYNC
-              </Text>
-              <View style={styles.containerb}>
-                <Switch
-                  trackColor={{ false: '#767577', true: 'white' }}
-                  thumbColor={isEnabled1 ? 'gray' : '#f4f3f4'}
-                  ios_backgroundColor="black"
-                  onValueChange={toggleSwitch1}
-                  value={isEnabled1}
-                  style={styles.toggleButton} // Ajout de la propriété de style
-                />
-              </View>
             </View>
-          </TouchableOpacity>
+          </View>
+          {/* </TouchableOpacity> */}
 
-          <TouchableOpacity onPress={handleAreaTodoist}>
-            <View style={styles.serv3} >
-              <Image
-                source={require('../Assets/dateservice.png')}
-                style={styles.image}
+          {/* <TouchableOpacity > */}
+          <View style={styles.serv3} >
+            <Image
+              source={require('../Assets/dateservice.png')}
+              style={styles.image}
+            />
+            <Text style={styles.Test1}>
+              Nouvelle tâche
+            </Text>
+            <Text style={styles.Test1}>
+              Lorsqu'une nouvelle tâche est ajoutée à une liste de tâches dans Notion, un message est posté dans un canal Discord pour informer les autres de la nouvelle tâche            </Text>
+            <View style={styles.containerb}>
+              <Switch
+                trackColor={{ false: '#767577', true: 'white' }}
+                thumbColor={isEnabled2 ? 'gray' : '#f4f3f4'}
+                ios_backgroundColor="black"
+                onValueChange={(value) => {
+                  toggleSwitch2(value);
+                  if (value) {
+                    handleAreaTodoist();
+                  }
+                }}
+                value={isEnabled2}
+                style={styles.toggleButton} // Ajout de la propriété de style
               />
-              <Text style={styles.Test1}>
-                Start service1
-              </Text>
-              <Text style={styles.Test1}>
-                by AREASYNC
-              </Text>
-              <View style={styles.containerb}>
-                <Switch
-                  trackColor={{ false: '#767577', true: 'white' }}
-                  thumbColor={isEnabled2 ? 'gray' : '#f4f3f4'}
-                  ios_backgroundColor="black"
-                  onValueChange={toggleSwitch2}
-                  value={isEnabled2}
-                  style={styles.toggleButton} // Ajout de la propriété de style
-                />
-              </View>
             </View>
-          </TouchableOpacity>
+          </View>
+          {/* </TouchableOpacity> */}
 
         </View>
       </ScrollView>
@@ -169,7 +192,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   toggleButton: {
-    transform: [{ scaleX: 1.5 }, { scaleY: 1.5 }] // Appliquer une mise à l'échelle
+    transform: [{ scaleX: 1.0 }, { scaleY: 1.0 }] // Appliquer une mise à l'échelle
   },
   bottomContainer: {
     marginTop: 20,
@@ -187,7 +210,6 @@ const styles = StyleSheet.create({
   servicenamebox: {
     marginTop: 30,
     paddingHorizontal: 20,
-    // backgroundColor: 'red',
     alignItems: 'center',
     justifyContent: 'center',
     gap: 20,
@@ -236,7 +258,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   Test1: {
-    fontSize: 18,
+    fontSize: 12,
     marginTop: 20,
     fontWeight: 'bold',
     paddingHorizontal: 22,

@@ -49,8 +49,8 @@ router.get('/spotify/callback', SpotifyCallback);
 router.post('/spotify/connect', createPlaylistWithLikedSongs)
 
 // Date&Time
+router.get('/datetime/sendprayertime', definePrayerTime);
 // router.get('/datetime/sendmotivation', scheduleEmails);
 // router.get('/datetime/sendweather', sendWeatherEmails);
-router.get('/datetime/sendprayertime', definePrayerTime);
 
 module.exports = router
