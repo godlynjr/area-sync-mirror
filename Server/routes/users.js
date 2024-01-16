@@ -1,5 +1,6 @@
 const express = require("express")
 const router = express.Router()
+
 const {  login, callback, Airtableconnect, CalendarConnect,  TodoistConnect } = require('../Services/Discord/index');
 const { QuoteLogin, DiscordConnection } = require('../Services/Quote/index');
 const {  notion_log, notion_callback } = require('../Services/Notion/notion');
@@ -42,11 +43,11 @@ router.get('/github/callback', githubService.handleCallback);
 router.get('/notion/login', notion_log);
 router.get('/notion/callback', notion_callback);
 
-
 // SPOTIFY API
 router.get('/spotify/login', ConnectSpotify);
 router.get('/spotify/callback', SpotifyCallback);
 router.post('/spotify/connect', createPlaylistWithLikedSongs)
+
 // Date&Time
 router.get('/datetime/sendmotivation', scheduleEmails);
 router.get('/datetime/sendweather', sendWeatherEmails);
