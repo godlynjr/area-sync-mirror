@@ -46,13 +46,12 @@ class GithubService extends IService {
       
           if (validateResponse.data) {
             console.log('GitHub access token:', accessToken);
-            // res.status(200).json({
-            //   access_token: accessToken,
-            //   token_type: response.data.token_type,
-            //   scope: response.data.scope,
-            //   user: validateResponse.data,
-            // });
-            res.status(200).json({});
+            res.status(200).json({
+              access_token: accessToken,
+              token_type: response.data.token_type,
+              scope: response.data.scope,
+              user: validateResponse.data,
+            });
           } else {
             console.error('Invalid GitHub access token');
             res.status(401).send('Unauthorized');
