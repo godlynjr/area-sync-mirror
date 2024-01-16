@@ -131,7 +131,7 @@
         "actions": [
             {
                 "name": "Envois des infos relatives à la météo",
-                "description": "À l'heure spécifiée, l'application collecte les données météorologiques actuelles ou prévues à partir d'une source fiable "
+                "description": "À l'heure spécifiée, l'application collecte les données météorologiques actuelles ou prévues à partir d'une source fiable"
             },
             {
                 "name": "Envois d'une citation motivante",
