@@ -32,6 +32,7 @@ const login = (req, res) => {
     try {
         const url = 'https://discord.com/api/oauth2/authorize?client_id=1186857028119973959&permissions=8&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Fusers%2Fdiscord%2Fcallback&scope=identify+guilds.members.read+bot+messages.read';
         redirectURL = req.headers.url;
+        DiscordIsActive = true;
         res.send(url);
     } catch (error) {
         console.error(error);
