@@ -3,15 +3,12 @@ import Header from "../../Components/Header"
 import Areas from "../../Components/areas"
 import User from "../../User"
 import { ArrowLeftIcon } from "@heroicons/react/solid";
-import { useLocation } from 'react-router-dom';
 import { FaDiscord, FaCalendar, FaSpotify, FaEnvelope, FaChartBar, FaGithub } from 'react-icons/fa';
 import { SiNotion } from "react-icons/si";
 
 function Area2() {
-  const location = useLocation();
 
   const ConnectArea2 = () => {
-    const currentPath = location.pathname;
     User.SpotifyArea2();
   }
 
@@ -43,7 +40,7 @@ function Area2() {
           {/* logo and description */}
           <div className="flex flex-col text-center">
             <div className="flex flex-row self-center space-x-2">
-              <FaDiscord className="h-12 w-12"/>
+              <FaSpotify className="h-12 w-12" />
               <FaSpotify className="h-12 w-12" />
             </div>
             <p className="text-xl">Lorsque vous likez une chanson une playlist est créée et la chanson est ajoutée.</p>
