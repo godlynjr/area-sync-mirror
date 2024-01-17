@@ -1,5 +1,5 @@
 import axios from 'axios';
-const api = "http://localhost:8080";
+const api = "https://area-sync-stagging.onrender.com";
 
 class Client {
   #personal = null;
@@ -82,7 +82,7 @@ class Client {
     this.redirectUrl = Url;
     try {
       axios
-          .get(api + "/spotify/login", {
+          .get(api + "/users/spotify/login", {
            headers: this.fillRequestHeaders(),
           })
           .then((res) => {
@@ -112,6 +112,58 @@ class Client {
       });
     } catch (error) {
       console.log(error);
+    }
+  }
+
+  async YoutubeLogin(Url) {
+    this.redirectUrl = Url;
+    try {
+      axios
+          .get(api + "/users/youtube/login", {
+           headers: this.fillRequestHeaders(),
+          })
+          .then((res) => {
+            console.log(res.data);
+            window.location.href = res.data;
+          })
+          .catch((err) => console.log(err));
+    } catch (error) {
+      console.error('Error during fetch:', error);
+      throw error;
+    }
+  }
+
+  async DriveLogin(Url) {
+    this.redirectUrl = Url;
+    try {
+      axios
+          .post(api + "/users/youtube/drive/connect", {
+           headers: this.fillRequestHeaders(),
+          })
+          .then((res) => {
+            console.log(res.data);
+            window.location.href = res.data;
+          })
+          .catch((err) => console.log(err));
+    } catch (error) {
+      console.error('Error during fetch:', error);
+      throw error;
+    }
+  }
+
+  async SpotifyArea2() {
+    try {
+      axios
+          .post(api + "/users/spotify/connect", {
+           headers: this.fillRequestHeaders(),
+          })
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((err) => console.log(err));
+    } catch (error) {
+      console.error('Error during fetch:', error);
+      throw error;
     }
   }
 }

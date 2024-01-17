@@ -61,7 +61,7 @@ function Discord() {
       </section>
 
       <section className="container mx-auto my-5">
-        <div className="grid grid-cols-2 gap-8 text-black sm:gap-10 md:grid-cols-3 lg:grid-cols-3 mt-5">
+        <div className="grid grid-cols-2 gap-8 text-black sm:gap-10 md:grid-cols-3 lg:grid-cols-3 mt-5 p-2">
           <a href="/Discord-1">
             <Areas service="discord" featuring="calendar" description="Chaque fois qu'un message est épinglé dans le serveur, un évenement est créer dans google calendar." bgComponent={'bg-discord'}/>
           </a>
