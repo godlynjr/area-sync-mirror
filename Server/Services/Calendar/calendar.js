@@ -45,7 +45,7 @@ const googled = async (req, res) => {
         access_type: 'offline',
         scope: scopes,
     });
-    redirectUrl = res.headers.url;
+    redirectUrl = req.headers.url;
     res.send(url);
 };
 
