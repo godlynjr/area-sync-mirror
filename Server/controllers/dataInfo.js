@@ -5,11 +5,11 @@ const jwt = require('jsonwebtoken');
 const about_json = async (req, res) => {
     // Routes to get the about.json file
     try {
-        const token = req.headers.authorization.split(' ')[1];
-        const isValid = verifyToken(token);
-        if (!isValid) {
-            return res.status(401).json({ message: 'Unauthorized' });
-        }
+        // const token = req.headers.authorization.split(' ')[1];
+        // const isValid = verifyToken(token);
+        // if (!isValid) {
+        //     return res.status(401).json({ message: 'Unauthorized' });
+        // }
         // Lire les informations sur les services à partir du fichier
         const servicesData = JSON.parse(fs.readFileSync(path.join(__dirname, 'services.json'), 'utf8'));
 
