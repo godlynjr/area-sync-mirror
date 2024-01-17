@@ -81,7 +81,7 @@ router.delete('/user/delete/:id', verifyToken, deleteUser);
 
 /**
  * @swagger
- * "/dashboard:
+ * "/dashboard":
  *   get:
  *     description: Get the dashboard
  *     responses:

@@ -6,6 +6,10 @@ const { google } = require('googleapis');
 const { Client } = require('@notionhq/client');
 const notion = new Client({ auth: process.env.NOTION_SECRET });
 const databaseId = process.env.NOTION_DATABASE_ID;
+
+const { notion_log } = require('../Notion/notion');
+const { twitter_login } = require('../Twitter/twitter');
+
 let redirectUrl = '';
 let numbers = 0;
 const oauth2Client = new google.auth.OAuth2(
@@ -33,7 +37,7 @@ const calendarId = 'primary';
 const channel = {
     id: uuidv4(),
     type: 'web_hook',
-    address: 'https://bird-distinct-gator.ngrok-free.app/users/calendar/google-calendar-webhook',
+    address: 'https://area-sync-stagging.onrender.com/users/calendar/google-calendar-webhook',
 };
 
 const scopes = ['https://www.googleapis.com/auth/calendar', 'https://www.googleapis.com/auth/calendar.events'];
@@ -45,7 +49,7 @@ const googled = async (req, res) => {
         access_type: 'offline',
         scope: scopes,
     });
-    redirectUrl = res.headers.url;
+    redirectUrl = req.headers.url;
     res.send(url);
 };
 
@@ -113,6 +117,8 @@ const calendarwebhook = async (req, res) => {
             console.log(`Date de création: ${dernierEvenement.created}`);
 
             // Ajoutez ici le code pour créer un événement dans Notion
+            // await notion_log(req, res); 
+            await twitter_login(req, res); 
             // en utilisant les informations reçues de l'événement Google Calendar.
             return res.status(200).end();
         }

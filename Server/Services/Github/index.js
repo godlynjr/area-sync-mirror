@@ -2,6 +2,7 @@ const IService = require('../IService');
 const fetch = require('node-fetch');
 require('dotenv').config();
 const axios = require('axios');
+let redirectURL = '';
 
 class GithubService extends IService {
     constructor(_accessToken = '') {

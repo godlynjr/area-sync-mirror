@@ -85,7 +85,7 @@ const callback = async (req, res) => {
         await newUser.save();
     }
     DiscordIsActive = true;
-    res.redirect(redirectURL, { discordId: userJson.id }); // Use the redirect URL from the header
+    res.redirect(`${redirectURL}?discordId=${userJson.id}`); // Use the redirect URL from the header
 };
 
 client.on('ready', () => {
@@ -97,12 +97,6 @@ client.on('ready', () => {
 
 const CalendarConnect = async (req, res) => {
     try {
-        console.log('header is ', req.headers);
-        const token = req.headers.authorization.split(' ')[1];
-        const isValid = verifyToken(token);
-        if (!isValid) {
-            return res.status(401).json({ message: 'Unauthorized' });
-        }
         if (DiscordIsActive) {
             await googled(req, res);
             CalendarIsActive = true;
@@ -187,12 +181,6 @@ async function createGoogleCalendarEvent(eventDetails) {
 
 const Airtableconnect = async (req, res) => {
     try {
-        const token = req.headers.authorization.split(' ')[1];
-        console.log('Token:', token);
-        const isValid = verifyToken(token);
-        if (!isValid) {
-            return res.status(401).json({ message: 'Unauthorized' });
-        }
         AirtableIsActive = true;
         res.status(200).json({ message: 'Airtable is connected' });
     } catch (error) {
@@ -237,12 +225,6 @@ client.on('guildMemberAdd', member => {
 
 const TodoistConnect = async (req, res) => {
     try {
-        const token = req.headers.authorization.split(' ')[1];
-        console.log('Token:', token);
-        const isValid = verifyToken(token);
-        if (!isValid) {
-            return res.status(401).json({ message: 'Unauthorized' });
-        }
         TodoistIsActive = true;
         res.status(200).json({ message: 'Todoist is connected' });
     } catch (error) {
