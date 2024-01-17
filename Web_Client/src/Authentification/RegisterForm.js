@@ -24,7 +24,7 @@ const RegisterForm = () => {
     e.preventDefault();
     // login logic here
     console.log("Registring with:", { email, password });
-    User.register(email, password);
+    User.log(email, password);
   };
 
   const handleContinueWithEmail = () => {

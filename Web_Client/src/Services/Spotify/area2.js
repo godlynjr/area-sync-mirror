@@ -10,9 +10,9 @@ import { SiNotion } from "react-icons/si";
 function Area2() {
   const location = useLocation();
 
-  const ConnectDiscord = () => {
+  const ConnectArea2 = () => {
     const currentPath = location.pathname;
-    User.CalendarLogin(currentPath);
+    User.SpotifyArea2();
   }
 
   return (
@@ -36,7 +36,7 @@ function Area2() {
               <a href="/Discord" className="text-lg font-bold">Back</a>
             </div>
             <div className="border-4 border-solid p-2 rounded-full">
-              <a href="https://discord.com" className="text-lg font-semibold">Visit Discord</a>
+              <a href="https://discord.com" className="text-lg font-semibold">Visit Spotify</a>
             </div>
           </div>
 
@@ -46,14 +46,14 @@ function Area2() {
               <FaDiscord className="h-12 w-12"/>
               <FaSpotify className="h-12 w-12" />
             </div>
-            <p className="text-xl">Lorsque vous commencez à écouter une playlist spécifique sur Spotify<br />un message est posté dans un canal Discord pour partager la playlist avec les autres.</p>
+            <p className="text-xl">Lorsque vous likez une chanson une playlist est créée et la chanson est ajoutée.</p>
           </div>
         </div>
       </section>
 
       <section className="container mx-auto flex text-center flex-col">
-        <button className="border-4 w-2/5 lg:w-1/6 border-solid p-2 rounded-full my-5 self-center bg-[#1DB954]" onClick={ConnectDiscord}>Connect</button>
-        <p className="self-center text-xl">Lorsque vous commencez à écouter une playlist spécifique sur Spotify<br />un message est posté dans un canal Discord pour partager la playlist avec les autres.</p>
+        <button className="border-4 w-2/5 lg:w-1/6 border-solid p-2 rounded-full my-5 self-center bg-[#1DB954]" onClick={ConnectArea2}>Connect</button>
+        <p className="self-center text-xl">Lorsque vous likez une chanson une playlist est créée et la chanson est ajoutée.</p>
       </section>
     </div>
   )

@@ -54,7 +54,7 @@ function Youtube() {
 
       <section className="container mx-auto my-5">
         <div className="grid grid-cols-2 gap-8 text-black sm:gap-10 md:grid-cols-3 lg:grid-cols-3 mt-5 p-2">
-          <a href="/Spotify-1">
+          <a href="/Youtube-1">
             <Areas service="youtube" featuring="drive" description="Apres un like sur une vidéo ses infos sont automatiquement ajoutée sur google drive." bgComponent={'bg-[#ff0000]'}/>
           </a> 
           <a href="/Spotify-2">

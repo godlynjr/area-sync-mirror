@@ -132,6 +132,40 @@ class Client {
       throw error;
     }
   }
+
+  async DriveLogin(Url) {
+    this.redirectUrl = Url;
+    try {
+      axios
+          .post(api + "/users/youtube/drive/connect", {
+           headers: this.fillRequestHeaders(),
+          })
+          .then((res) => {
+            console.log(res.data);
+            window.location.href = res.data;
+          })
+          .catch((err) => console.log(err));
+    } catch (error) {
+      console.error('Error during fetch:', error);
+      throw error;
+    }
+  }
+
+  async SpotifyArea2() {
+    try {
+      axios
+          .post(api + "/users/spotify/connect", {
+           headers: this.fillRequestHeaders(),
+          })
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((err) => console.log(err));
+    } catch (error) {
+      console.error('Error during fetch:', error);
+      throw error;
+    }
+  }
 }
 
 const User = new Client();

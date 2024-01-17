@@ -58,7 +58,7 @@ function Spotify() {
             <Areas service="spotify" featuring="calendar" description="Chaque fois qu'un message est épinglé dans le serveur, un évenement est créer dans google calendar." bgComponent={'bg-[#1DB954]'}/>
           </a> 
           <a href="/Spotify-2">
-            <Areas service="spotify" featuring="spotify" description="Lorsque vous commencez à écouter une playlist spécifique sur Spotify, un message est posté dans un canal Discord pour partager la playlist avec les autres." bgComponent={'bg-[#1DB954]'}/>
+            <Areas service="spotify" featuring="spotify" description="Lorsque vous likez une chanson une playlist est créée et la chanson est ajoutée." bgComponent={'bg-[#1DB954]'}/>
           </a>
           <a href="/Spotify-3">
             <Areas service="spotify" featuring="notion" description="Lorsqu'une nouvelle tâche est ajoutée à une liste de tâches dans Notion, un message est posté dans un canal Discord pour informer les autres de la nouvelle tâche." bgComponent={'bg-[#1DB954]'}/>

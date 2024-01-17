@@ -14,8 +14,8 @@ function Header() {
   // }
 
   const Links =[
-    {name:"HOME",link:"/"},
-    {name:"SERVICE",link:"/"},
+    {name:"Login",link:"/login"},
+    {name:"Get started",link:"/register"},
   ];
 
   useEffect(() => {
@@ -44,7 +44,9 @@ function Header() {
                       <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
                   </svg>
                 </a>
-                <button className="h-full lg:hidden" onClick={()=>setOpen(!open)}>
+                
+              </div>
+              <button className="h-full lg:hidden" onClick={()=>setOpen(!open)}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -60,7 +62,6 @@ function Header() {
                   />
                   </svg>
                 </button>
-              </div>
             </div>
             
           }
