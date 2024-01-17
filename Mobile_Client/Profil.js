@@ -1,12 +1,12 @@
 
 import React, { useState, } from 'react';
-import { View, Text, StyleSheet, Dimensions, TouchableOpacity, SafeAreaViewBase } from 'react-native';
+import { View, Text, StyleSheet, Alert, TouchableOpacity, SafeAreaViewBase } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native'; // Importer useNavigation
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-const Profil = () => {
+const Profil = ({}) => {
   const navigation = useNavigation(); // Obtenir l'objet navigation
   const [isEditing, setIsEditing] = useState(true);
 
@@ -20,6 +20,16 @@ const Profil = () => {
   const PressEdit = () => {
     navigation.navigate('Edit_profil');
     setIsEditing(true)
+  };
+  const handleLogout = () => {
+    Alert.alert(
+      'Sign out',
+      `Sign out ` + user.email + `?`,
+      [
+        { text: 'Cancel', style: 'cancel' },
+        { text: 'Sign out', onPress: () => navigation.navigate('OnboardingPageI') }
+      ]
+    );
   };
 
   return (
@@ -76,7 +86,7 @@ const Profil = () => {
 
           <View style={styles.line} />
 
-          <TouchableOpacity>
+          <TouchableOpacity onPress={handleLogout}>
             <View style={styles.rowContainer}>
               <Text style={styles.menuText}> Log out</Text>
               <Ionicons name="log-out" size={20} color='white' marginTop={10} />

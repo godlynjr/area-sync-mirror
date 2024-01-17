@@ -20,8 +20,8 @@ const Services = ({ }) => {
     const handleGoogle = async () => {
         navigation.navigate('Service/Google');
     };
-    const handleNotion = async () => {
-        navigation.navigate('Service/Notion');
+    const handleYoutube = async () => {
+        navigation.navigate('Service/Youtube');
     };
     const handleCalendar = async () => {
         navigation.navigate('Service/Calendar');
@@ -146,9 +146,9 @@ const Services = ({ }) => {
                             style={styles.image1}
                         />
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={handleNotion}>
+                    <TouchableOpacity onPress={handleYoutube}>
                         <Image
-                            source={require('./Assets/notion.png')}
+                            source={require('./Assets/youtube.png')}
                             style={styles.image1}
                         />
                     </TouchableOpacity>

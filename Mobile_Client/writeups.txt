@@ -1,5 +1,0 @@
-What need to be done :
-- install dependancies : open-jdk, android sdk, android ndk, node, expo-cli
-- export ANDROID_HOME=$HOME/Android/Sdk
-- cd android && ./gradlew assembleDebug
-- share generated apk to volume

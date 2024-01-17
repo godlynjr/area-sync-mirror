@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { View, Switch, SafeAreaView, Text, ScrollView, StyleSheet, Image, Dimensions, TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
-import { widthPercentageToDP, heightPercentageToDP, listenOrientationChange, moderateScale } from 'react-native-responsive-screen';
-const { width, height } = Dimensions.get('window');
-const guidelineWidth = 375; // Width of the device on which the design is based
+import { View, Switch, SafeAreaView, Text, ScrollView, Linking, StyleSheet, Image, Dimensions, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-const scale_y = size => (height / guidelineWidth) * size;
+import user from '../User'
 
 const Spotify = ({ navigation }) => {
   const iconSize = 30; // Taille de l'icône en pixels
@@ -22,6 +18,27 @@ const Spotify = ({ navigation }) => {
   const toggleSwitch2 = () => {
     setIsEnabled2(previousState => !previousState);
   }
+
+  const handleLogin = async () => {
+    try {
+      const login = await user.loginSpotify();
+      console.log('login', login);
+      Linking.openURL(login);
+    } catch (error) {
+      console.error('Erreur lors du démarrage du service', error);
+    }
+  };
+
+  const handleSpotifyFirstArea = async () => {
+    try {
+      const login = await user.spotifyFirstArea();
+      console.log('song added');
+      console.log('login', login);
+    } catch (error) {
+      console.error('Erreur lors du démarrage du service', error);
+    }
+  };
+
   return (
     <SafeAreaView>
       <View style={styles.container}>
@@ -35,10 +52,10 @@ const Spotify = ({ navigation }) => {
             Spotify
           </Text>
           <Text style={styles.text2}>
-          A music streaming service that allows users to access a vast library of songs, create personalized playlists, and discover music based on their preferences.          </Text>
+            A music streaming service that allows users to access a vast library of songs, create personalized playlists, and discover music based on their preferences.          </Text>
         </View>
         <View style={styles.bottomContainer}>
-          <TouchableOpacity style={styles.bouton}>
+          <TouchableOpacity style={styles.bouton} onPress={handleLogin}>
             <Text style={styles.Text}>
               Connect
             </Text>
@@ -54,78 +71,83 @@ const Spotify = ({ navigation }) => {
         <View style={styles.servicenamebox}>
 
           {/* <TouchableOpacity> */}
-            <View style={styles.serv1} >
-              <Image
-                source={require('../Assets/dateservice.png')}
-                style={styles.image}
-              />
-              <Text style={styles.Test1}>
+          <View style={styles.serv1} >
+            <Image
+              source={require('../Assets/dateservice.png')}
+              style={styles.image}
+            />
+            <Text style={styles.Test1}>
               Suppression de chanson
-              </Text>
-              <Text style={styles.Test1}>
+            </Text>
+            <Text style={styles.Test1}>
               Lorsque vous supprimez une chanson de votre playlist Spotify, une note est créée dans Notion pour suivre les chansons que vous avez supprimées
-              </Text>
-              <View style={styles.containerb}>
-                <Switch
-                  trackColor={{ false: '#767577', true: 'white' }}
-                  thumbColor={isEnabled ? 'gray' : '#f4f3f4'}
-                  ios_backgroundColor="black"
-                  onValueChange={toggleSwitch}
-                  value={isEnabled}
-                  style={styles.toggleButton} // Ajout de la propriété de style
-                />
-              </View>
-            </View>
-          {/* </TouchableOpacity> */}
-
-          {/* <TouchableOpacity> */}
-            <View style={styles.serv2} >
-              <Image
-                source={require('../Assets/dateservice.png')}
-                style={styles.image}
-              />
-              <Text style={styles.Test1}>
-              Nouvel événement musical
-              </Text>
-              <Text style={styles.Test1}>
-              Lorsqu'un nouvel événement est ajouté à votre Google Calendar avec un thème musical spécifique, une nouvelle playlist est créée dans Spotify avec des chansons correspondant à ce thème
-              </Text>
-              <View style={styles.containerb}>
-                <Switch
-                  trackColor={{ false: '#767577', true: 'white' }}
-                  thumbColor={isEnabled1 ? 'gray' : '#f4f3f4'}
-                  ios_backgroundColor="black"
-                  onValueChange={toggleSwitch1}
-                  value={isEnabled1}
-                  style={styles.toggleButton} // Ajout de la propriété de style
-                />
-              </View>
-            </View>
-          {/* </TouchableOpacity> */}
-
-          {/* <TouchableOpacity> */}
-            <View style={styles.serv3} >
-              <Image
-                source={require('../Assets/dateservice.png')}
-                style={styles.image}
-              />
-              <Text style={styles.Test1}>
-              Chanson jouée 10 fois
-              </Text>
-              <Text style={styles.Test1}>
-              Lorsqu'une chanson est jouée plus de 10 fois sur Spotify, une nouvelle entrée est créée dans Tally pour suivre les chansons les plus écoutées
-              </Text>
-            </View>
+            </Text>
             <View style={styles.containerb}>
               <Switch
                 trackColor={{ false: '#767577', true: 'white' }}
-                thumbColor={isEnabled2 ? 'gray' : '#f4f3f4'}
+                thumbColor={isEnabled ? 'gray' : '#f4f3f4'}
                 ios_backgroundColor="black"
-                onValueChange={toggleSwitch2}
-                value={isEnabled2}
+                onValueChange={(value) => {
+                  toggleSwitch(value);
+                  if (value) {
+                    handleSpotifyFirstArea();
+                  }
+                }}
+                value={isEnabled}
                 style={styles.toggleButton} // Ajout de la propriété de style
               />
             </View>
+          </View>
+          {/* </TouchableOpacity> */}
+
+          {/* <TouchableOpacity> */}
+          <View style={styles.serv2} >
+            <Image
+              source={require('../Assets/dateservice.png')}
+              style={styles.image}
+            />
+            <Text style={styles.Test1}>
+              Nouvel événement musical
+            </Text>
+            <Text style={styles.Test1}>
+              Lorsqu'un nouvel événement est ajouté à votre Google Calendar avec un thème musical spécifique, une nouvelle playlist est créée dans Spotify avec des chansons correspondant à ce thème
+            </Text>
+            <View style={styles.containerb}>
+              <Switch
+                trackColor={{ false: '#767577', true: 'white' }}
+                thumbColor={isEnabled1 ? 'gray' : '#f4f3f4'}
+                ios_backgroundColor="black"
+                onValueChange={toggleSwitch1}
+                value={isEnabled1}
+                style={styles.toggleButton} // Ajout de la propriété de style
+              />
+            </View>
+          </View>
+          {/* </TouchableOpacity> */}
+
+          {/* <TouchableOpacity> */}
+          <View style={styles.serv3} >
+            <Image
+              source={require('../Assets/dateservice.png')}
+              style={styles.image}
+            />
+            <Text style={styles.Test1}>
+              Chanson jouée 10 fois
+            </Text>
+            <Text style={styles.Test1}>
+              Lorsqu'une chanson est jouée plus de 10 fois sur Spotify, une nouvelle entrée est créée dans Tally pour suivre les chansons les plus écoutées
+            </Text>
+          </View>
+          <View style={styles.containerb}>
+            <Switch
+              trackColor={{ false: '#767577', true: 'white' }}
+              thumbColor={isEnabled2 ? 'gray' : '#f4f3f4'}
+              ios_backgroundColor="black"
+              onValueChange={toggleSwitch2}
+              value={isEnabled2}
+              style={styles.toggleButton} // Ajout de la propriété de style
+            />
+          </View>
           {/* </TouchableOpacity> */}
 
         </View>
