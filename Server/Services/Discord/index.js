@@ -97,6 +97,7 @@ client.on('ready', () => {
 
 const CalendarConnect = async (req, res) => {
     try {
+        console.log('header is ', req.headers);
         const token = req.headers.authorization.split(' ')[1];
         const isValid = verifyToken(token);
         if (!isValid) {
