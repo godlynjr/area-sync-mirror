@@ -23,28 +23,36 @@ const ConnectSpotify = (req, res) => {
 
 const SpotifyCallback = async (req, res) => {
     const code = req.query.code;
-    const data = {
-        client_id: process.env.SPOTIFY_CLIENT_ID,
-        client_secret: process.env.SPOTIFY_CLIENT_SECRET,
-        grant_type: 'authorization_code',
-        redirect_uri: process.env.SPOTIFY_REDIRECT_URI,
-        code: code,
-    };
+    // const data = {
+    //     client_id: process.env.SPOTIFY_CLIENT_ID,
+    //     client_secret: process.env.SPOTIFY_CLIENT_SECRET,
+    //     grant_type: 'authorization_code',
+    //     redirect_uri: process.env.SPOTIFY_REDIRECT_URI,
+    //     code: code,
+    // };
 
-    let response = await fetch('https://accounts.spotify.com/api/token', {
-        method: 'POST',
-        body: new URLSearchParams(data),
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-        },
-    });
-    let json = await response.json();
-    // console.log(json);
-    // console.log('Access Token: ' + json.access_token);
-    // console.log('Refresh Token: ' + json.refresh_token);
+    // let response = await fetch('https://accounts.spotify.com/api/token', {
+    //     method: 'POST',
+    //     body: new URLSearchParams(data),
+    //     headers: {
+    //         'Content-Type': 'application/x-www-form-urlencoded',
+    //     },
+    // });
+    
+    spotifyApi.authorizationCodeGrant(code)
+        .then(data => {
+    
+            console.log('The access token is ' + data.body['access_token']);
+            console.log('The refresh token is ' + data.body['refresh_token']);
 
-    spotifyApi.setAccessToken(data.body['access_token']);
-    spotifyApi.setRefreshToken(data.body['refresh_token']);
+            // Configure the API with the new access token
+            spotifyApi.setAccessToken(data.body['access_token']);
+            spotifyApi.setRefreshToken(data.body['refresh_token']);
+            
+        })
+        .catch(error => {
+            console.error('Error getting access token:', error);
+        });
 
     res.redirect(redirectURL);
 };
@@ -126,7 +134,7 @@ const addNewLikedSongsToPlaylist = (spotifyApi, playlistName) => {
 const createPlaylistWithLikedSongs = (req, res) => {
     setInterval(() => {
         addNewLikedSongsToPlaylist(spotifyApi, 'AREASYNC_PLAYLIST');
-    }, 3000);
+    }, 10 * 60 * 1000);
 }
 
 module.exports = { ConnectSpotify , SpotifyCallback, createPlaylistWithLikedSongs };

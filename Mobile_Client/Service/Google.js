@@ -35,8 +35,7 @@ const Google = ({ navigation }) => {
             Google
           </Text>
           <Text style={styles.text2}>
-            The NAS that does it all. Connect, automate, and sync your apps and data with ease.
-          </Text>
+          A popular search engine that enables users to find information, access online services such as Gmail, Google Drive, and Google Maps, and much more.          </Text>
         </View>
         <View style={styles.bottomContainer}>
           <TouchableOpacity style={styles.bouton}>
@@ -156,13 +155,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   toggleButton: {
-    transform: [{ scaleX: 1.5 }, { scaleY: 1.5 }] // Appliquer une mise à l'échelle
+    transform: [{ scaleX: 1.0 }, { scaleY: 1.0 }] // Appliquer une mise à l'échelle
   },
   textBox: {
     gap: 15,
   },
   Test1: {
-    fontSize: 18,
+    fontSize: 12,
     marginTop: 20,
     fontWeight: 'bold',
     paddingHorizontal: 22,

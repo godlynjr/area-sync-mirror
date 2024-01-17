@@ -23,6 +23,8 @@ import Date_Time from './Service/Date_Time';
 import AreaTodoist from './Service/AreaTodoist';
 import AreaAirtable from './Service/AreaAirtable';
 import AreaCalendar from './Service/AreaCalendar';
+import Quote from './Service/Quote';
+import Youtube from './Service/Youtube';
 
 const Stack = createNativeStackNavigator();
 
@@ -47,6 +49,8 @@ const App = () => {
           <Stack.Screen name="Service/Spotify" component={Spotify} />
           <Stack.Screen name="Service/Discord" component={Discord} />
           <Stack.Screen name="Service/Date_Time" component={Date_Time} />
+          <Stack.Screen name="Service/Quote" component={Quote} />
+          <Stack.Screen name="Service/Youtube" component={Youtube} />
           <Stack.Screen name="Service/AreaCalendar" component={AreaCalendar} />
           <Stack.Screen name="Service/AreaTodoist" component={AreaTodoist} />
           <Stack.Screen name="Service/AreaAirtable" component={AreaAirtable} />

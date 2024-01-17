@@ -1,12 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { View, Switch, SafeAreaView, ScrollView, Text, StyleSheet, Image, Dimensions, TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
-import { widthPercentageToDP, heightPercentageToDP, listenOrientationChange, moderateScale } from 'react-native-responsive-screen';
-const { width, height } = Dimensions.get('window');
-const guidelineWidth = 375; // Width of the device on which the design is based
+import { View, Switch, SafeAreaView, ScrollView, Text, Linking, StyleSheet, Image, Dimensions, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-const scale_y = size => (height / guidelineWidth) * size;
 import user from '../User'
+
 const Notion = ({ navigation }) => {
   const [isEnabled, setIsEnabled] = useState(false);
   const [isEnabled1, setIsEnabled1] = useState(false);
@@ -15,8 +11,10 @@ const Notion = ({ navigation }) => {
   const handleLogin = async () => {
     try {
       const login = await user.loginNotion();
+      console.log('login', login);
+      Linking.openURL(login);
     } catch (error) {
-      console.error('Erreur lors du démarrage du service de température', error);
+      console.error('Erreur lors du démarrage du service', error);
     }
   };
 
@@ -29,7 +27,7 @@ const Notion = ({ navigation }) => {
   const toggleSwitch2 = () => {
     setIsEnabled2(previousState => !previousState);
   }
-  const iconSize = 30; // Taille de l'icône en pixels
+
   return (
     <SafeAreaView>
       <View style={styles.container}>
@@ -43,11 +41,10 @@ const Notion = ({ navigation }) => {
             Notion
           </Text>
           <Text style={styles.text2}>
-            The NAS that does it all. Connect, automate, and sync your apps and data with ease.
-          </Text>
+          A productivity platform that allows users to create, organize, and share notes, to-do lists, dashboards, and other collaborative content.          </Text>
         </View>
         <View style={styles.bottomContainer}>
-          <TouchableOpacity style={styles.bouton}>
+          <TouchableOpacity style={styles.bouton} onPress={handleLogin}>
             <Text style={styles.Text}>
               Connect
             </Text>
@@ -62,17 +59,17 @@ const Notion = ({ navigation }) => {
       <ScrollView>
         <View style={styles.servicenamebox}>
 
-          <TouchableOpacity>
+          {/* <TouchableOpacity> */}
             <View style={styles.serv1} >
               <Image
                 source={require('../Assets/dateservice.png')}
                 style={styles.image}
               />
               <Text style={styles.Test1}>
-                Start service3
+              Nouvelle page créée
               </Text>
               <Text style={styles.Test1}>
-                by AREASYNC
+              Créer un événement dans Google Calendar pour cette nouvelle page lorsqu'une nouvelle page est créée dans une base de données spécifique
               </Text>
               <View style={styles.containerb}>
                 <Switch
@@ -85,19 +82,19 @@ const Notion = ({ navigation }) => {
                 />
               </View>
             </View>
-          </TouchableOpacity>
+          {/* </TouchableOpacity> */}
 
-          <TouchableOpacity>
+          {/* <TouchableOpacity> */}
             <View style={styles.serv2} >
               <Image
                 source={require('../Assets/dateservice.png')}
                 style={styles.image}
               />
               <Text style={styles.Test1}>
-                Start service3
+              Tâche terminée
               </Text>
               <Text style={styles.Test1}>
-                by AREASYNC
+              Envoyer une notification sur Tally lorsqu'une tâche est marquée comme terminée
               </Text>
               <View style={styles.containerb}>
                 <Switch
@@ -110,19 +107,19 @@ const Notion = ({ navigation }) => {
                 />
               </View>
             </View>
-          </TouchableOpacity>
+          {/* </TouchableOpacity> */}
 
-          <TouchableOpacity>
+          {/* <TouchableOpacity> */}
             <View style={styles.serv3} >
               <Image
                 source={require('../Assets/dateservice.png')}
                 style={styles.image}
               />
               <Text style={styles.Test1}>
-                Start service3
+              Commentaire ajouté
               </Text>
               <Text style={styles.Test1}>
-                by AREASYNC
+              Créer une issue sur Github avec les détails du commentaire lorsqu'un commentaire est ajouté à une page
               </Text>
               <View style={styles.containerb}>
                 <Switch
@@ -135,7 +132,7 @@ const Notion = ({ navigation }) => {
                 />
               </View>
             </View>
-          </TouchableOpacity>
+          {/* </TouchableOpacity> */}
 
         </View>
       </ScrollView>
@@ -164,10 +161,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   toggleButton: {
-    transform: [{ scaleX: 1.5 }, { scaleY: 1.5 }] // Appliquer une mise à l'échelle
+    transform: [{ scaleX: 1.0 }, { scaleY: 1.0 }] // Appliquer une mise à l'échelle
   },
   Test1: {
-    fontSize: 18,
+    fontSize: 12,
     marginTop: 20,
     fontWeight: 'bold',
     paddingHorizontal: 22,

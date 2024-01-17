@@ -1,14 +1,14 @@
 const prefix = '!';
-const dayjs  = require('dayjs')
+const dayjs  = require('dayjs');
 const jwt = require('jsonwebtoken');
 const fetch = require('node-fetch');
 const airtable = require('airtable');
+const IService = require('../IService');
 const { TodoistApi } = require('@doist/todoist-api-typescript');
 const todoist = new TodoistApi(process.env.TODOIST_API_KEY);
 const DiscordUser = require('../../models/DiscordUser');
 const { Client, GatewayIntentBits } = require('discord.js')
 const { googled, oauth2Client, calendar } = require('../Calendar/calendar');
-
 
 const client = new Client({
     intents: [
@@ -30,7 +30,7 @@ client.login(process.env.DISCORD_BOT_TOKEN);
 
 const login = (req, res) => {
     try {
-        const url = 'https://discord.com/api/oauth2/authorize?client_id=1186857028119973959&permissions=8&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Fusers%2Fdiscord%2Fcallback&scope=identify+guilds.members.read+bot+messages.read';
+        const url = 'https://discord.com/api/oauth2/authorize?client_id=1186857028119973959&permissions=8&response_type=code&redirect_uri=https%3A%2F%2Farea-sync-stagging.onrender.com%2Fusers%2Fdiscord%2Fcallback&scope=identify+bot+guilds.members.read+messages.read';
         redirectURL = req.headers.url;
         DiscordIsActive = true;
         res.send(url);
@@ -85,7 +85,7 @@ const callback = async (req, res) => {
         await newUser.save();
     }
     DiscordIsActive = true;
-    res.redirect(redirectURL); // Use the redirect URL from the header
+    res.redirect(redirectURL, { discordId: userJson.id }); // Use the redirect URL from the header
 };
 
 client.on('ready', () => {
@@ -103,7 +103,8 @@ const CalendarConnect = async (req, res) => {
         if (!isValid) {
             return res.status(401).json({ message: 'Unauthorized' });
         }
-        if (await googled(req, res)) {
+        if (DiscordIsActive) {
+            await googled(req, res);
             CalendarIsActive = true;
             res.status(200).json({ message: 'Calendar is connected' });
         }

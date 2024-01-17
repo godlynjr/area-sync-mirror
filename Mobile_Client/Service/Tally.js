@@ -35,8 +35,7 @@ const Tally = ({ navigation }) => {
             Tally
           </Text>
           <Text style={styles.text2}>
-            The NAS that does it all. Connect, automate, and sync your apps and data with ease.
-          </Text>
+            A counting application used for quick calculations and tracking totals. It is often used for accounting, expense tracking, or tallying results.          </Text>
         </View>
         <View style={styles.bottomContainer}>
           <TouchableOpacity style={styles.bouton}>
@@ -61,10 +60,10 @@ const Tally = ({ navigation }) => {
                 style={styles.image}
               />
               <Text style={styles.Test1}>
-                Start service3
+                Nouveau score ajouté
               </Text>
               <Text style={styles.Test1}>
-                by AREASYNC
+                Ajouter une nouvelle entrée dans une base de données Notion lorsqu'un nouveau score est ajouté
               </Text>
               <View style={styles.containerb}>
                 <Switch
@@ -86,10 +85,10 @@ const Tally = ({ navigation }) => {
                 style={styles.image}
               />
               <Text style={styles.Test1}>
-                Start service3
+                Score supprimé
               </Text>
               <Text style={styles.Test1}>
-                by AREASYNC
+                upprimer un événement correspondant dans Google Calendar lorsqu'un score est supprimé
               </Text>
               <View style={styles.containerb}>
                 <Switch
@@ -111,10 +110,10 @@ const Tally = ({ navigation }) => {
                 style={styles.image}
               />
               <Text style={styles.Test1}>
-                Start service3
+                Score mis à jour
               </Text>
               <Text style={styles.Test1}>
-                by AREASYNC
+                Mettre à jour une issue correspondante sur Github lorsqu'un score est mis à jour
               </Text>
               <View style={styles.containerb}>
                 <Switch
@@ -143,7 +142,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   toggleButton: {
-    transform: [{ scaleX: 1.5 }, { scaleY: 1.5 }] // Appliquer une mise à l'échelle
+    transform: [{ scaleX: 1.0 }, { scaleY: 1.0 }] // Appliquer une mise à l'échelle
   },
   container: {
     position: 'relative',
@@ -167,7 +166,7 @@ const styles = StyleSheet.create({
     left: 20,
   },
   Test1: {
-    fontSize: 18,
+    fontSize: 12,
     marginTop: 20,
     fontWeight: 'bold',
     paddingHorizontal: 22,
