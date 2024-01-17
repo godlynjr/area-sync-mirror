@@ -23,36 +23,45 @@ class GithubService extends IService {
     async handleCallback(req, res) {
         const code = req.query.code;
         try {
-            const response = await axios({
-                method: 'post',
-                url: 'https://github.com/login/oauth/access_token',
-                data: {
-                client_id: process.env.GITHUB_CLIENT_ID,
-                client_secret: process.env.GITHUB_CLIENT_SECRET,
-                code: code,
-                },
-                headers: {
-                accept: 'application/json',
-                },
-            });
+          const response = await axios({
+            method: 'post',
+            url: 'https://github.com/login/oauth/access_token',
+            data: {
+              client_id: process.env.GITHUB_CLIENT_ID,
+              client_secret: process.env.GITHUB_CLIENT_SECRET,
+              code: code,
+            },
+            headers: {
+              accept: 'application/json',
+            },
+          });
       
-            const accessToken = response.data.access_token;
-            const tokenType = response.data.token_type;
-            const scope = response.data.scope;
-        
-            res.status(200).json({
-                access_token: accessToken,
-                token_type: tokenType,
-                scope: scope,
-            });
-        
+          const accessToken = response.data.access_token;
+      
+          const validateResponse = await axios.get('https://api.github.com/user', {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          });
+      
+          if (validateResponse.data) {
             console.log('GitHub access token:', accessToken);
+            res.status(200).json({
+              access_token: accessToken,
+              token_type: response.data.token_type,
+              scope: response.data.scope,
+              user: validateResponse.data,
+            });
+          } else {
+            console.error('Invalid GitHub access token');
+            res.status(401).send('Unauthorized');
+          }
         } catch (error) {
           console.error('Error exchanging code for access token:', error);
-          // Handle error and respond accordingly
           res.status(500).send('Internal Server Error');
         }
-      };
+      }
+      
 
     async connect() {
         try {

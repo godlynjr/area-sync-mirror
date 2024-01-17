@@ -1,11 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { View, Switch, SafeAreaView, ScrollView, Text, StyleSheet, Image, Dimensions, TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
-import { widthPercentageToDP, heightPercentageToDP, listenOrientationChange, moderateScale } from 'react-native-responsive-screen';
-const { width, height } = Dimensions.get('window');
-const guidelineWidth = 375; // Width of the device on which the design is based
+import { View, Switch, SafeAreaView, ScrollView, Text, Linking, StyleSheet, Image, Dimensions, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-const scale_y = size => (height / guidelineWidth) * size;
 import user from '../User'
 
 const Calendar = ({ navigation }) => {
@@ -26,10 +21,22 @@ const Calendar = ({ navigation }) => {
   const handleLogin = async () => {
     try {
       const login = await user.loginCalendar();
+      console.log('login', login);
+      Linking.openURL(login);
     } catch (error) {
-      console.error('Erreur lors du démarrage du service de température', error);
+      console.error('Erreur lors du démarrage du service', error);
     }
   };
+  const handleCalendarFirstArea = async () => {
+    try {
+      const login = await user.calendarFirstArea();
+      console.log('login', login);
+      // Linking.openURL(login);
+    } catch (error) {
+      console.error('Erreur lors du démarrage de l\' Area watch de calendar', error);
+    }
+  };
+  // /calendar/watch
   return (
     <SafeAreaView>
       <View style={styles.container}>
@@ -43,11 +50,10 @@ const Calendar = ({ navigation }) => {
             Calendar
           </Text>
           <Text style={styles.text2}>
-            The NAS that does it all. Connect, automate, and sync your apps and data with ease.
-          </Text>
+            An online calendar service that enables users to schedule events, manage their schedules, receive reminders, and share calendars with other users.          </Text>
         </View>
         <View style={styles.bottomContainer}>
-          <TouchableOpacity style={styles.bouton}>
+          <TouchableOpacity style={styles.bouton} onPress={handleLogin}>
             <Text style={styles.Text}>
               Connect
             </Text>
@@ -62,42 +68,47 @@ const Calendar = ({ navigation }) => {
       <ScrollView>
         <View style={styles.servicenamebox}>
 
-          <TouchableOpacity>
+          {/* <TouchableOpacity> */}
             <View style={styles.serv1} >
               <Image
                 source={require('../Assets/dateservice.png')}
                 style={styles.image}
               />
               <Text style={styles.Test1}>
-                Start service1
+                Nouvel événement ajouté
               </Text>
               <Text style={styles.Test1}>
-                by AREASYNC
+                Créer une nouvelle page dans Notion avec les détails de l'événement lorsqu'un nouvel événement est ajouté à votre calendrier
               </Text>
               <View style={styles.containerb}>
                 <Switch
                   trackColor={{ false: '#767577', true: 'white' }}
                   thumbColor={isEnabled ? 'gray' : '#f4f3f4'}
                   ios_backgroundColor="black"
-                  onValueChange={toggleSwitch}
+                  onValueChange={(value) => {
+                    toggleSwitch(value);
+                    if (value) {
+                      handleCalendarFirstArea();
+                    }
+                  }}
                   value={isEnabled}
                   style={styles.toggleButton} // Ajout de la propriété de style
                 />
               </View>
             </View>
-          </TouchableOpacity>
+          {/* </TouchableOpacity> */}
 
-          <TouchableOpacity>
+          {/* <TouchableOpacity> */}
             <View style={styles.serv2} >
               <Image
                 source={require('../Assets/dateservice.png')}
                 style={styles.image}
               />
               <Text style={styles.Test1}>
-                Start service1
+                Événement supprimé
               </Text>
               <Text style={styles.Test1}>
-                by AREASYNC
+                Envoyer une notification sur Tally lorsqu'un événement est supprimé de votre calendrier
               </Text>
               <View style={styles.containerb}>
                 <Switch
@@ -110,18 +121,18 @@ const Calendar = ({ navigation }) => {
                 />
               </View>
             </View>
-          </TouchableOpacity>
-          <TouchableOpacity>
+          {/* </TouchableOpacity> */}
+          {/* <TouchableOpacity> */}
             <View style={styles.serv3} >
               <Image
                 source={require('../Assets/dateservice.png')}
                 style={styles.image}
               />
               <Text style={styles.Test1}>
-                Start service1
+                Événement mis à jour
               </Text>
               <Text style={styles.Test1}>
-                by AREASYNC
+                Mettre à jour une issue correspondante sur Github lorsqu'un événement est mis à jour
               </Text>
               <View style={styles.containerb}>
                 <Switch
@@ -134,7 +145,7 @@ const Calendar = ({ navigation }) => {
                 />
               </View>
             </View>
-          </TouchableOpacity>
+          {/* </TouchableOpacity> */}
 
         </View>
       </ScrollView>
@@ -158,7 +169,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   toggleButton: {
-    transform: [{ scaleX: 1.5 }, { scaleY: 1.5 }] // Appliquer une mise à l'échelle
+    transform: [{ scaleX: 1.0 }, { scaleY: 1.0 }] // Appliquer une mise à l'échelle
   },
   servicenamebox: {
     marginTop: 30,
@@ -193,7 +204,7 @@ const styles = StyleSheet.create({
     // paddingVertical: 90,
   },
   Test1: {
-    fontSize: 18,
+    fontSize: 12,
     marginTop: 20,
     fontWeight: 'bold',
     paddingHorizontal: 22,
