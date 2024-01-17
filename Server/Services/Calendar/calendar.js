@@ -37,7 +37,7 @@ const calendarId = 'primary';
 const channel = {
     id: uuidv4(),
     type: 'web_hook',
-    address: 'https://bird-distinct-gator.ngrok-free.app/users/calendar/google-calendar-webhook',
+    address: 'https://area-sync-stagging.onrender.com/users/calendar/google-calendar-webhook',
 };
 
 const scopes = ['https://www.googleapis.com/auth/calendar', 'https://www.googleapis.com/auth/calendar.events'];
