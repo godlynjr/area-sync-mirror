@@ -15,7 +15,6 @@ const notion_log = async (req, res) => {
   res.redirect(authUrl);
 };
 
-
 const createNotionPage = async (title, content, accessToken) => {
   const newNotion = new Client({ auth: accessToken });
   try {
@@ -35,61 +34,6 @@ const createNotionPage = async (title, content, accessToken) => {
           ],
         },
       },
-      // children: [
-      //   {
-      //     object: 'block',
-      //     type: 'paragraph',
-      //     paragraph: {
-      //       text: [
-      //         {
-      //           type: 'text',
-      //           text: {
-      //             content: content,
-      //           },
-      //         },
-      //       ],
-      //     },
-      //   },
-      // ],
-      // "cover": {
-      //   "type": "external",
-      //   "external": {
-      //     "url": "https://upload.wikimedia.org/wikipedia/commons/6/62/Tuscankale.jpg"
-      //   }
-      // },
-      // "icon": {
-      //   "type": "emoji",
-      //   "emoji": "🥬"
-      // },
-      // "parent": {
-      //   "type": "database_id",
-      //   "database_id": database_id
-      // },
-      // properties: {
-      //   "Name": {
-      //     "title": [
-      //       {
-      //         "text": {
-      //           "content": "Tuscan kale"
-      //         }
-      //       }
-      //     ]
-      //   },
-      //   "Description": {
-      //     "rich_text": [
-      //       {
-      //         "text": {
-      //           "content": "A dark green leafy vegetable"
-      //         }
-      //       }
-      //     ]
-      //   },
-      //   "Food group": {
-      //     "select": {
-      //       "name": "🥬 Vegetable"
-      //     }
-      //   }
-      // },
       "children": [
         {
           "object": "block",
@@ -165,4 +109,67 @@ const notion_callback = async (req, res) => {
     res.status(500).send('Erreur d\'authentification');
   }
 };
+
+
+const sendEmailNotification = async (videoTitle, videoId) => {
+  try {
+      // Set up Nodemailer transporter (replace with your email configuration)
+      const transporter = nodemailer.createTransport({
+          service: 'gmail',
+          auth: {
+              user: gmailUser,
+              pass: gmailPassword,
+          },
+      });
+
+      // Email content
+      const mailOptions = {
+          from: gmailUser,
+          to: UserEmail,
+          subject: 'New YouTube Video Uploaded',
+          text: `A new video titled "${videoTitle}" has been uploaded. Watch it here: https://www.youtube.com/watch?v=${videoId}`,
+      };
+
+      // Send the email
+      const info = await transporter.sendMail(mailOptions);
+      console.log('Email sent:', info.response);
+  } catch (error) {
+      console.error('Error sending email:', error);
+  }
+};
+const Callback = async (req, res) => {
+  const code = req.query.code
+  if (code) {
+      try {
+          const { tokens } = await OAuth2Data.getToken(code);
+          console.log('Successfully authenticated');
+          OAuth2Data.setCredentials(tokens);
+          const userProfile = await fetchUserEmail(tokens.access_token);
+          UserEmail = userProfile;
+          res.send({
+              msg: "Successfully loggeed in to Youtube",
+          });
+          res.redirect('http://localhost:8081/Youtube');
+      } catch (err) {
+          console.log('Error authenticating')
+          console.log(err);
+      }
+  }
+};
+
+// Function to fetch user profile information using the access token
+const fetchUserEmail = async (accessToken) => {
+  const response = await axios.get('https://www.googleapis.com/oauth2/v2/userinfo', {
+      headers: {
+          Authorization: `Bearer ${accessToken}`
+      }
+  });
+
+  if (!response.data || !response.data.email) {
+      throw new Error('Failed to fetch user email');
+  }
+
+  return response.data.email;
+};
+
 module.exports = { notion_log, notion_callback };

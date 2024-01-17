@@ -84,7 +84,7 @@ const callback_calendar = async (req, res) => {
         orderBy: 'startTime',
       });
   
-    const events = response.data.items;
+    const events = response;
     numbers = events.length;
     return res.status(200).end();
 };
