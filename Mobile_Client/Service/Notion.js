@@ -1,12 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { View, Switch, SafeAreaView, ScrollView, Text, StyleSheet, Image, Dimensions, TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
-import { widthPercentageToDP, heightPercentageToDP, listenOrientationChange, moderateScale } from 'react-native-responsive-screen';
-const { width, height } = Dimensions.get('window');
-const guidelineWidth = 375; // Width of the device on which the design is based
+import { View, Switch, SafeAreaView, ScrollView, Text, Linking, StyleSheet, Image, Dimensions, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-const scale_y = size => (height / guidelineWidth) * size;
 import user from '../User'
+
 const Notion = ({ navigation }) => {
   const [isEnabled, setIsEnabled] = useState(false);
   const [isEnabled1, setIsEnabled1] = useState(false);
@@ -15,8 +11,10 @@ const Notion = ({ navigation }) => {
   const handleLogin = async () => {
     try {
       const login = await user.loginNotion();
+      console.log('login', login);
+      Linking.openURL(login);
     } catch (error) {
-      console.error('Erreur lors du démarrage du service de température', error);
+      console.error('Erreur lors du démarrage du service', error);
     }
   };
 
@@ -29,7 +27,7 @@ const Notion = ({ navigation }) => {
   const toggleSwitch2 = () => {
     setIsEnabled2(previousState => !previousState);
   }
-  const iconSize = 30; // Taille de l'icône en pixels
+
   return (
     <SafeAreaView>
       <View style={styles.container}>
@@ -46,7 +44,7 @@ const Notion = ({ navigation }) => {
           A productivity platform that allows users to create, organize, and share notes, to-do lists, dashboards, and other collaborative content.          </Text>
         </View>
         <View style={styles.bottomContainer}>
-          <TouchableOpacity style={styles.bouton}>
+          <TouchableOpacity style={styles.bouton} onPress={handleLogin}>
             <Text style={styles.Text}>
               Connect
             </Text>

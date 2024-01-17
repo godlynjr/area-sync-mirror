@@ -49,7 +49,7 @@ const Quote = ({ navigation }) => {
                         Quote
                     </Text>
                     <Text style={styles.text2}>
-                        A popular search engine that enables users to find information, access online services such as Gmail, Quote Drive, and Quote Maps, and much more.          </Text>
+                        A service that provides inspiring quotes, proverbs, or memorable lines. Quotes can be used for motivation, reflection, inspiration, or simply to share uplifting thoughts and ideas.                               </Text>
                 </View>
                 <View style={styles.bottomContainer}>
                     <TouchableOpacity style={styles.bouton} onPress={handleLogin}>

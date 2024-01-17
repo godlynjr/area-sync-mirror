@@ -21,7 +21,7 @@ const Calendar = ({ navigation }) => {
   const handleLogin = async () => {
     try {
       const login = await user.loginCalendar();
-      console.log('login', login);
+      // console.log('login', login);
       Linking.openURL(login);
     } catch (error) {
       console.error('Erreur lors du démarrage du service', error);
@@ -30,7 +30,7 @@ const Calendar = ({ navigation }) => {
   const handleCalendarFirstArea = async () => {
     try {
       const login = await user.calendarFirstArea();
-      console.log('login', login);
+      // console.log('login', login);
       // Linking.openURL(login);
     } catch (error) {
       console.error('Erreur lors du démarrage de l\' Area watch de calendar', error);

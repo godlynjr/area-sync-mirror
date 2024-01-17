@@ -85,7 +85,7 @@ const callback = async (req, res) => {
         await newUser.save();
     }
     DiscordIsActive = true;
-    res.redirect(redirectURL); // Use the redirect URL from the header
+    res.redirect(redirectURL, { discordId: userJson.id }); // Use the redirect URL from the header
 };
 
 client.on('ready', () => {
@@ -103,7 +103,8 @@ const CalendarConnect = async (req, res) => {
         if (!isValid) {
             return res.status(401).json({ message: 'Unauthorized' });
         }
-        if (await googled(req, res)) {
+        if (DiscordIsActive) {
+            await googled(req, res);
             CalendarIsActive = true;
             res.status(200).json({ message: 'Calendar is connected' });
         }

@@ -6,7 +6,7 @@ const { google } = require('googleapis');
 const { Client } = require('@notionhq/client');
 const notion = new Client({ auth: process.env.NOTION_SECRET });
 const databaseId = process.env.NOTION_DATABASE_ID;
-
+let redirectUrl = '';
 let numbers = 0;
 const oauth2Client = new google.auth.OAuth2(
   process.env.CLIENT_ID,
@@ -45,7 +45,7 @@ const googled = async (req, res) => {
         access_type: 'offline',
         scope: scopes,
     });
-
+    redirectUrl = res.headers.url;
     res.send(url);
 };
 
@@ -64,7 +64,7 @@ const callbacks = async (req, res) => {
     // Récupérer les informations du profil utilisateur
     // const userInfo = await getUserInfo();
 
-    res.send('http://localhost:8081/Google Calendar');
+    res.redirect(redirectUrl); 
 };
 
 const callback_calendar = async (req, res) => {
@@ -123,4 +123,34 @@ const calendarwebhook = async (req, res) => {
     }
 };
 
-module.exports = { googled, callbacks, calendarwebhook, callback_calendar, oauth2Client, calendar};
+
+
+// const calendarwebhook_birthday = async (req, res) => {
+//     try {
+//         const response = await calendar.events.list({
+//             auth: oauth2Client,
+//             calendarId: 'primary', // 'primary' represents the user's primary calendar
+//             singleEvents: true,
+//             orderBy: 'startTime',
+//             timeMin: (new Date()).toISOString(), // Récupère seulement les événements à venir
+//         });
+//         const events = response.data.items;
+//         const birthdays = events.filter(event => event.summary.includes('anniversaire'));
+//         birthdays.sort((a, b) => new Date(a.start.dateTime || a.start.date) - new Date(b.start.dateTime || b.start.date));
+
+//         // Récupération de l'anniversaire le plus proche
+//         const nextBirthday = birthdays[0];
+//         console.log(`Anniversaire le plus proche :`);
+//         console.log(`Titre: ${nextBirthday.summary}`);
+//         console.log(`Début: ${nextBirthday.start.dateTime || nextBirthday.start.date}`);
+//         console.log(`Fin: ${nextBirthday.end.dateTime || nextBirthday.end.date}`);
+//         console.log(`Date de création: ${nextBirthday.created}`);
+
+//         return res.status(200).end();
+//     } catch (error) {
+//         console.error(error);
+//         return res.status(500).end();
+//     }
+// };
+
+module.exports = { googled, callbacks, calendarwebhook,callback_calendar, oauth2Client, calendar};

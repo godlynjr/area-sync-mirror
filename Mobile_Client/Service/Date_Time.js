@@ -33,7 +33,6 @@ const Date_Time = ({ navigation }) => {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + undefined,
         };
-        console.log(api + '/users/datetime/sendprayertime');
         const response = await fetch(api + '/users/datetime/sendprayertime', {
           method: 'GET',
           headers: headers,
@@ -42,15 +41,15 @@ const Date_Time = ({ navigation }) => {
           console.log("ugibk");
 
         })
-        console.log("data");
+        // console.log("data");
 
-        console.log(data);
+        // console.log(data);
         if (response.ok) {
           const data = await response.json();
           console.log(data);
           return data;
         } else {
-            console.error('Erreur lors de la requête GET:', response.status);
+            console.error('Erreur lors de la requête GET dedans:', response.status);
         }   
       } catch (error) {
         console.error('Erreur lors de la requête GET :', error);

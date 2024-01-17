@@ -5,7 +5,7 @@ import Profil from './Profil';
 import { Ionicons } from '@expo/vector-icons';
 import HomePage from './HomePage';
 
-const OtherPage = () => {
+const AppContentScreen = () => {
   const [activeTab, setActiveTab] = useState('Home');
 
   const handleTabPress = (tabName) => {
@@ -18,8 +18,8 @@ const OtherPage = () => {
         {/* Contenu de chaque onglet */}
         {activeTab === 'Home' && <HomePage/>}
         {activeTab === 'Search' && <Services/>}
-        {activeTab === 'Add' && <Text>Contenu de l'onglet Add</Text>}
-        {activeTab === 'Layers' && <Text>Contenu de l'onglet Recent services</Text>}
+        {/* {activeTab === 'Add' && <Text>Contenu de l'onglet Add</Text>}
+        {activeTab === 'Layers' && <Text>Contenu de l'onglet Recent services</Text>} */}
         {activeTab === 'Account' && <Profil/>}
       </View>
 
@@ -38,7 +38,7 @@ const OtherPage = () => {
           <Ionicons name="search" size={24} color={activeTab === 'Search' ? '#E0C0FC' : 'black'} />
         </TouchableOpacity>
 
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={[styles.tabButton, activeTab === 'Add' && styles.activeTab]}
           onPress={() => handleTabPress('Add')}
         >
@@ -50,7 +50,7 @@ const OtherPage = () => {
           onPress={() => handleTabPress('Layers')}
         >
           <Ionicons name="layers" size={24} color={activeTab === 'Layers' ? '#E0C0FC' : 'black'} />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
         <TouchableOpacity
           style={[styles.tabButton, activeTab === 'Account' && styles.activeTab]}
@@ -92,4 +92,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default OtherPage;
+export default AppContentScreen;

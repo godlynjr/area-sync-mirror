@@ -8,9 +8,9 @@ import { useLocation } from 'react-router-dom';
 function Github() {
   const location = useLocation();
 
-  const ConnectSpotify = () => {
+  const ConnectGithub = () => {
     const currentPath = location.pathname;
-    User.SpotifyLogin(currentPath);
+    User.GithubLogin(currentPath);
   }
   return (
     <div>
@@ -54,7 +54,7 @@ function Github() {
             <p className="text-xl lg:mx-36 mx-10"> <b>Github</b> is a code hosting platform for version control and collaboration. It lets you and others work together on projects from anywhere.</p>
             
 
-            <button className="border-4 w-2/5 lg:w-1/6 border-solid p-2 rounded-full my-5 self-center" onClick={ConnectSpotify}>Connect</button>
+            <button className="border-4 w-2/5 lg:w-1/6 border-solid p-2 rounded-full my-5 self-center" onClick={ConnectGithub}>Connect</button>
           </div>
         </div>
       </section>
