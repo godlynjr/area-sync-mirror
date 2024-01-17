@@ -124,37 +124,32 @@ const calendarwebhook = async (req, res) => {
 
 
 
-const calendarwebhook_birthday = async (req, res) => {
-    try {
-        
-        const response = await calendar.events.list({
-            auth: oauth2Client,
-            calendarId: 'primary', // 'primary' represents the user's primary calendar
-            singleEvents: true,
-            orderBy: 'startTime',
-            timeMin: (new Date()).toISOString(), // Récupère seulement les événements à venir
-        });
+// const calendarwebhook_birthday = async (req, res) => {
+//     try {
+//         const response = await calendar.events.list({
+//             auth: oauth2Client,
+//             calendarId: 'primary', // 'primary' represents the user's primary calendar
+//             singleEvents: true,
+//             orderBy: 'startTime',
+//             timeMin: (new Date()).toISOString(), // Récupère seulement les événements à venir
+//         });
+//         const events = response.data.items;
+//         const birthdays = events.filter(event => event.summary.includes('anniversaire'));
+//         birthdays.sort((a, b) => new Date(a.start.dateTime || a.start.date) - new Date(b.start.dateTime || b.start.date));
 
-        const events = response.data.items;
+//         // Récupération de l'anniversaire le plus proche
+//         const nextBirthday = birthdays[0];
+//         console.log(`Anniversaire le plus proche :`);
+//         console.log(`Titre: ${nextBirthday.summary}`);
+//         console.log(`Début: ${nextBirthday.start.dateTime || nextBirthday.start.date}`);
+//         console.log(`Fin: ${nextBirthday.end.dateTime || nextBirthday.end.date}`);
+//         console.log(`Date de création: ${nextBirthday.created}`);
 
+//         return res.status(200).end();
+//     } catch (error) {
+//         console.error(error);
+//         return res.status(500).end();
+//     }
+// };
 
-        const birthdays = events.filter(event => event.summary.includes('anniversaire'));
-
-        birthdays.sort((a, b) => new Date(a.start.dateTime || a.start.date) - new Date(b.start.dateTime || b.start.date));
-
-        // Récupération de l'anniversaire le plus proche
-        const nextBirthday = birthdays[0];
-        console.log(`Anniversaire le plus proche :`);
-        console.log(`Titre: ${nextBirthday.summary}`);
-        console.log(`Début: ${nextBirthday.start.dateTime || nextBirthday.start.date}`);
-        console.log(`Fin: ${nextBirthday.end.dateTime || nextBirthday.end.date}`);
-        console.log(`Date de création: ${nextBirthday.created}`);
-
-        return res.status(200).end();
-    } catch (error) {
-        console.error(error);
-        return res.status(500).end();
-    }
-};
-
-module.exports = { googled, callbacks, calendarwebhook, callback_calendar, oauth2Client, calendar};
+module.exports = { googled, callbacks, calendarwebhook,callback_calendar, oauth2Client, calendar};
