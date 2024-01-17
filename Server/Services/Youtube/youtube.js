@@ -43,7 +43,7 @@ const loginyt = async (req, res) => {
         access_type: 'offline',
         scope: SCOPES,
     });
-    res.redirect(url);
+    res.send(url);
 };
 
 // Callback route
@@ -57,7 +57,7 @@ const Callback = async (req, res) => {
             res.send({
                 msg: "Successfully loggeed in to Youtube",
             });
-            // res.redirect('http://localhost:8081/Youtube');
+            res.redirect('http://localhost:8081/Youtube');
         } catch (err) {
             console.log('Error authenticating')
             console.log(err);
