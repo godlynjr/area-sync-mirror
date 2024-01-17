@@ -4,8 +4,7 @@ import Areas from "../../Components/areas"
 
 function Discord() {
   const ConnectDiscord = () => {
-    // authentication to discord
-    console.log("Connecting to Discord")
+    User.QuoteArea1();
   }
 
   return (

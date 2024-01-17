@@ -6,6 +6,7 @@ import { ArrowLeftIcon } from "@heroicons/react/solid";
 import { useLocation } from 'react-router-dom';
 import { FaDiscord, FaCalendar, FaSpotify, FaEnvelope, FaChartBar, FaGithub } from 'react-icons/fa';
 import { SiNotion } from "react-icons/si";
+import { BsTwitterX } from "react-icons/bs";
 
 function Area2() {
   const location = useLocation();
@@ -43,8 +44,8 @@ function Area2() {
           {/* logo and description */}
           <div className="flex flex-col text-center">
             <div className="flex flex-row self-center space-x-2">
-              <FaDiscord className="h-12 w-12"/>
-              <FaSpotify className="h-12 w-12" />
+              <FaCalendar className="h-12 w-12"/>
+              <BsTwitterX className="h-12 w-12" />
             </div>
             <p className="text-xl">Lorsque vous commencez à écouter une playlist spécifique sur Spotify<br />un message est posté dans un canal Discord pour partager la playlist avec les autres.</p>
           </div>

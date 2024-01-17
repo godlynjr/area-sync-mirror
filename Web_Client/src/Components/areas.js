@@ -2,6 +2,7 @@ import React from 'react';
 import { FaDiscord, FaCalendar, FaSpotify, FaEnvelope, FaChartBar, FaGithub, FaYoutube, FaGoogleDrive, FaQuoteRight } from 'react-icons/fa';
 import { SiNotion } from "react-icons/si";
 import { IoIosTimer } from "react-icons/io";
+import { BsTwitterX } from "react-icons/bs";
 
 const Areas = ({ service, featuring, description, bgComponent}) => {
 
@@ -30,6 +31,12 @@ const Areas = ({ service, featuring, description, bgComponent}) => {
       case 'quote':
         ServiceIcon = <FaQuoteRight className='text-white h-5 w-5' />;
         break;
+      case 'time':
+        ServiceIcon = <IoIosTimer className='text-white h-5 w-5' />;
+        break;
+      case 'twitter':
+        ServiceIcon = <BsTwitterX className='text-white h-5 w-5' />;
+        break;
       default:
         ServiceIcon = null;
         break;
@@ -53,6 +60,12 @@ const Areas = ({ service, featuring, description, bgComponent}) => {
         break;
       case 'drive':
         iconComponent = <FaGoogleDrive className='text-white h-5 w-5' />;
+        break;
+      case 'time':
+        iconComponent = <IoIosTimer className='text-white h-5 w-5' />;
+        break;
+      case 'twitter':
+        ServiceIcon = <BsTwitterX className='text-white h-5 w-5' />;
         break;
       default:
         iconComponent = null;

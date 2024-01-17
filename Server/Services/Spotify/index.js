@@ -133,6 +133,7 @@ const addNewLikedSongsToPlaylist = (spotifyApi, playlistName) => {
 };
 
 const createPlaylistWithLikedSongs = (req, res) => {
+    console.log('function triggered');
     setInterval(() => {
         addNewLikedSongsToPlaylist(spotifyApi, 'AREASYNC_PLAYLIST');
     }, 10 * 60 * 1000);

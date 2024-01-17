@@ -3,12 +3,16 @@ import Header from "../../Components/Header"
 import Areas from "../../Components/areas"
 import User from "../../User"
 import { ArrowLeftIcon } from "@heroicons/react/solid";
+import { useLocation } from 'react-router-dom';
 import { FaDiscord, FaCalendar, FaSpotify, FaEnvelope, FaChartBar, FaGithub } from 'react-icons/fa';
 
 function Calendar() {
-  const ConnectMail = () => {
-    console.log("Connect to Mail");
-    // User.DiscordLogin();
+  const location = useLocation();
+
+  const ConnectCalendar = () => {
+
+    const currentPath = location.pathname;
+    User.GCalendarLogin(currentPath);
   }
 
   return (
@@ -46,7 +50,7 @@ function Calendar() {
       Passez plus de temps à agir et moins à planifier grâce à un agenda partageable compatible avec tous les outils Google Workspace.</p>
             
 
-            <button className="border-4 w-2/5 lg:w-1/6 border-solid p-2 rounded-full my-5 self-center" onClick={ConnectMail}>Connect</button>
+            <button className="border-4 w-2/5 lg:w-1/6 border-solid p-2 rounded-full my-5 self-center" onClick={ConnectCalendar}>Connect</button>
           </div>
         </div>
       </section>
@@ -54,14 +58,14 @@ function Calendar() {
       <section className="container mx-auto my-5">
         <div className="grid grid-cols-2 gap-8 text-black sm:gap-10 md:grid-cols-3 lg:grid-cols-3 mt-5 p-2">
           <a href="/Calendar-1">
-            <Areas service="mail" featuring="calendar" description="Chaque fois qu'un message est épinglé dans le serveur, un évenement est créer dans google calendar." bgComponent={'bg-[#4285f4]'}/>
+            <Areas service="notion" featuring="calendar" description="Créer une nouvelle page dans Notion avec les détails de l'événement lorsqu'un nouvel événement est ajouté à votre calendrier" bgComponent={'bg-[#4285f4]'}/>
           </a>
           <a href="/Calendar-2">
-            <Areas service="mail" featuring="spotify" description="Lorsque vous commencez à écouter une playlist spécifique sur Spotify, un message est posté dans un canal Discord pour partager la playlist avec les autres." bgComponent={'bg-[#4285f4]'}/>
+            <Areas service="twitter" featuring="calendar" description="Lorsque vous commencez à écouter une playlist spécifique sur Spotify, un message est posté dans un canal Discord pour partager la playlist avec les autres." bgComponent={'bg-[#4285f4]'}/>
           </a>
-          <a href="/Calendar-3">
+          {/* <a href="/Calendar-3">
             <Areas service="mail" featuring="notion" description="Lorsqu'une nouvelle tâche est ajoutée à une liste de tâches dans Notion, un message est posté dans un canal Discord pour informer les autres de la nouvelle tâche." bgComponent={'bg-[#4285f4]'}/>
-          </a>
+          </a> */}
         </div>
       </section>
     </div>

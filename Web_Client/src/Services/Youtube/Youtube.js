@@ -57,7 +57,7 @@ function Youtube() {
           <a href="/Youtube-1">
             <Areas service="youtube" featuring="drive" description="Apres un like sur une vidéo ses infos sont automatiquement ajoutée sur google drive." bgComponent={'bg-[#ff0000]'}/>
           </a> 
-          <a href="/Spotify-2">
+          <a href="/Youtube-2">
             <Areas service="youtube" featuring="mail" description="Envoyer une notification sur Gmail lorsqu'une nouvelle vidéo est mise en ligne par un channel spécifié." bgComponent={'bg-[#ff0000]'}/>
           </a>
           {/* <a href="/Spotify-3">

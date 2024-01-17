@@ -12,7 +12,7 @@ function Area3() {
 
   const ConnectDiscord = () => {
     const currentPath = location.pathname;
-    User.CalendarLogin(currentPath);
+    User.DiscordArea3(currentPath);
   }
 
   return (
@@ -44,16 +44,15 @@ function Area3() {
           <div className="flex flex-col text-center">
             <div className="flex flex-row self-center space-x-2">
               <FaDiscord className="h-12 w-12"/>
-              <SiNotion className="h-12 w-12" />
             </div>
-            <p className="text-xl">Lorsqu'une nouvelle tâche est ajoutée à une liste de tâches dans Notion <br /> un message est posté dans un canal Discord pour informer les autres de la nouvelle tâche.</p>
+            <p className="text-xl">Lorsqu'un message de type '!task' est envoyé dans un canal Discord, une nouvelle tâche est créée sur Todoist.</p>
           </div>
         </div>
       </section>
 
       <section className="container mx-auto flex text-center flex-col">
         <button className="border-4 w-2/5 lg:w-1/6 border-solid p-2 rounded-full my-5 self-center bg-discord" onClick={ConnectDiscord}>Connect</button>
-        <p className="self-center text-xl">Lorsqu'une nouvelle tâche est ajoutée à une liste de tâches dans Notion <br /> un message est posté dans un canal Discord pour informer les autres de la nouvelle tâche.</p>
+        <p className="self-center text-xl">Lorsqu'un message de type '!task' est envoyé dans un canal Discord, une nouvelle tâche est créée sur Todoist.</p>
       </section>
     </div>
   )

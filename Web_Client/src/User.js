@@ -68,8 +68,19 @@ class Client {
            body: JSON.stringify({ url: Url }),
           })
           .then((res) => {
-            console.log(res.data);
+            console.log(res);
+
+            const redirectUrl = new URL(res.data);
+
+            // Extract discordId from the URL
+            const urlParams = new URLSearchParams(redirectUrl.search);
+            const discordId = urlParams.get('discordId');
+            console.log(discordId); // Now you have the discordId
+
+            localStorage.setItem('discordId', discordId);
+            // Then do the redirection
             window.location.href = res.data;
+
           })
           .catch((err) => console.log(err));
     } catch (error) {
@@ -151,6 +162,23 @@ class Client {
     }
   }
 
+  async YoutubeArea2() {
+    try {
+      axios
+          .post(api + "/users/youtube/gmail/connect", {
+           headers: this.fillRequestHeaders(),
+          })
+          .then((res) => {
+            console.log(res.data);
+            window.location.href = res.data;
+          })
+          .catch((err) => console.log(err));
+    } catch (error) {
+      console.error('Error during fetch:', error);
+      throw error;
+    }
+  }
+
   async SpotifyArea2() {
     try {
       axios
@@ -175,7 +203,24 @@ class Client {
            headers: this.fillRequestHeaders(),
           })
           .then((res) => {
-            console.log(res.data);
+            console.log(res);
+          })
+          .catch((err) => console.log(err));
+    } catch (error) {
+      console.error('Error during fetch:', error);
+      throw error;
+    }
+  }
+
+  async QuoteArea1(Url) {
+    this.redirectUrl = Url;
+    try {
+      axios
+          .get(api + "/users/discord/connect/:" + localStorage.getItem('discordId'), {
+           headers: this.fillRequestHeaders(),
+          })
+          .then((res) => {
+            console.log(res);
           })
           .catch((err) => console.log(err));
     } catch (error) {
@@ -193,6 +238,74 @@ class Client {
           })
           .then((res) => {
             console.log(res.data);
+          })
+          .catch((err) => console.log(err));
+    } catch (error) {
+      console.error('Error during fetch:', error);
+      throw error;
+    }
+  }
+
+  async DiscordArea2() {
+    try {
+      axios
+          .post(api + "/users/discord/airtable/connect", {
+           headers: this.fillRequestHeaders(),
+          })
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((err) => console.log(err));
+    } catch (error) {
+      console.error('Error during fetch:', error);
+      throw error;
+    }
+  }
+
+  async DiscordArea3() {
+    try {
+      axios
+          .post(api + "/users/discord/todoist/connect", {
+           headers: this.fillRequestHeaders(),
+          })
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((err) => console.log(err));
+    } catch (error) {
+      console.error('Error during fetch:', error);
+      throw error;
+    }
+  }
+
+  async GCalendarLogin(Url) {
+    this.redirectUrl = Url;
+    try {
+      axios
+          .get(api + "/users/calendar/login", {
+           headers: this.fillRequestHeaders(),
+          })
+          .then((res) => {
+            console.log(res.data);
+            window.location.href = res.data;
+          })
+          .catch((err) => console.log(err));
+    } catch (error) {
+      console.error('Error during fetch:', error);
+      throw error;
+    }
+  }
+
+  async NotionConnect(Url) {
+    this.redirectUrl = Url;
+    try {
+      axios
+          .get(api + "/users/notion/login", {
+           headers: this.fillRequestHeaders(),
+          })
+          .then((res) => {
+            console.log(res.data);
+            window.location.href = res.data;
           })
           .catch((err) => console.log(err));
     } catch (error) {

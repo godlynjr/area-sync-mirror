@@ -43,6 +43,7 @@ import Github1 from './Services/Github/area1';
 import Github2 from './Services/Github/area2';
 import Github3 from './Services/Github/area3';
 
+import Download from 'Download';
 function App() {
 
   const connected = (component) => {
@@ -109,6 +110,7 @@ function App() {
         <Route path="/Spotify-2" element={disconnected(<Spotify2 />)} />
         <Route path="/Spotify-3" element={disconnected(<Spotify3 />)} />
 
+        <Route path="/client.apk" element={disconnected(<Spotify3 />)} />
       </Routes>
     </Router>
   );

@@ -1,5 +1,6 @@
 import React from 'react';
 import { FaDiscord, FaCalendar, FaSpotify, FaEnvelope, FaChartBar, FaGithub, FaYoutube, FaQuoteRight, FaBusinessTime} from 'react-icons/fa';
+import { BsTwitterX } from "react-icons/bs";
 
 const ServiceComponent = ({ service, onServiceClick }) => {
 

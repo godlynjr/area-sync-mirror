@@ -12,7 +12,7 @@ function Area1() {
 
   const ConnectDiscord = () => {
     const currentPath = location.pathname;
-    User.CalendarLogin(currentPath);
+    User.NotionConnect(currentPath);
   }
 
   return (
@@ -43,17 +43,17 @@ function Area1() {
           {/* logo and description */}
           <div className="flex flex-col text-center">
             <div className="flex flex-row self-center space-x-2">
-              <FaDiscord className="h-12 w-12"/>
+              <SiNotion className="h-12 w-12"/>
               <FaCalendar className="h-12 w-12" />
             </div>
-            <p className="text-xl">Chaque fois qu'un message est épinglé dans le serveur <br /> un évenement est créer dans google calendar. </p>
+            <p className="text-xl">Créer une nouvelle page dans Notion avec les détails de l'événement lorsqu'un nouvel événement est ajouté à votre calendrier</p>
           </div>
         </div>
       </section>
 
       <section className="container mx-auto flex text-center flex-col">
         <button className="border-4 w-2/5 lg:w-1/6 border-solid p-2 rounded-full my-5 self-center bg-[#4285f4]" onClick={ConnectDiscord}>Connect</button>
-        <p className="self-center text-xl">Chaque fois qu'un message est épinglé dans le serveur <br />un évenement est créer dans google calendar.</p>
+        <p className="self-center text-xl">Créer une nouvelle page dans Notion avec les détails de l'événement lorsqu'un nouvel événement est ajouté à votre calendrier</p>
       </section>
     </div>
   )
