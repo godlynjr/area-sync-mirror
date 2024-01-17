@@ -6,7 +6,7 @@ const { google } = require('googleapis');
 const { Client } = require('@notionhq/client');
 const notion = new Client({ auth: process.env.NOTION_SECRET });
 const databaseId = process.env.NOTION_DATABASE_ID;
-
+let redirectUrl = '';
 let numbers = 0;
 const oauth2Client = new google.auth.OAuth2(
   process.env.CLIENT_ID,
@@ -45,6 +45,7 @@ const googled = async (req, res) => {
         access_type: 'offline',
         scope: scopes,
     });
+    redirectUrl = res.headers.url;
     res.send(url);
 };
 
@@ -63,7 +64,7 @@ const callbacks = async (req, res) => {
     // Récupérer les informations du profil utilisateur
     // const userInfo = await getUserInfo();
 
-    res.redirect('http://localhost:8081/Google Calendar'); 
+    res.redirect(redirectUrl); 
 };
 
 const callback_calendar = async (req, res) => {

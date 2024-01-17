@@ -7,11 +7,11 @@ const notion = new Client({ auth: process.env.NOTION_SECRET });
 
 const clientId = process.env.NOTION_ID;
 const clientSecret = process.env.NOTION_SECRET;
-const redirectUri = 'http://localhost:8080/users/notion/callback';
+const redirectUri = 'https://area-sync-stagging.onrender.com/users/notion/callback';
 const database_id = process.env.NOTION_DATABASE_ID;
 
 const notion_log = async (req, res) => {
-  const authUrl = `https://api.notion.com/v1/oauth/authorize?client_id=302fe87e-a378-4cdd-a3e7-f583a514257c&response_type=code&owner=user&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Fusers%2Fnotion%2Fcallback`;
+  const authUrl = `https://api.notion.com/v1/oauth/authorize?client_id=302fe87e-a378-4cdd-a3e7-f583a514257c&response_type=code&owner=user&redirect_uri=https%3A%2F%2Farea-sync-stagging.onrender.com%2Fusers%2Fnotion%2Fcallback`;
   res.redirect(authUrl);
 };
 

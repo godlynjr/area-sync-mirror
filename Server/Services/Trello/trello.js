@@ -5,7 +5,7 @@ const querystring = require('querystring');
 
 const CLIENT_ID = '43103a7dad47862c9991206e12024b67';
 const CLIENT_SECRET = 'c2129f4e9b3bd5eaffc5b91b72c029ef2defc393d5dd7ca0c9ff6e6cab499965';
-const TRELLO_REDIRECT_URI = 'http://localhost:8080/users/trello/callback';
+const TRELLO_REDIRECT_URI = 'https://area-sync-stagging.onrender.com/users/trello/callback';
 
 const trello_login = (req, res) => {
     const authUrl = `https://trello.com/1/authorize?expiration=never&name=MyApp&scope=read,write&callback_method=fragment&response_type=fragment&key=${CLIENT_ID}&return_url=${encodeURIComponent(TRELLO_REDIRECT_URI)}`;
