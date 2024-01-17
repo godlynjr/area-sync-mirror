@@ -113,10 +113,6 @@ const LandingPage = () => {
                 </svg>
             </a>
 
-            <a href="#" className="flex justify-center items-center">
-              <img src={Tally} alt='tally' className='h-10'></img>
-            </a>
-
           </div>
         </div>
       </section>

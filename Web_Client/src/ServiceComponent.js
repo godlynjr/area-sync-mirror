@@ -1,6 +1,6 @@
 import React from 'react';
-import { FaDiscord, FaCalendar, FaSpotify, FaEnvelope, FaChartBar, FaGithub, FaYoutube } from 'react-icons/fa';
-import { SiNotion } from "react-icons/si";
+import { FaDiscord, FaCalendar, FaSpotify, FaEnvelope, FaChartBar, FaGithub, FaYoutube, FaQuoteRight, FaBusinessTime} from 'react-icons/fa';
+import { BsTwitterX } from "react-icons/bs";
 
 const ServiceComponent = ({ service, onServiceClick }) => {
 
@@ -13,9 +13,14 @@ const ServiceComponent = ({ service, onServiceClick }) => {
     let bgColorClass;
 
     switch (service.name.toLowerCase()) {
+      
       case 'discord':
         iconComponent = <FaDiscord className='h-10 w-10'/>;
         bgColorClass = 'bg-discord';
+        break;
+      case 'quote':
+        iconComponent = <FaQuoteRight className='h-10 w-10'/>;
+        bgColorClass = 'bg-[#d3d3d3]';
         break;
       case 'google calendar':
         iconComponent = <FaCalendar className='h-9 w-10' />;
@@ -33,8 +38,8 @@ const ServiceComponent = ({ service, onServiceClick }) => {
         iconComponent = <FaEnvelope className='h-10 w-10' />;
         bgColorClass = 'bg-[#d3d3d3]'
         break;
-      case 'tally':
-        iconComponent = <FaChartBar className='h-10 w-10' />;
+      case 'date & time':
+        iconComponent = <FaBusinessTime className='h-10 w-10' />;
         bgColorClass = 'bg-[#773b96]'
         break;
       case 'github':

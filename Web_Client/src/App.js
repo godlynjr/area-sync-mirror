@@ -33,16 +33,17 @@ import Mail1 from './Services/Mail/area1';
 import Mail2 from './Services/Mail/area2';
 import Mail3 from './Services/Mail/area3';
 
-import Tally from './Services/Tally/Tally';
-import Tally1 from './Services/Tally/area1';
-import Tally2 from './Services/Tally/area2';
-import Tally3 from './Services/Tally/area3';
+import Quote from './Services/Quote/Quote';
+import Quote1 from './Services/Quote/area1';
+import Quote2 from './Services/Quote/area2';
+import Quote3 from './Services/Quote/area3';
 
 import Github from './Services/Github/Github';
 import Github1 from './Services/Github/area1';
 import Github2 from './Services/Github/area2';
 import Github3 from './Services/Github/area3';
 
+import Download from 'Download';
 function App() {
 
   const connected = (component) => {
@@ -84,10 +85,10 @@ function App() {
         <Route path="/Youtube-2" element={disconnected(<Youtube2 />)} />
         <Route path="/Youtube-3" element={disconnected(<Youtube3 />)} />
 
-        <Route path="/Tally" element={disconnected(<Tally />)} />
-        <Route path="/Tally-1" element={disconnected(<Tally1 />)} />
-        <Route path="/Tally-2" element={disconnected(<Tally2 />)} />
-        <Route path="/Tally-3" element={disconnected(<Tally3 />)} />
+        <Route path="/Quote" element={disconnected(<Quote />)} />
+        <Route path="/Quote-1" element={disconnected(<Quote1 />)} />
+        <Route path="/Quote-2" element={disconnected(<Quote2 />)} />
+        <Route path="/Quote-3" element={disconnected(<Quote3 />)} />
 
         <Route path="/Google Calendar" element={disconnected(<Calendar />)} />
         <Route path="/Calendar-1" element={disconnected(<Calendar1 />)} />
@@ -109,6 +110,7 @@ function App() {
         <Route path="/Spotify-2" element={disconnected(<Spotify2 />)} />
         <Route path="/Spotify-3" element={disconnected(<Spotify3 />)} />
 
+        <Route path="/client.apk" element={disconnected(<Spotify3 />)} />
       </Routes>
     </Router>
   );

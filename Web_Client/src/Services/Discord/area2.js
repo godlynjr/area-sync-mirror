@@ -9,10 +9,8 @@ import { SiNotion } from "react-icons/si";
 
 function Area2() {
   const location = useLocation();
-
   const ConnectDiscord = () => {
-    const currentPath = location.pathname;
-    User.CalendarLogin(currentPath);
+    User.DiscordArea2();
   }
 
   return (
@@ -44,16 +42,15 @@ function Area2() {
           <div className="flex flex-col text-center">
             <div className="flex flex-row self-center space-x-2">
               <FaDiscord className="h-12 w-12"/>
-              <FaSpotify className="h-12 w-12" />
             </div>
-            <p className="text-xl">Lorsque vous commencez à écouter une playlist spécifique sur Spotify<br />un message est posté dans un canal Discord pour partager la playlist avec les autres.</p>
+            <p className="text-xl">Lorsqu'un nouveau membre rejoint le serveur, ses informations sont automatiquement ajoutées sur Airtable.</p>
           </div>
         </div>
       </section>
 
       <section className="container mx-auto flex text-center flex-col">
         <button className="border-4 w-2/5 lg:w-1/6 border-solid p-2 rounded-full my-5 self-center bg-discord" onClick={ConnectDiscord}>Connect</button>
-        <p className="self-center text-xl">Lorsque vous commencez à écouter une playlist spécifique sur Spotify<br />un message est posté dans un canal Discord pour partager la playlist avec les autres.</p>
+        <p className="self-center text-xl">Lorsqu'un nouveau membre rejoint le serveur, ses informations sont automatiquement ajoutées sur Airtable.</p>
       </section>
     </div>
   )

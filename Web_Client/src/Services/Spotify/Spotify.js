@@ -54,15 +54,15 @@ function Spotify() {
 
       <section className="container mx-auto my-5">
         <div className="grid grid-cols-2 gap-8 text-black sm:gap-10 md:grid-cols-3 lg:grid-cols-3 mt-5 p-2">
-          <a href="/Spotify-1">
+          {/* <a href="/Spotify-1">
             <Areas service="spotify" featuring="calendar" description="Chaque fois qu'un message est épinglé dans le serveur, un évenement est créer dans google calendar." bgComponent={'bg-[#1DB954]'}/>
-          </a> 
+          </a>  */}
           <a href="/Spotify-2">
             <Areas service="spotify" featuring="spotify" description="Lorsque vous likez une chanson une playlist est créée et la chanson est ajoutée." bgComponent={'bg-[#1DB954]'}/>
           </a>
-          <a href="/Spotify-3">
+          {/* <a href="/Spotify-3">
             <Areas service="spotify" featuring="notion" description="Lorsqu'une nouvelle tâche est ajoutée à une liste de tâches dans Notion, un message est posté dans un canal Discord pour informer les autres de la nouvelle tâche." bgComponent={'bg-[#1DB954]'}/>
-          </a>
+          </a> */}
         </div>
       </section>
     </div>

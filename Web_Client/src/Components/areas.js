@@ -1,6 +1,8 @@
 import React from 'react';
-import { FaDiscord, FaCalendar, FaSpotify, FaEnvelope, FaChartBar, FaGithub, FaYoutube, FaGoogleDrive } from 'react-icons/fa';
+import { FaDiscord, FaCalendar, FaSpotify, FaEnvelope, FaChartBar, FaGithub, FaYoutube, FaGoogleDrive, FaQuoteRight } from 'react-icons/fa';
 import { SiNotion } from "react-icons/si";
+import { IoIosTimer } from "react-icons/io";
+import { BsTwitterX } from "react-icons/bs";
 
 const Areas = ({ service, featuring, description, bgComponent}) => {
 
@@ -26,6 +28,15 @@ const Areas = ({ service, featuring, description, bgComponent}) => {
       case 'youtube':
         ServiceIcon = <FaYoutube className='text-white h-5 w-5' />;
         break;
+      case 'quote':
+        ServiceIcon = <FaQuoteRight className='text-white h-5 w-5' />;
+        break;
+      case 'time':
+        ServiceIcon = <IoIosTimer className='text-white h-5 w-5' />;
+        break;
+      case 'twitter':
+        ServiceIcon = <BsTwitterX className='text-white h-5 w-5' />;
+        break;
       default:
         ServiceIcon = null;
         break;
@@ -36,8 +47,7 @@ const Areas = ({ service, featuring, description, bgComponent}) => {
         iconComponent = <FaEnvelope className='h-5 w-5' />;
         break;
       case 'discord':
-        iconComponent = <FaDiscord className='h-10 w-10'/>;
-        bgColorClass = 'bg-discord';
+        iconComponent = <FaDiscord className='h-5 w-5'/>;
         break;
       case 'calendar':
         iconComponent = <FaCalendar className='text-white h-5 w-5' />;
@@ -50,6 +60,12 @@ const Areas = ({ service, featuring, description, bgComponent}) => {
         break;
       case 'drive':
         iconComponent = <FaGoogleDrive className='text-white h-5 w-5' />;
+        break;
+      case 'time':
+        iconComponent = <IoIosTimer className='text-white h-5 w-5' />;
+        break;
+      case 'twitter':
+        ServiceIcon = <BsTwitterX className='text-white h-5 w-5' />;
         break;
       default:
         iconComponent = null;

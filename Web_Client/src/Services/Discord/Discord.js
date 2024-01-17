@@ -63,13 +63,13 @@ function Discord() {
       <section className="container mx-auto my-5">
         <div className="grid grid-cols-2 gap-8 text-black sm:gap-10 md:grid-cols-3 lg:grid-cols-3 mt-5 p-2">
           <a href="/Discord-1">
-            <Areas service="discord" featuring="calendar" description="Chaque fois qu'un message est épinglé dans le serveur, un évenement est créer dans google calendar." bgComponent={'bg-discord'}/>
+            <Areas service="discord" featuring="calendar" description="Chaque fois qu'un message est épinglé dans le serveur un évenement est créer dans google calendar." bgComponent={'bg-discord'}/>
           </a>
           <a href="/Discord-2">
-            <Areas service="discord" featuring="spotify" description="Lorsque vous commencez à écouter une playlist spécifique sur Spotify, un message est posté dans un canal Discord pour partager la playlist avec les autres." bgComponent={'bg-discord'}/>
+            <Areas service="discord" featuring="" description="Lorsqu'un nouveau membre rejoint le serveur, ses informations sont automatiquement ajoutées sur Airtable." bgComponent={'bg-discord'}/>
           </a>
           <a href="/Discord-3">
-            <Areas service="discord" featuring="notion" description="Lorsqu'une nouvelle tâche est ajoutée à une liste de tâches dans Notion, un message est posté dans un canal Discord pour informer les autres de la nouvelle tâche." bgComponent={'bg-discord'}/>
+            <Areas service="discord" featuring="" description="Lorsqu'un message de type '!task' est envoyé dans un canal Discord, une nouvelle tâche est créée sur Todoist." bgComponent={'bg-discord'}/>
           </a>
         </div>
       </section>
