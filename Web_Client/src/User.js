@@ -166,6 +166,24 @@ class Client {
       throw error;
     }
   }
+
+  async GithubLogin(Url) {
+    this.redirectUrl = Url;
+    try {
+      axios
+          .get(api + "/users/github/login", {
+           headers: this.fillRequestHeaders(),
+          })
+          .then((res) => {
+            console.log(res.data);
+            window.location.href = res.data;
+          })
+          .catch((err) => console.log(err));
+    } catch (error) {
+      console.error('Error during fetch:', error);
+      throw error;
+    }
+  }
 }
 
 const User = new Client();
