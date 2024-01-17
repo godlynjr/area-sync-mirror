@@ -48,6 +48,7 @@
     "t": "^0.5.1",
     "translate-google": "^1.5.0",
     "twilio": "^5.0.0-rc.1",
+    "twit": "^2.2.11",
     "twitter-oauth2": "^1.1.0",
     "uuid": "^9.0.1"
   },

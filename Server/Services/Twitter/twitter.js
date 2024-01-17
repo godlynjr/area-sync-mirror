@@ -6,6 +6,15 @@ const twitter_client_id= process.env.TWITTER_ID;
 const twitter_redirect_uri= process.env.TWITTER_REDIRECT_URI;
 const twitter_secret= process.env.TWITTER_SECRET;
 
+const Twit = require('twit');
+
+const T = new Twit({
+  consumer_key: 'eTmsrqLsmBxWaynSAzBULwuYU',
+  consumer_secret: 'pnQYqnLPZcOF0NlSwGY0qGKAcWRzwTq2Ssz5onA9Jv0oouf44q',
+  access_token: '2744375949-6Gt3XQdGyabjYPxUfnQJpokCHb2ise0fEGoUiOT',
+  access_token_secret: 'ticssHmUnfD4QRJcRJNCGqY7ewzW8a26guSu12dqwSwMY'
+});
+
 function encodeUrl(url) {
     return encodeURIComponent(url);
 }
@@ -44,7 +53,7 @@ const getTwitterAccessToken = async (req, res) => {
                 access_token: response.data.access_token,
             }
             console.log("twitter access token:", response);
-            await postTweet(response.data.access_token, "Hello, I'm godlyn!");
+            await postTweet(req, res);
             res.status(200).send("you are connected");
         } catch (error) {
             console.error("Error making Axios request:", error);
@@ -55,21 +64,35 @@ const getTwitterAccessToken = async (req, res) => {
     }
 }
 
-const postTweet = async (accessToken, tweetText) => {
-  const tweetData = {
-    status: tweetText,
-  };
-
-  const headers = {
-    Authorization: `Bearer ${accessToken}`,
-  };
-
+const postTweet = async (req, res) => {
   try {
-    const response = await axios.post('https://api.twitter.com/2/tweets', tweetData, { headers });
-    console.log('Tweet posté avec succès:', response.data);
+    T.post('statuses/update', { status: 'Hello from Node.js!' }, (err, data, response) => {
+      if (err) {
+        console.log('Error:', err);
+        res.status(500).send('Error posting tweet');
+      } else {
+        console.log('Tweet posted successfully!');
+        res.status(200).send('Tweet posted successfully!');
+      }
+    });
   } catch (error) {
-    console.error('Erreur lors de la publication du tweet:', error.response.data);
+    console.log('Error posting tweet:', error);
+    res.status(500).send('Error posting tweet');
   }
+  // const tweetData = {
+  //   status: tweetText,
+  // };
+
+  // const headers = {
+  //   Authorization: `Bearer ${accessToken}`,
+  // };
+
+  // try {
+  //   const response = await axios.post('https://api.twitter.com/2/tweets', tweetData, { headers });
+  //   console.log('Tweet posté avec succès:', response.data);
+  // } catch (error) {
+  //   console.error('Erreur lors de la publication du tweet:', error.response.data);
+  // }
 };
 
 module.exports = { twitter_login, getTwitterAccessToken};

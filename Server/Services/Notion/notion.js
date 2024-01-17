@@ -5,6 +5,8 @@ require('dotenv').config();
 const { Client } = require('@notionhq/client');
 const notion = new Client({ auth: process.env.NOTION_SECRET });
 
+
+
 const clientId = process.env.NOTION_ID;
 const clientSecret = process.env.NOTION_SECRET;
 const redirectUri = 'https://area-sync-stagging.onrender.com/users/notion/callback';

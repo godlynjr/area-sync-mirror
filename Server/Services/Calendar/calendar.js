@@ -6,6 +6,9 @@ const { google } = require('googleapis');
 const { Client } = require('@notionhq/client');
 const notion = new Client({ auth: process.env.NOTION_SECRET });
 const databaseId = process.env.NOTION_DATABASE_ID;
+
+const { notion_log } = require('../Notion/notion');
+
 let redirectUrl = '';
 let numbers = 0;
 const oauth2Client = new google.auth.OAuth2(
@@ -113,6 +116,7 @@ const calendarwebhook = async (req, res) => {
             console.log(`Date de création: ${dernierEvenement.created}`);
 
             // Ajoutez ici le code pour créer un événement dans Notion
+            await notion_log(req, res);
             // en utilisant les informations reçues de l'événement Google Calendar.
             return res.status(200).end();
         }
