@@ -136,7 +136,7 @@ const createPlaylistWithLikedSongs = (req, res) => {
     console.log('function triggered');
     setInterval(() => {
         addNewLikedSongsToPlaylist(spotifyApi, 'AREASYNC_PLAYLIST');
-    }, 10 * 60 * 1000);
+    }, 1000);
 }
 
 module.exports = { ConnectSpotify , SpotifyCallback, createPlaylistWithLikedSongs };
