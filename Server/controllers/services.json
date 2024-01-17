@@ -8,26 +8,26 @@
                   "description": "Chaque fois qu'un message est épinglé dans le serveur, un évenement est créer dans google calendar."
               },
               {
-                  "name": "Écoute de playlist",
-                  "description": "Lorsque vous commencez à écouter une playlist spécifique sur Spotify, un message est posté dans un canal Discord pour partager la playlist avec les autres."
+                  "name": "Nouveau membre",
+                  "description": "Lorsqu'un nouveau membre rejoint le serveur, ses informations sont automatiquement ajoutées sur Airtable."
               },
               {
                   "name": "Nouvelle tâche",
-                  "description": "Lorsqu'une nouvelle tâche est ajoutée à une liste de tâches dans Notion, un message est posté dans un canal Discord pour informer les autres de la nouvelle tâche."
+                  "description": "Lorsqu'un message de type '!task' est envoyé dans un canal Discord, une nouvelle tâche est créée sur Todoist."
               }
           ],
           "reactions": []
       },
       {
-          "name": "Gmail",
+          "name": "Quote",
           "actions": [
               {
-                  "name": "Nouvel e-mail",
-                  "description": "Lorsqu'un nouvel e-mail est reçu dans Gmail avec une date spécifique, un nouvel événement est ajouté à votre Google Calendar pour cette date."
+                  "name": "Message particulier",
+                  "description": "Lorsqu'un nouveau message de type '!quote' est envoyé dans le serveur, il recoit une citation motivante."
               },
               {
-                  "name": "Envoi d'e-mail",
-                  "description": "Lorsqu'un nouvel e-mail est envoyé depuis Gmail, une nouvelle entrée est créée dans Tally pour suivre le nombre d'e-mails que vous avez envoyés."
+                  "name": "Citation ponctuelle",
+                  "description": "Chaque matin a 9h, une citation motivatante est posté dans le serveur."
               },
               {
                   "name": "E-mail avec issue Github",
@@ -91,37 +91,37 @@
         "reactions": []
     },
     {
-        "name": "Notion",
+        "name": "Youtube",
         "actions": [
             {
-                "name": "Nouvelle page créée",
-                "description": "Créer un événement dans Google Calendar pour cette nouvelle page lorsqu'une nouvelle page est créée dans une base de données spécifique"
+                "name": "Aimer une chanson youtube",
+                "description": "Apres un like sur une vidéo ses infos sont automatiquement ajoutée sur google drive."
             },
             {
-                "name": "Tâche terminée",
-                "description": "Envoyer une notification sur Tally lorsqu'une tâche est marquée comme terminée"
+                "name": "Alerte Nouvelle Vidéo",
+                "description": "Envoyer une notification sur Gmail lorsqu'une nouvelle vidéo est mise en ligne par un channel spécifié."
             },
             {
-                "name": "Commentaire ajouté",
-                "description": "Créer une issue sur Github avec les détails du commentaire lorsqu'un commentaire est ajouté à une page"
+                "name": "Nouvel abonnement",
+                "description": "Envoyer un message sur un channel discord lorsque je m'abonne à un channel youtube."
             }
         ],
         "reactions": []
     },
     {
-        "name": "Tally",
+        "name": "Date & Time",
         "actions": [
             {
-                "name": "Nouveau score ajouté",
-                "description": "Ajouter une nouvelle entrée dans une base de données Notion lorsqu'un nouveau score est ajouté"
+                "name": "Envois des infos relatives à la météo",
+                "description": "À l'heure spécifiée, l'application collecte les données météorologiques actuelles ou prévues à partir d'une source fiable"
             },
             {
-                "name": "Score supprimé",
-                "description": "Supprimer un événement correspondant dans Google Calendar lorsqu'un score est supprimé"
+                "name": "Envois d'une citation motivante",
+                "description": "Envoyer une citation motivante par e-mail à l'heure spécifiée."
             },
             {
-                "name": "Score mis à jour",
-                "description": "Mettre à jour une issue correspondante sur Github lorsqu'un score est mis à jour"
+                "name": "Rappel des heures de la prière",
+                "description": "Envoyez un message de rappel des prières quotidiennes à chacunes des heures de la prière"
             }
         ],
         "reactions": []
