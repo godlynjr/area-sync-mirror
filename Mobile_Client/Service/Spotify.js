@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, SafeAreaView, Text, StyleSheet, Image, Dimensions, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Switch, SafeAreaView, Text, ScrollView, StyleSheet, Image, Dimensions, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { widthPercentageToDP, heightPercentageToDP, listenOrientationChange, moderateScale } from 'react-native-responsive-screen';
 const { width, height } = Dimensions.get('window');
@@ -7,12 +7,25 @@ const guidelineWidth = 375; // Width of the device on which the design is based
 import { Ionicons } from '@expo/vector-icons';
 const scale_y = size => (height / guidelineWidth) * size;
 
-const Discord = ({ navigation }) => {
+const Spotify = ({ navigation }) => {
   const iconSize = 30; // Taille de l'icône en pixels
+  const [isEnabled, setIsEnabled] = useState(false);
+  const [isEnabled1, setIsEnabled1] = useState(false);
+  const [isEnabled2, setIsEnabled2] = useState(false);
+
+  const toggleSwitch = () => {
+    setIsEnabled(previousState => !previousState);
+  }
+  const toggleSwitch1 = () => {
+    setIsEnabled1(previousState => !previousState);
+  }
+  const toggleSwitch2 = () => {
+    setIsEnabled2(previousState => !previousState);
+  }
   return (
     <SafeAreaView>
       <View style={styles.container}>
-        <Ionicons style={{position: 'absolute', top: 10, left: 10}} name="arrow-back" size={30} color="#fff" onPress={() => navigation.goBack()} />
+        <Ionicons style={{ position: 'absolute', top: 10, left: 10 }} name="arrow-back" size={30} color="#fff" onPress={() => navigation.goBack()} />
         <Image
           source={require('../Assets/spotify1.jpeg')}
           style={styles.Image}
@@ -22,8 +35,7 @@ const Discord = ({ navigation }) => {
             Spotify
           </Text>
           <Text style={styles.text2}>
-            The NAS that does it all. Connect, automate, and sync your apps and data with ease.
-          </Text>
+          A music streaming service that allows users to access a vast library of songs, create personalized playlists, and discover music based on their preferences.          </Text>
         </View>
         <View style={styles.bottomContainer}>
           <TouchableOpacity style={styles.bouton}>
@@ -38,6 +50,86 @@ const Discord = ({ navigation }) => {
           </TouchableOpacity>
         </View>
       </View>
+      <ScrollView>
+        <View style={styles.servicenamebox}>
+
+          {/* <TouchableOpacity> */}
+            <View style={styles.serv1} >
+              <Image
+                source={require('../Assets/dateservice.png')}
+                style={styles.image}
+              />
+              <Text style={styles.Test1}>
+              Suppression de chanson
+              </Text>
+              <Text style={styles.Test1}>
+              Lorsque vous supprimez une chanson de votre playlist Spotify, une note est créée dans Notion pour suivre les chansons que vous avez supprimées
+              </Text>
+              <View style={styles.containerb}>
+                <Switch
+                  trackColor={{ false: '#767577', true: 'white' }}
+                  thumbColor={isEnabled ? 'gray' : '#f4f3f4'}
+                  ios_backgroundColor="black"
+                  onValueChange={toggleSwitch}
+                  value={isEnabled}
+                  style={styles.toggleButton} // Ajout de la propriété de style
+                />
+              </View>
+            </View>
+          {/* </TouchableOpacity> */}
+
+          {/* <TouchableOpacity> */}
+            <View style={styles.serv2} >
+              <Image
+                source={require('../Assets/dateservice.png')}
+                style={styles.image}
+              />
+              <Text style={styles.Test1}>
+              Nouvel événement musical
+              </Text>
+              <Text style={styles.Test1}>
+              Lorsqu'un nouvel événement est ajouté à votre Google Calendar avec un thème musical spécifique, une nouvelle playlist est créée dans Spotify avec des chansons correspondant à ce thème
+              </Text>
+              <View style={styles.containerb}>
+                <Switch
+                  trackColor={{ false: '#767577', true: 'white' }}
+                  thumbColor={isEnabled1 ? 'gray' : '#f4f3f4'}
+                  ios_backgroundColor="black"
+                  onValueChange={toggleSwitch1}
+                  value={isEnabled1}
+                  style={styles.toggleButton} // Ajout de la propriété de style
+                />
+              </View>
+            </View>
+          {/* </TouchableOpacity> */}
+
+          {/* <TouchableOpacity> */}
+            <View style={styles.serv3} >
+              <Image
+                source={require('../Assets/dateservice.png')}
+                style={styles.image}
+              />
+              <Text style={styles.Test1}>
+              Chanson jouée 10 fois
+              </Text>
+              <Text style={styles.Test1}>
+              Lorsqu'une chanson est jouée plus de 10 fois sur Spotify, une nouvelle entrée est créée dans Tally pour suivre les chansons les plus écoutées
+              </Text>
+            </View>
+            <View style={styles.containerb}>
+              <Switch
+                trackColor={{ false: '#767577', true: 'white' }}
+                thumbColor={isEnabled2 ? 'gray' : '#f4f3f4'}
+                ios_backgroundColor="black"
+                onValueChange={toggleSwitch2}
+                value={isEnabled2}
+                style={styles.toggleButton} // Ajout de la propriété de style
+              />
+            </View>
+          {/* </TouchableOpacity> */}
+
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -50,6 +142,61 @@ const styles = StyleSheet.create({
     backgroundColor: '#494949',
     paddingVertical: 40,
     paddingHorizontal: 20
+  },
+  containerb: {
+    paddingVertical: 20,
+    paddingHorizontal: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  toggleButton: {
+    transform: [{ scaleX: 1.0 }, { scaleY: 1.0 }] // Appliquer une mise à l'échelle
+  },
+  Test1: {
+    fontSize: 12,
+    marginTop: 20,
+    fontWeight: 'bold',
+    paddingHorizontal: 22,
+  },
+  image: {
+    // paddingVertical: 10,
+    marginTop: 20,
+    marginLeft: 20,
+    width: 30,
+    height: 30,
+    borderRadius: 50,
+  },
+  servicenamebox: {
+    marginTop: 30,
+    paddingHorizontal: 20,
+    // backgroundColor: 'red',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 20,
+  },
+  serv1: {
+    backgroundColor: 'red',
+    borderRadius: 15,
+    width: 370,
+    height: 200,
+    // paddingHorizontal: 150,
+    // paddingVertical: 90,
+  },
+  serv2: {
+    borderRadius: 15,
+    width: 370,
+    height: 200,
+    backgroundColor: 'green',
+    // paddingHorizontal: 150,
+    // paddingVertical: 90,
+  },
+  serv3: {
+    borderRadius: 15,
+    width: 370,
+    height: 200,
+    backgroundColor: 'blue',
+    // paddingHorizontal: 150,
+    // paddingVertical: 90,
   },
   bottomContainer: {
     marginTop: 20,
@@ -101,4 +248,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Discord;
+export default Spotify;

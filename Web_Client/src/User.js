@@ -10,10 +10,11 @@ class Client {
   } 
 
   fillRequestHeaders() {
+    console.log(localStorage.getItem('authToken'));
     return {
       "Content-Type": "application/json",
-      'Authorization' : 'Bearer ' + localStorage.getItem('authToken'),
-      'Url': 'http://localhost:8081' + this.redirectUrl
+      "Authorization" : 'Bearer ' + localStorage.getItem('authToken'),
+      "Url": 'http://localhost:8081' + this.redirectUrl
     };
   }
 
@@ -27,6 +28,7 @@ class Client {
       .then(response => response.json())
       .then(data => {
         this.isLoggedIn = true;
+        console.log('token received: ', data.token);
         localStorage.setItem('authToken', data.token);
         window.location.href = '/home';
       })
@@ -76,7 +78,8 @@ class Client {
     }
   }
 
-  async SpotifyLogin() {
+  async SpotifyLogin(Url) {
+    this.redirectUrl = Url;
     try {
       axios
           .get(api + "/spotify/login", {
@@ -96,18 +99,19 @@ class Client {
   async CalendarLogin(Url) {
     this.redirectUrl = Url;
     try {
-      axios
-          .get(api + "users/discord/calendar/login", {
-           headers: this.fillRequestHeaders(),
-          })
-          .then((res) => {
-            console.log(res.data);
-            window.location.href = res.data;
-          })
-          .catch((err) => console.log(err));
+      const response = await fetch(api + "/users/discord/calendar/connect", {
+        method: "POST",
+        headers: this.fillRequestHeaders(),
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+      })
+      .catch(error => {
+        console.error('Erreur de connexion :', error);
+      });
     } catch (error) {
-      console.error('Error during fetch:', error);
-      throw error;
+      console.log(error);
     }
   }
 }
