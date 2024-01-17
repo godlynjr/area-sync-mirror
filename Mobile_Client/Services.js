@@ -20,14 +20,14 @@ const Services = ({ }) => {
     const handleGoogle = async () => {
         navigation.navigate('Service/Google');
     };
-    const handleNotion = async () => {
-        navigation.navigate('Service/Notion');
+    const handleYoutube = async () => {
+        navigation.navigate('Service/Youtube');
     };
     const handleCalendar = async () => {
         navigation.navigate('Service/Calendar');
     };
-    const handleTally = async () => {
-        navigation.navigate('Service/Tally');
+    const handleQuote = async () => {
+        navigation.navigate('Service/Quote');
     };
     const handleSpotify = async () => {
         navigation.navigate('Service/Spotify');
@@ -146,9 +146,9 @@ const Services = ({ }) => {
                             style={styles.image1}
                         />
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={handleNotion}>
+                    <TouchableOpacity onPress={handleYoutube}>
                         <Image
-                            source={require('./Assets/notion.png')}
+                            source={require('./Assets/youtube.png')}
                             style={styles.image1}
                         />
                     </TouchableOpacity>
@@ -166,9 +166,9 @@ const Services = ({ }) => {
                             style={styles.image2}
                         />
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={handleTally}>
+                    <TouchableOpacity onPress={handleQuote}>
                         <Image
-                            source={require('./Assets/tally.png')}
+                            source={require('./Assets/quote.png')}
                             style={styles.image3}
                         />
                     </TouchableOpacity>

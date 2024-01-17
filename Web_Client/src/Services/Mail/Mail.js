@@ -28,7 +28,7 @@ function Mail() {
         
                   className="h-5 w-5 text-black mt-1"
                 />
-              <a href="/home" className="text-lg font-bold">Back</a>
+              <a href="/home" className="text-lg font-semibold">Back</a>
             </div>
             <div className="border-4 border-solid p-2 rounded-full">
               <a href="https://discord.com" className="text-lg font-semibold">Visit Discord</a>
@@ -42,7 +42,7 @@ function Mail() {
                 <path d="M32 6v20c0 1.135-0.865 2-2 2h-2v-18.151l-12 8.62-12-8.62v18.151h-2c-1.135 0-2-0.865-2-2v-20c0-0.568 0.214-1.068 0.573-1.422 0.359-0.365 0.859-0.578 1.427-0.578h0.667l13.333 9.667 13.333-9.667h0.667c0.568 0 1.068 0.214 1.427 0.578 0.359 0.354 0.573 0.854 0.573 1.422z"/>
               </svg>
             </a>
-            <p className="text-3xl lg:text-5xl my-2 font-bold">Mail integrations</p>
+            <p className="text-3xl lg:text-5xl my-2 font-semibold">Mail integrations</p>
             <p className="text-xl lg:mx-36 mx-10"> <b>Gmail</b> une messagerie sécurisée, intelligente et facile à utiliser.</p>
             
 
@@ -52,7 +52,7 @@ function Mail() {
       </section>
 
       <section className="container mx-auto my-5">
-        <div className="grid grid-cols-2 gap-8 text-black sm:gap-10 md:grid-cols-3 lg:grid-cols-3 mt-5">
+        <div className="grid grid-cols-2 gap-8 text-black sm:gap-10 md:grid-cols-3 lg:grid-cols-3 mt-5 p-2">
           <a href="/Mail-1">
             <Areas service="mail" featuring="calendar" description="Chaque fois qu'un message est épinglé dans le serveur, un évenement est créer dans google calendar." bgComponent={'bg-[#d3d3d3]'}/>
           </a>

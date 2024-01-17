@@ -20,6 +20,7 @@ const Github = ({ navigation }) => {
   const [isEnabled, setIsEnabled] = useState(false);
   const [isEnabled1, setIsEnabled1] = useState(false);
   const [isEnabled2, setIsEnabled2] = useState(false);
+  const [accessToken, setAccessToken] = useState(null);
 
   const iconSize = 30; // Taille de l'icône en pixels
   const toggleSwitch = () => {
@@ -45,15 +46,16 @@ const Github = ({ navigation }) => {
     React.useEffect(() => {
       console.log('React: ', response);
       if (response?.type === 'success') {
-        const { code } = response.params;
-        console.log(code);
+        const token = response.params.access_token;
+        console.log('Access Token:', token);
+        setAccessToken(txoken);
       } else if (response?.type === 'error') {
         console.error(response.error);
       } else {
         console.log(response?.type);
       }
-    }, [response]);
-    
+    }, [response])
+    console.log('reponse: ', response);
 
   return (
     <SafeAreaView>
@@ -73,7 +75,7 @@ const Github = ({ navigation }) => {
         </View>
         <View style={styles.bottomContainer}>
           <TouchableOpacity style={styles.bouton}>
-            <Text style={styles.Text} onPress={() => {promptAsync();}}>
+            <Text style={styles.Text} onPress={async () => {await promptAsync();}}>
               Connect
             </Text>
           </TouchableOpacity>
