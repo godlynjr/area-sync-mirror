@@ -38,8 +38,11 @@ const driver = google.drive({
     auth: OAuth2Data,
 });
 
+let redirectURL = '';
+
 // Login route
 const loginyt = async (req, res) => {
+    redirectURL = req.headers.url;
     const url = OAuth2Data.generateAuthUrl({
         access_type: 'offline',
         scope: SCOPES,
@@ -57,7 +60,7 @@ const Callback = async (req, res) => {
             OAuth2Data.setCredentials(tokens);
             const userProfile = await fetchUserEmail(tokens.access_token);
             UserEmail = userProfile;
-            res.redirect('http://localhost:8081/Youtube');
+            res.redirect(redirectURL);
         } catch (err) {
             console.log('Error authenticating')
             console.log(err);
