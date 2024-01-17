@@ -261,7 +261,7 @@ const youtubeXdrive = async (req, res) => {
                 });
             }
             // Set a timeout to call this function again in 10 minutes
-            // setTimeout(youtubeXdrive, 60000);
+            setTimeout(youtubeXdrive, 60000);
         } catch (err) {
             console.error('Error processing YouTube X Drive request:', err);
             res.status(500).send({
