@@ -1,10 +1,12 @@
 let QuoteIsActive = false;
 let DiscordIsActive = false;
+let TimeIsActive = false;
 const axios = require('axios');
 const PREFIX = '!';
 const jwt = require('jsonwebtoken');
 const { client, login } = require('../Discord/index');
 const DiscordUser = require('../../models/DiscordUser');
+const schedule = require('node-schedule');
 
 const isUserLoggedIn = async (userId) => {
     const user = DiscordUser.findOne({ discordId: userId });
@@ -54,6 +56,8 @@ const DiscordConnection = async (req, res) => {
     }
 };
 
+// Area One
+
 client.on('messageCreate', async (message) => {
     if (!QuoteIsActive && !DiscordIsActive) {
         console.log('Quote and Discord are not active');
@@ -63,10 +67,10 @@ client.on('messageCreate', async (message) => {
         const args = message.content.slice(PREFIX.length).trim().split(/ +/);
         const command = args.shift().toLowerCase();
         if (command === 'quote') {
-            // Appeler la Quotes REST API pour obtenir une citation aléatoire
+            // Appeler l'API Quotable pour obtenir une citation aléatoire
             try {
-                const response = await axios.get('https://quotes.rest/qod.json');
-                const quote = response.data.contents.quotes[0].quote;
+                const response = await axios.get('https://api.quotable.io/random');
+                const quote = response.data.content; // Assurez-vous que le chemin d'accès à la citation est correct
 
                 // Envoyer la citation sur le canal Discord
                 message.channel.send(`Citation du jour : "${quote}"`);
@@ -77,6 +81,42 @@ client.on('messageCreate', async (message) => {
         }
     }
 });
+
+// Area Two
+
+const QuoteConnect = async (req, res) => {
+    try {
+        const token = req.headers.authorization.split(' ')[1];
+        const isValid = verifyToken(token);
+        if (!isValid) {
+            return res.status(401).json({ message: 'Unauthorized' });
+        }
+        
+        TimeIsActive = true;
+    } catch (error) {
+        console.error('Error in DiscordConnection:', error);
+        res.status(500).json({ message: 'Server error', error: error.toString() });
+    }
+
+};
+
+// Function to post a motivational quote about working hard in the Discord channel
+const postMotivationalQuote = async () => {
+    try {
+        const response = await axios.get('https://api.quotable.io/random?tags=work');
+        const quote = response.data.content;
+
+        // Send the motivational quote to the Discord channel
+        const channel = client.channels.cache.get('YOUR_CHANNEL_ID'); // Replace 'YOUR_CHANNEL_ID' with the actual channel ID
+        channel.send(`Motivational Quote of the Day (About Working Hard): "${quote}"`);
+    } catch (error) {
+        console.error('Error while retrieving the quote:', error);
+    }
+};
+
+// Schedule the job to post the motivational quote every morning at 9:00 AM
+schedule.scheduleJob('0 9 * * *', postMotivationalQuote);
+
 
 const verifyToken = async (token) => {
     // Function to check if the token is valid
@@ -89,4 +129,4 @@ const verifyToken = async (token) => {
     }
 };
 
-module.exports = { QuoteLogin, DiscordConnection };
+module.exports = { QuoteLogin, DiscordConnection , QuoteConnect};

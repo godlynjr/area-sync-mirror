@@ -10,12 +10,13 @@ const OAuth2Data = new google.auth.OAuth2(
     process.env.CLIENT_SECRET,
     process.env.YOUTUBE_REDIRECT_URI
 );
-const isAREA1 = false;
+let UserEmail = '';
 const SCOPES =
     ['https://www.googleapis.com/auth/youtube.readonly',
         'https://www.googleapis.com/auth/gmail.send',
         'https://www.googleapis.com/auth/youtube.force-ssl',
-        'https://www.googleapis.com/auth/drive.file'];
+        'https://www.googleapis.com/auth/drive.file',
+        'https://www.googleapis.com/auth/userinfo.email'];
 
 OAuth2Data.on('tokens', (tokens) => {
     if (tokens.refresh_token) {
@@ -54,12 +55,29 @@ const Callback = async (req, res) => {
             const { tokens } = await OAuth2Data.getToken(code);
             console.log('Successfully authenticated');
             OAuth2Data.setCredentials(tokens);
+            const userProfile = await fetchUserEmail(tokens.access_token);
+            UserEmail = userProfile;
             res.redirect('http://localhost:8081/Youtube');
         } catch (err) {
             console.log('Error authenticating')
             console.log(err);
         }
     }
+};
+
+// Function to fetch user profile information using the access token
+const fetchUserEmail = async (accessToken) => {
+    const response = await axios.get('https://www.googleapis.com/oauth2/v2/userinfo', {
+        headers: {
+            Authorization: `Bearer ${accessToken}`
+        }
+    });
+
+    if (!response.data || !response.data.email) {
+        throw new Error('Failed to fetch user email');
+    }
+
+    return response.data.email;
 };
 
 //  AREA 1 ------------------
@@ -113,7 +131,7 @@ const monitorChannelForNewVideos = async (channelId) => {
         } catch (error) {
             console.error('Error fetching YouTube channel data:', error);
         }
-    }, 300000); // 5minutes interval (adjust as needed)
+    }, 300000); // 5 minutes interval (adjust as needed)
 };
 
 const gmailUser = 'admareasync6@gmail.com';
@@ -134,7 +152,7 @@ const sendEmailNotification = async (videoTitle, videoId) => {
         // Email content
         const mailOptions = {
             from: gmailUser,
-            to: 'jeanlucahoyo@gmail.com',
+            to: UserEmail,
             subject: 'New YouTube Video Uploaded',
             text: `A new video titled "${videoTitle}" has been uploaded. Watch it here: https://www.youtube.com/watch?v=${videoId}`,
         };
@@ -150,7 +168,7 @@ const sendEmailNotification = async (videoTitle, videoId) => {
 const youtubeXgmail = async (req, res) => {
     try {
         const { youtubeUrl } = req.body; // Assuming the YouTube URL is sent in the request body
-
+        console.log('youtt', youtubeUrl);
         // Extract channel ID from the YouTube URL
         const channelId = await extractChannelId(youtubeUrl);
         monitorChannelForNewVideos(channelId);
