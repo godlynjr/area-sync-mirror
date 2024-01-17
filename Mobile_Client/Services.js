@@ -5,6 +5,8 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import { useNavigation } from '@react-navigation/native';
 import { Menu, Divider, Button } from 'react-native-paper';
 import user from './User'
+import notionImage from './Assets/notion.png';
+import tallyImage from './Assets/tally.png';
 
 const Services = ({ }) => {
     const navigation = useNavigation();
@@ -33,38 +35,26 @@ const Services = ({ }) => {
     const handleDiscord = async () => {
         navigation.navigate('Service/Discord');
     };
+    const handleDateTime = async () => {
+        navigation.navigate('Service/Date_Time');
+    };
 
     const [aboutData, setAboutData] = useState(null);
+
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const data = await user.fetchAboutData();
                 setAboutData(data);
-                console.log('data is now', data);
+                // console.log('data is now', data);
             } catch (error) {
                 console.error('Erreur lors de la récupération des données :', error);
             }
         };
         fetchData();
     }, []);
-
-//     <View>
-//     {aboutData ? (
-//         aboutData.server.services.map((service, index) => (
-//             <View key={index}>
-//                 <Text>{service.name}</Text>
-//                 {service.imagePath && (
-//                     <Image
-//                         source={require('./Assets/notion.png')}
-//                         style={styles.serviceImage}
-//                     />
-//                 )}
-//             </View>
-//         ))
-//     ) : (
-//         <Text style={styles.text}>Chargement des données...</Text>
-//     )}
-// </View>
+    const services = aboutData?.server.services;
+    const images = [notionImage, tallyImage]; // Remplacez par vos propres images
 
     return (
         <SafeAreaView style={styles.container}>
@@ -79,7 +69,24 @@ const Services = ({ }) => {
                 <Divider />
                 <Menu.Item onPress={() => { }} title="Item 3" />
             </Menu> */}
-            <View>
+            {/* <View>
+                {aboutData ? (
+                    aboutData.server.services.map((service, index) => (
+                        <View key={index}>
+                            <Text>{service.name}</Text>
+                            {service.imagePath && (
+                                <Image
+                                    source={require('./Assets/notion.png')}
+                                    style={styles.serviceImage}
+                                />
+                            )}
+                        </View>
+                    ))
+                ) : (
+                    <Text style={styles.text}>Chargement des données...</Text>
+                )}
+            </View> */}
+            {/* <View>
                 {aboutData ? (
                     aboutData.server.services.map((service, index) => (
                         <View key={index}>
@@ -89,7 +96,42 @@ const Services = ({ }) => {
                 ) : (
                     <Text style={styles.text}>Chargement des données...</Text>
                 )}
-            </View>
+            </View> */}
+            {/* <ScrollView>
+                <View >
+                    {services && images && services.length === images.length ? (
+                        services.map((service, index) => (
+                            <View key={index} style={styles.serviceItem}>
+                                {service.imagePath && (
+                                    <Image
+                                        source={images[index]}
+                                        style={styles.serviceImage}
+                                    />
+                                )}
+                                <Text style={styles.serviceName}>{service.name}</Text>
+                            </View>
+                        ))
+                        
+                    ) : (
+                        <Text style={styles.loadingText}>Chargement des données...</Text>
+                    )}
+                </View>
+            </ScrollView> */}
+            {/* <ScrollView>
+                <View>
+                    {services && images && services.length === images.length ? (
+                        services.map((service, index) => (
+                            <ServiceComponent
+                                key={index}
+                                service={service}
+                                imageSource={images[index]}
+                            />
+                        ))
+                    ) : (
+                        <Text style={styles.text}>Chargement des données...</Text>
+                    )}
+                </View>
+            </ScrollView> */}
             <View style={styles.serviceContainer}>
                 <ScrollView contentContainerStyle={styles.appletsListContainer} style={styles.box}>
                     <TouchableOpacity onPress={handleGithub}>
@@ -133,6 +175,12 @@ const Services = ({ }) => {
                     <TouchableOpacity onPress={handleDiscord}>
                         <Image
                             source={require('./Assets/discord.png')}
+                            style={styles.image1}
+                        />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={handleDateTime}>
+                        <Image
+                            source={require('./Assets/date.png')}
                             style={styles.image1}
                         />
                     </TouchableOpacity>
