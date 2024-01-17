@@ -54,9 +54,6 @@ const Callback = async (req, res) => {
             const { tokens } = await OAuth2Data.getToken(code);
             console.log('Successfully authenticated');
             OAuth2Data.setCredentials(tokens);
-            res.send({
-                msg: "Successfully loggeed in to Youtube",
-            });
             res.redirect('http://localhost:8081/Youtube');
         } catch (err) {
             console.log('Error authenticating')
