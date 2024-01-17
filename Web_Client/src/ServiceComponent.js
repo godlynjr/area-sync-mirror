@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaDiscord, FaCalendar, FaSpotify, FaEnvelope, FaChartBar, FaGithub } from 'react-icons/fa';
+import { FaDiscord, FaCalendar, FaSpotify, FaEnvelope, FaChartBar, FaGithub, FaYoutube } from 'react-icons/fa';
 import { SiNotion } from "react-icons/si";
 
 const ServiceComponent = ({ service, onServiceClick }) => {
@@ -21,9 +21,9 @@ const ServiceComponent = ({ service, onServiceClick }) => {
         iconComponent = <FaCalendar className='h-9 w-10' />;
         bgColorClass = 'bg-[#4285f4]';
         break;
-      case 'notion':
-        iconComponent = <SiNotion className='h-10 w-10' />;
-        bgColorClass = 'bg-[#FAF3DD]'
+      case 'youtube':
+        iconComponent = <FaYoutube className='h-10 w-10' />;
+        bgColorClass = 'bg-[#ff0000]'
         break;
       case 'spotify':
         iconComponent = <FaSpotify className='h-10 w-10' />;
@@ -39,7 +39,7 @@ const ServiceComponent = ({ service, onServiceClick }) => {
         break;
       case 'github':
         iconComponent = <FaGithub className='h-10 w-10' />;
-        bgColorClass = 'bg-[#bd2c00]'
+        bgColorClass = 'bg-[#302b5c]'
         break;
       default:
         iconComponent = null;

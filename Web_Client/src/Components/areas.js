@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaDiscord, FaCalendar, FaSpotify, FaEnvelope, FaChartBar, FaGithub } from 'react-icons/fa';
+import { FaDiscord, FaCalendar, FaSpotify, FaEnvelope, FaChartBar, FaGithub, FaYoutube, FaGoogleDrive } from 'react-icons/fa';
 import { SiNotion } from "react-icons/si";
 
 const Areas = ({ service, featuring, description, bgComponent}) => {
@@ -23,6 +23,9 @@ const Areas = ({ service, featuring, description, bgComponent}) => {
       case 'spotify':
         ServiceIcon = <FaSpotify className='text-white h-5 w-5' />;
         break;
+      case 'youtube':
+        ServiceIcon = <FaYoutube className='text-white h-5 w-5' />;
+        break;
       default:
         ServiceIcon = null;
         break;
@@ -45,18 +48,21 @@ const Areas = ({ service, featuring, description, bgComponent}) => {
       case 'spotify':
         iconComponent = <FaSpotify className='text-white h-5 w-5' />;
         break;
+      case 'drive':
+        iconComponent = <FaGoogleDrive className='text-white h-5 w-5' />;
+        break;
       default:
         iconComponent = null;
         break;
     }
 
     return (
-        <div className={`flex flex-col w-30 border border-solid h-72 w-3/4 rounded-lg p-2 ${bgComponent} text-white`}>
+        <div className={`flex flex-col w-30 border border-solid h-72 lg:w-3/4 w-full rounded-lg p-2 ${bgComponent} text-white`}>
             <div className="flex flex-row space-x-2">
                 {ServiceIcon}
                 {iconComponent}
             </div>
-            <p className='text-2xl font-bold'>{description}</p>
+            <p className='text-xl lg:text-2xl font-bold'>{description}</p>
         </div>
     );
 };
