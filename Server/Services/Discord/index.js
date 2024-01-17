@@ -1,14 +1,14 @@
 const prefix = '!';
-const dayjs  = require('dayjs')
+const dayjs  = require('dayjs');
 const jwt = require('jsonwebtoken');
 const fetch = require('node-fetch');
 const airtable = require('airtable');
+const IService = require('../IService');
 const { TodoistApi } = require('@doist/todoist-api-typescript');
 const todoist = new TodoistApi(process.env.TODOIST_API_KEY);
 const DiscordUser = require('../../models/DiscordUser');
 const { Client, GatewayIntentBits } = require('discord.js')
 const { googled, oauth2Client, calendar } = require('../Calendar/calendar');
-
 
 const client = new Client({
     intents: [
