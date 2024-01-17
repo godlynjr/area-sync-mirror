@@ -84,7 +84,7 @@ const definePrayerTime = async (req, res) => {
 //     });
 // }
 
-definePrayerTime();
+// definePrayerTime();
 // const definePrayerTime = () => {
 //     heuresPriere.forEach(priere => {
 //         const regleEnvoi = new schedule.RecurrenceRule();
