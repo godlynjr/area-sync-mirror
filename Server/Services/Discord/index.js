@@ -103,10 +103,11 @@ const CalendarConnect = async (req, res) => {
         if (!isValid) {
             return res.status(401).json({ message: 'Unauthorized' });
         }
-        // if (await googled(req, res)) {
-        //     CalendarIsActive = true;
-        //     res.status(200).json({ message: 'Calendar is connected' });
-        // }
+        if (DiscordIsActive) {
+            await googled(req, res);
+            CalendarIsActive = true;
+            res.status(200).json({ message: 'Calendar is connected' });
+        }
     } catch (error) {
         console.error('Error in CalendarConnect:', error);
         res.status(500).json({ message: 'Server error', error: error.toString() } , { message: 'Calendar is not connected' });
