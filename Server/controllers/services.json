@@ -125,24 +125,6 @@
             }
         ],
         "reactions": []
-    },
-    {
-        "name": "Date & Time",
-        "actions": [
-            {
-                "name": "Envois des infos relatives à la météo",
-                "description": "À l'heure spécifiée, l'application collecte les données météorologiques actuelles ou prévues à partir d'une source fiable "
-            },
-            {
-                "name": "Envois d'une citation motivante",
-                "description": "Envoyer une citation motivante par e-mail à l'heure spécifiée."
-            },
-            {
-                "name": "Rappel des heures de la prière",
-                "description": "Envoyez un message de rappel des prières quotidiennes à chacunes des heures de la prière"
-            }
-        ],
-        "reactions": []
     }
   ]
 }

@@ -33,17 +33,25 @@ const Date_Time = ({ navigation }) => {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + undefined,
         };
-        const response = await fetch(api + '/users//datetime/sendprayertime', {
+        console.log(api + '/users/datetime/sendprayertime');
+        const response = await fetch(api + '/users/datetime/sendprayertime', {
           method: 'GET',
           headers: headers,
-        });
+        })
+        .then((res) => {
+          console.log("ugibk");
+
+        })
+        console.log("data");
+
+        console.log(data);
         if (response.ok) {
           const data = await response.json();
-          // console.log(data);
+          console.log(data);
           return data;
         } else {
-          console.error('Erreur lors de la requête GET 4587:', response.status);
-        }
+            console.error('Erreur lors de la requête GET:', response.status);
+        }   
       } catch (error) {
         console.error('Erreur lors de la requête GET :', error);
       }
@@ -107,9 +115,11 @@ const Date_Time = ({ navigation }) => {
   //   };
   //   fetchData();
   // }, []);
-  const handleStartPrayerService = async () => {
+  const handleStartPrayerService = () => {
     try {
-      await PrayerService.startPrayerService();
+      console.log('its start');
+      PrayerService.startPrayerService();
+      console.log('its finish');
     } catch (error) {
       console.error('Erreur lors du démarrage du service de prière', error);
     }
@@ -144,11 +154,10 @@ const Date_Time = ({ navigation }) => {
             Date and Time
           </Text>
           <Text style={styles.text2}>
-            The NAS that does it all. Connect, automate, and sync your apps and data with ease.
-          </Text>
+          A service that provides information about the current date and time, often used to display local time or perform time manipulation operations.          </Text>
         </View>
         <View style={styles.bottomContainer}>
-          <TouchableOpacity style={styles.bouton} onPress={handleStartMotivationService}>
+          <TouchableOpacity style={styles.bouton} onPress={handleStartPrayerService}>
             <Text style={styles.Text}>
               Create
             </Text>
@@ -178,17 +187,17 @@ const Date_Time = ({ navigation }) => {
       <ScrollView>
         <View style={styles.servicenamebox}>
 
-          <TouchableOpacity onPress={handleStartPrayerService}>
+          <TouchableOpacity >
             <View style={styles.serv2} >
               <Image
                 source={require('../Assets/dateservice.png')}
                 style={styles.image}
               />
               <Text style={styles.Test1}>
-                Start service2
+              Envois des infos relatives à la météo
               </Text>
               <Text style={styles.Test1}>
-                by AREASYNC
+              À l'heure spécifiée, l'application collecte les données météorologiques actuelles ou prévues à partir d'une source fiable
               </Text>
               <View style={styles.containerb}>
                 <Switch
@@ -203,17 +212,17 @@ const Date_Time = ({ navigation }) => {
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={handleStartMotivationService}>
+          <TouchableOpacity >
             <View style={styles.serv1} >
               <Image
                 source={require('../Assets/dateservice.png')}
                 style={styles.image}
               />
               <Text style={styles.Test1}>
-                Start service1
+              Envois d'une citation motivante
               </Text>
               <Text style={styles.Test1}>
-                by AREASYNC
+              Envoyer une citation motivante par e-mail à l'heure spécifiée
               </Text>
               <View style={styles.containerb}>
                 <Switch
@@ -228,17 +237,17 @@ const Date_Time = ({ navigation }) => {
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={handleStartweatherService}>
+          <TouchableOpacity >
             <View style={styles.serv3} >
               <Image
                 source={require('../Assets/dateservice.png')}
                 style={styles.image}
               />
               <Text style={styles.Test1}>
-                Start service3
+              Rappel des heures de la prière
               </Text>
               <Text style={styles.Test1}>
-                by AREASYNC
+               Envoyez un message de rappel des prières quotidiennes à chacunes des heures de la prière
               </Text>
               <View style={styles.containerb}>
                 <Switch
@@ -269,7 +278,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 38,
   },
   Test1: {
-    fontSize: 18,
+    fontSize: 12,
     marginTop: 20,
     fontWeight: 'bold',
     paddingHorizontal: 22,
@@ -321,7 +330,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   toggleButton: {
-    transform: [{ scaleX: 1.5 }, { scaleY: 1.5 }] // Appliquer une mise à l'échelle
+    transform: [{ scaleX: 1.0 }, { scaleY: 1.0 }] // Appliquer une mise à l'échelle
   },
   bottomContainer: {
     marginTop: 20,
