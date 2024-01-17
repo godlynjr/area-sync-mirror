@@ -48,7 +48,7 @@ const Github = ({ navigation }) => {
       if (response?.type === 'success') {
         const token = response.params.access_token;
         console.log('Access Token:', token);
-        setAccessToken(token);
+        setAccessToken(txoken);
       } else if (response?.type === 'error') {
         console.error(response.error);
       } else {

@@ -17,10 +17,10 @@ import Calendar1 from './Services/Calendar/area1';
 import Calendar2 from './Services/Calendar/area2';
 import Calendar3 from './Services/Calendar/area3';
 
-import Notion from './Services/Notion/Notion';
-import Notion1 from './Services/Notion/area1';
-import Notion2 from './Services/Notion/area2';
-import Notion3 from './Services/Notion/area3';
+import Youtube from './Services/Youtube/Youtube';
+import Youtube1 from './Services/Youtube/area1';
+import Youtube2 from './Services/Youtube/area2';
+import Youtube3 from './Services/Youtube/area3';
 
 
 import Spotify from './Services/Spotify/Spotify';
@@ -79,10 +79,10 @@ function App() {
         <Route path="/Discord-3" element={disconnected(<Discord3 />)} />
 
 
-        <Route path="/Notion" element={disconnected(<Notion />)} />
-        <Route path="/Notion-1" element={disconnected(<Notion1 />)} />
-        <Route path="/Notion-2" element={disconnected(<Notion2 />)} />
-        <Route path="/Notion-3" element={disconnected(<Notion3 />)} />
+        <Route path="/Youtube" element={disconnected(<Youtube />)} />
+        <Route path="/Youtube-1" element={disconnected(<Youtube1 />)} />
+        <Route path="/Youtube-2" element={disconnected(<Youtube2 />)} />
+        <Route path="/Youtube-3" element={disconnected(<Youtube3 />)} />
 
         <Route path="/Tally" element={disconnected(<Tally />)} />
         <Route path="/Tally-1" element={disconnected(<Tally1 />)} />

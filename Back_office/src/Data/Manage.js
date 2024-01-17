@@ -1,4 +1,4 @@
-const api = "http://localhost:8080";
+const api = "https://area-sync-stagging.onrender.com";
 
 class Data {
     #fillRequestHeaders()
