@@ -1,8 +1,8 @@
 const express = require("express")
 const router = express.Router()
 
-// const {  login, callback, Airtableconnect, CalendarConnect,  TodoistConnect } = require('../Services/Discord/index');
-// const { QuoteLogin, DiscordConnection, QuoteConnect } = require('../Services/Quote/index');
+const {  login, callback, Airtableconnect, CalendarConnect,  TodoistConnect } = require('../Services/Discord/index');
+const { QuoteLogin, DiscordConnection, QuoteConnect } = require('../Services/Quote/index');
 const {  notion_log, notion_callback } = require('../Services/Notion/notion');
 const GithubService = require('../Services/Github/index');
 const {  googled, callbacks, calendarwebhook, callback_calendar } = require('../Services/Calendar/calendar');
@@ -11,16 +11,16 @@ const { ConnectSpotify , SpotifyCallback, createPlaylistWithLikedSongs} = requir
 const { definePrayerTime, scheduleEmails, sendWeatherEmails } = require("../Services/Date&Time/date&time_service");
 
 // Discord API
-// router.get('/discord/login', login);
-// router.get('/discord/callback', callback);
-// router.post('/discord/airtable/connect', Airtableconnect);
-// router.post('/discord/calendar/connect', CalendarConnect);
-// router.post('/discord/todoist/connect', TodoistConnect);
+router.get('/discord/login', login);
+router.get('/discord/callback', callback);
+router.post('/discord/airtable/connect', Airtableconnect);
+router.post('/discord/calendar/connect', CalendarConnect);
+router.post('/discord/todoist/connect', TodoistConnect);
 
 // Quote API
-// router.get('/quote/login', QuoteLogin);
-// router.get('/quote/discord/connect/:userId', DiscordConnection);
-// router.post('/quote/discord/connect', QuoteConnect);
+router.get('/quote/login', QuoteLogin);
+router.get('/quote/discord/connect/:userId', DiscordConnection);
+router.post('/quote/discord/connect', QuoteConnect);
 
 // Calendar API
 router.get('/calendar/login', googled);
@@ -39,8 +39,6 @@ router.post('/youtube/spotify/connect', youtubeXspotify);
 const githubService = new GithubService();
 router.get('/github/login', githubService.login);
 router.get('/github/callback', githubService.handleCallback);
-router.get('/github/gmail/connect', githubService.getPushSendMsg);
-router.get('/github/webhook', githubService.webhook);
 
 // Notion API authentication
 router.get('/notion/login', notion_log);
