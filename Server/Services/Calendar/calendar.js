@@ -8,6 +8,7 @@ const notion = new Client({ auth: process.env.NOTION_SECRET });
 const databaseId = process.env.NOTION_DATABASE_ID;
 
 const { notion_log } = require('../Notion/notion');
+const { twitter_login } = require('../Twitter/twitter');
 
 let redirectUrl = '';
 let numbers = 0;
@@ -116,7 +117,8 @@ const calendarwebhook = async (req, res) => {
             console.log(`Date de création: ${dernierEvenement.created}`);
 
             // Ajoutez ici le code pour créer un événement dans Notion
-            await notion_log(req, res);
+            // await notion_log(req, res); 
+            await twitter_login(req, res); 
             // en utilisant les informations reçues de l'événement Google Calendar.
             return res.status(200).end();
         }
