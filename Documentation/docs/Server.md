@@ -1,44 +1,56 @@
-#
+# Documentation du Serveur
 
-## Les mandatory du Serveur
+## Introduction
 
-Le corps du projet se trouve au sein du serveur. En effet le serveur contient des donnees tels que l'implementation des services, la logique metier de l'authentification, la connection a la base de donnees et bien dautres choses.
+Ce serveur est développé en Node.js et implémente des services tels que YouTube, Discord, Quotes, Date&Time, Google Calendar, GitHub, Spotify. Il est conçu pour fonctionner de manière similaire à IFTTT.
 
-## Comment on run le Serveur
+## Authentification
 
-Pour run le serveur il faut executer une serie de commande dans un ordre precis.
-On a :
+L'authentification au serveur se fait soit via email soit via Gmail avec OAuth 2. Lors de l'authentification, un token JWT est généré et envoyé au client. Il faut noter que le serveur ne stocke pas ce token. Lorsqu'une requête est envoyée par le client, son email est récupéré et vérifié pour sa validité.
 
-## Comment l'authenfication a ete mise en place
+## Base de Données
 
-Il faut dabord creer des identifants du develppeur dans la console google cloud.
-Apres avoir recuperaton de l'dentifiant on creer un client google qui sabonne a l'API de google. On lance une requete de connexion a Google en envoyant une URL de redirection au frontend. Apres seste quthentifier l'API de google renvoie toutes les informations conecernant lutilsiateur(comme le username, le mot de passe, son profil, etc).
+La base de données est développée avec MongoDB.
 
-        export async function connectToGmail(req, res)
-        {
-        const auth = new google.auth.OAuth2(credential.web.client_id, credential.web.client_secret, credential.web.redirect_uris[1]);
-        console.log(req.session);
-            const scopes = ['https://www.googleapis.com/auth/gmail.readonly', 'https://www.googleapis.com/auth/gmail.modify'];
-            const authurl = auth.generateAuthUrl({access_type: 'offline', scope: scopes});  
-            res.status(200).json({url: authurl});
-        }
+## Services
 
-Comme vous pouvez le voir ci dessous il:
+L'ensemble des services et des actions/réactions sont stockés dans un fichier `about.json` qui est envoyé aux clients suite à leur demande. Chaque service et ses actions/réactions sont gérés dans le dossier `Services`. D'ailleurs en voici la liste:
+
+- **YouTube** : Ce service permet d'interagir avec l'API de YouTube pour effectuer des actions comme la recherche de vidéos, la gestion des abonnements, etc.
+
+- **Discord** : Ce service permet d'envoyer des messages à des canaux spécifiques sur Discord ou d'interagir avec les utilisateurs.
+
+- **Quotes** : Ce service fournit des citations aléatoires. Il est utilisé pour envoyer des citations quotidiennes ou pour rechercher des citations par auteur ou par thème.
+
+- **Date&Time** : Ce service fournit des informations sur la date et l'heure actuelles. Il est utilisé pour déclencher des actions à des moments spécifiques.
+
+- **Google Calendar** : Ce service permet d'interagir avec l'API de Google Calendar. Il est utilisé pour créer, modifier ou supprimer des événements de calendrier.
+
+- **GitHub** : Ce service permet d'interagir avec l'API de GitHub. Il est utilisé pour créer des issues, faire des pull requests, etc.
+
+- **Spotify** : Ce service permet d'interagir avec l'API de Spotify. Il est utilisé pour jouer de la musique, créer des listes de lecture, etc.
 
 
-* Récupère le code d'autorisation à partir de la requête req.query, utilise ce code pour obtenir un jeton d'authentification Gmail via auth.getToken(code) et stocke le jeton dans la base de données.
+## Backoffice
 
-* Renvoie une réponse HTTP avec un statut 200 et un message JSON indiquant que le jeton a été reçu avec succès.
+Sur le backoffice, on peut obtenir le nombre total de services et d'utilisateurs. Il fournit également une liste complète des utilisateurs. Chaque utilisateur peut être modifié ou supprimé individuellement.
 
-        export async function getTokenToGmail(req, res)
-        {
-        console.log(req.session);
-        const auth = new google.auth.OAuth2(credential.web.client_id, credential.web.client_secret, credential.web.redirect_uris[1]);
-        const {code} = req.query;
-        const {tokens} = await auth.getToken(code);
-        console.log(tokens);
-        await putElemInBase(new ObjectId(req.session._id), {gmail: tokens});
-        res.status(200).json({message: "token receive"});
-        }
+## Gestion des Requêtes
 
-## Comment les services sont impletes du cote du Serveur
+La gestion des requêtes est réalisée de manière abstraite et lisible, ce qui facilite la maintenance et l'évolution du serveur.
+
+## Routes
+
+Le dossier `routes` contient les différentes routes pour l'authentification, les requêtes backoffice et la gestion des actions/réactions définies en tant que triggers.
+
+## Tests
+
+Un dossier `test` contient des tests unitaires pour chaque service.
+
+## Docker
+
+Un `Dockerfile` est inclus pour faciliter le déploiement du serveur.
+
+## API Documentation
+
+La documentation de notre API RESTful est réalisée grâce à Express et est disponible dans le fichier `swagger.js`.

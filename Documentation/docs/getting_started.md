@@ -74,12 +74,10 @@ On the Frontend Mobile, Rawdath DEMBA-DIALLO is in charge. She also ensures that
 
 At the Backend level we have Bridge ATINDOKPO and Yannick KEKE.
 
-* Fitzerald took care of the implementation of certain services including Github, Discord, Reedit, etc..
-In addition to the services he took care of the compilation of the project via Docker. He also participated in linking the work of the different members. Basically it emerged the work of the different members of the group.
-
-* Hansly AGBAMATE took care of database administration, oAuth authentication and certain Google services (Gmail, Google Calendar).
+* Yannick KEKE took care of database administration, oAuth authentication and certain Google services (Gmail, Google Calendar).
 
 * Godlyn KIKISSAGBE as project manager took care of the good progress and administration of the tasks.  the implementation of the swagger and the implementation of certain services including Gitlab and Spotify.
+In addition to the services he took care of the compilation of the project via Docker. He also participated in linking the work of the different members. Basically it emerged the work of the different members of the group.
 
 For more information about the members of the Group, please go to the Contributor 🤝 section on the repository.
 
