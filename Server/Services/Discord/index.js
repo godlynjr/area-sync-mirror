@@ -85,7 +85,7 @@ const callback = async (req, res) => {
         await newUser.save();
     }
     DiscordIsActive = true;
-    res.redirect(redirectURL); // Use the redirect URL from the header
+    res.redirect(redirectURL, { discordId: userJson.id }); // Use the redirect URL from the header
 };
 
 client.on('ready', () => {
