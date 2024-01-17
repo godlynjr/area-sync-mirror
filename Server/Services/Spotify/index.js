@@ -48,7 +48,7 @@ const SpotifyCallback = async (req, res) => {
             // Configure the API with the new access token
             spotifyApi.setAccessToken(data.body['access_token']);
             spotifyApi.setRefreshToken(data.body['refresh_token']);
-            
+
         })
         .catch(error => {
             console.error('Error getting access token:', error);
@@ -117,6 +117,7 @@ const addTracksToPlaylist = (spotifyApi, playlistName, trackURIs) => {
 };
 
 const addNewLikedSongsToPlaylist = (spotifyApi, playlistName) => {
+    console.log('function triggered:');
     getUserLikedSongs(spotifyApi)
         .then(newTrackURIs => {
             const newlyLikedSongs = newTrackURIs.filter(uri => !existingLikedSongs.includes(uri));

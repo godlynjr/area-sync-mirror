@@ -166,6 +166,23 @@ class Client {
       throw error;
     }
   }
+  
+  async QuoteLogin(Url) {
+    this.redirectUrl = Url;
+    try {
+      axios
+          .get(api + "/users/quote/login", {
+           headers: this.fillRequestHeaders(),
+          })
+          .then((res) => {
+            console.log(res.data);
+          })
+          .catch((err) => console.log(err));
+    } catch (error) {
+      console.error('Error during fetch:', error);
+      throw error;
+    }
+  }
 }
 
 const User = new Client();
